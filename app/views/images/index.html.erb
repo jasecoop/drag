@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<%= react_component('ImageBox',
+                    {:presenter => @presenter.to_json, :imgSrc => image_path("http://placehold.it/500x500")},
+                    {:prerender => true}) %>
+
+<br>
+
+<%= link_to 'New Image', new_image_path %>
