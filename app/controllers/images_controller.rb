@@ -32,7 +32,7 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    @image = Image.new(image_params)
+    @image = Image.new(file: params[:file])
 
     if @image.save!
       respond_to do |format|
