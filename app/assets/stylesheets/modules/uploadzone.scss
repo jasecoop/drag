@@ -4,14 +4,18 @@
   width: 100%;
   height: 100%;
   z-index: 99999;
+  background: none;
+  top: 0;
 }
 
-.dropzone.dz-drag-hover {
+.dropzone.dz-drag-hover,
+.dropzone.dz-started {
   background: rgba(00,00,00,.92);
   border: none;
   position: fixed;
   height: 100%;
   width: 100%;
+  color: #fff;
 }
 
 .dropzone .dz-message {
@@ -22,4 +26,19 @@
   top: 0;
   margin: 0;
   color: #fff;
+}
+
+.dropzone .dz-message img {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.dropzone .dz-message {
+  display: none;
+}
+
+.dropzone.dz-drag-hover .dz-message {
+  display: block;
 }

@@ -1,8 +1,7 @@
 var Image = React.createClass({
   render: function () {
-    console.log(this.props)
     return (
-      <div>
+      <div className="image-list__item">
         <img src= { this.props.file.url } />
       </div>
     )

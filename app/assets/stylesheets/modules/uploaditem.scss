@@ -9,7 +9,7 @@
 }
 
 .uploadItem__thumbnail {
-  background: #242424;
+  background: #3B3B3B;
   @extend .columns;
   @extend .four;
   text-align: center;
@@ -18,9 +18,44 @@
 .uploadItem__thumbnail img {
   display: inline-block;
   padding: 4em 0;
+  max-width: 100%;
 }
 
 .uploadItem__content {
   @extend .columns;
   @extend .eight;
 }
+
+.dz-progress {
+  width: 100%;
+  background: #3B3B3B;
+  display: block;
+  height: 21px;
+  position: relative;
+  &:before {
+    content: "U P L O A D I N G";
+    font-size: 9px;
+    width: 100%;
+    line-height: 21px;
+    position: absolute;
+    left: 0;
+    text-align: left;
+    padding-left: 10px;
+  }
+}
+
+.dz-upload {
+  display: block;
+  height: 21px;
+  background: #2E2E2E;
+}
+
+.dz-success .dz-upload {
+  background: #00B71C;
+}
+
+.dz-success .dz-progress:before {
+  content: "U P L O A D  C O M P L E T E";
+}
+
+

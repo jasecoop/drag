@@ -5,7 +5,7 @@
     <%= file_field_tag "media", multiple: true%>
   </div>
   <div class="dz-message">
-    UPLOAD
+    <%= image_tag 'uploadzone_message.svg' %>
   </div>
 <% end %>
 
@@ -14,15 +14,19 @@
     <div class="uploadItem__container dz-details">
       <div class="uploadItem__thumbnail">
         <img data-dz-thumbnail />
+
+        <div class="dz-progress">
+          <span class="dz-upload" data-dz-uploadprogress></span>
+        </div>
+
       </div>
       <div class="uploadItem__content">
         <div class="dz-filename"><span data-dz-name></span></div>
         <div class="dz-size" data-dz-size></div>
       </div>
     </div>
-    <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-    <div class="dz-success-mark"><span>✔</span></div>
-    <div class="dz-error-mark"><span>✘</span></div>
+<!--     <div class="dz-success-mark"><span>✔</span></div>
+    <div class="dz-error-mark"><span>✘</span></div> -->
     <div class="dz-error-message"><span data-dz-errormessage></span></div>
   </div>
 </div>

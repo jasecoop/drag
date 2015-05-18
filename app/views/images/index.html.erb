@@ -1,9 +1,37 @@
-<p id="notice"><%= notice %></p>
+<%= link_to 'New Image', new_image_path %>
+
+<%= form_tag @image, :html => {:multipart => true}, method: :post, class: "dropzone", id: "media-dropzone" do %>
+  <div class="fallback">
+    <%= file_field_tag "media", multiple: true%>
+  </div>
+  <div class="dz-message">
+    <%= image_tag 'uploadzone_message.svg' %>
+  </div>
+<% end %>
+
+<div class="upload-item-example dz-preview preview-template dz-custom dz-file-preview">
+  <div class="uploadItem">
+    <div class="uploadItem__container dz-details">
+      <div class="uploadItem__thumbnail">
+        <img data-dz-thumbnail />
+
+        <div class="dz-progress">
+          <span class="dz-upload" data-dz-uploadprogress></span>
+        </div>
+
+      </div>
+      <div class="uploadItem__content">
+        <div class="dz-filename"><span data-dz-name></span></div>
+        <div class="dz-size" data-dz-size></div>
+      </div>
+    </div>
+<!--     <div class="dz-success-mark"><span>✔</span></div>
+    <div class="dz-error-mark"><span>✘</span></div> -->
+    <div class="dz-error-message"><span data-dz-errormessage></span></div>
+  </div>
+</div>
+
 
 <%= react_component('ImageBox',
                     {:presenter => @presenter.to_json, :imgSrc => image_path("http://placehold.it/500x500")},
                     {:prerender => true}) %>
-
-<br>
-
-<%= link_to 'New Image', new_image_path %>

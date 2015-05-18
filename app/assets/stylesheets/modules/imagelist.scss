@@ -1,0 +1,12 @@
+.image-list {
+  @extend .row;
+}
+
+.image-list__item {
+  @extend .columns;
+  @extend .four;
+}
+
+.image-list__item img {
+  max-width: 100%;
+}
