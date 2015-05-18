@@ -1,0 +1,26 @@
+.upload-item-example {
+  display: none;
+}
+
+.uploadItem {
+  @extend .row;
+  overflow: hidden;
+  margin-bottom: 1em;
+}
+
+.uploadItem__thumbnail {
+  background: #242424;
+  @extend .columns;
+  @extend .four;
+  text-align: center;
+}
+
+.uploadItem__thumbnail img {
+  display: inline-block;
+  padding: 4em 0;
+}
+
+.uploadItem__content {
+  @extend .columns;
+  @extend .eight;
+}

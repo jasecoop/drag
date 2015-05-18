@@ -24,5 +24,7 @@ module Img
     config.active_record.raise_in_transactional_callbacks = true
 
     config.react.addons = true
+
+    config.assets.paths << Rails.root.join("app", "assets", "img")
   end
 end

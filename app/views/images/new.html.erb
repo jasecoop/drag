@@ -1,11 +1,28 @@
-<h1>New Image</h1>
-
 <!-- <%= render 'form' %> -->
 
 <%= form_tag @image, :html => {:multipart => true}, method: :post, class: "dropzone", id: "media-dropzone" do %>
   <div class="fallback">
     <%= file_field_tag "media", multiple: true%>
   </div>
+  <div class="dz-message">
+    UPLOAD
+  </div>
 <% end %>
 
-<%= link_to 'Back', images_path %>
+<div class="upload-item-example dz-preview preview-template dz-custom dz-file-preview">
+  <div class="uploadItem">
+    <div class="uploadItem__container dz-details">
+      <div class="uploadItem__thumbnail">
+        <img data-dz-thumbnail />
+      </div>
+      <div class="uploadItem__content">
+        <div class="dz-filename"><span data-dz-name></span></div>
+        <div class="dz-size" data-dz-size></div>
+      </div>
+    </div>
+    <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+    <div class="dz-success-mark"><span>✔</span></div>
+    <div class="dz-error-mark"><span>✘</span></div>
+    <div class="dz-error-message"><span data-dz-errormessage></span></div>
+  </div>
+</div>
