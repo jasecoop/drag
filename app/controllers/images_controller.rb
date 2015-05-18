@@ -34,13 +34,9 @@ class ImagesController < ApplicationController
   def create
     @image = Image.new(image_params)
 
-    respond_to do |format|
-      if @image.save
-        format.html { redirect_to @image, notice: 'Image was successfully created.' }
-        format.json { render :show, status: :created, location: @image }
-      else
-        format.html { render :new }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
+    if @image.save!
+      respond_to do |format|
+        format.json{ render :json => @image }
       end
     end
   end
@@ -77,6 +73,6 @@ class ImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:url, :source, :title, :desc, :file)
+      params.require(:image).permit(:file)
     end
 end

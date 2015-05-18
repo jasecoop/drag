@@ -2,14 +2,10 @@
 
 <!-- <%= render 'form' %> -->
 
-<%= form_for @image, :html => {:multipart => true} do |f| %>
-
-
-  <p>
-    <%= f.file_field :file %>
-  </p>
-
-  <p><%= f.submit %></p>
+<%= form_tag @image, :html => {:multipart => true}, method: :post, class: "dropzone", id: "media-dropzone" do %>
+  <div class="fallback">
+    <%= file_field_tag "media", multiple: true%>
+  </div>
 <% end %>
 
 <%= link_to 'Back', images_path %>
