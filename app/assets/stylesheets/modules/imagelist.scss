@@ -1,12 +1,20 @@
-.image-list {
-  @extend .row;
+.image-list[data-columns]::before {
+  content: '3 .column.size-1of3';
 }
 
+.column {
+  float: left;
+  margin: 0;
+}
+.size-1of3 { width: 33.333%; }
+.size-1of2 { width: 50%; }
+
 .image-list__item {
-  @extend .columns;
-  @extend .four;
+  margin: 50px;
+  text-align: center;
 }
 
 .image-list__item img {
   max-width: 100%;
+  display: inline-block;
 }

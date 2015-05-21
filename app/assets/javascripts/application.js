@@ -1,4 +1,5 @@
 //= require jquery
+//= require vendor/salvatorre
 //= require dropzone
 //= require react
 //= require react_ujs
@@ -28,3 +29,14 @@ $(function() {
   });
 
 });
+
+// $( window ).on('load', function() {
+//   var container = document.querySelector('.image-list');
+//   $('.image-list').masonry({
+//     itemSelector: '.image-list__item',
+//     // set columnWidth a fraction of the container width
+//     columnWidth: function( containerWidth ) {
+//       return containerWidth / 5;
+//     }
+//   });
+// });

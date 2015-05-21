@@ -5,7 +5,7 @@ var ImageList = React.createClass({
     });
 
     return (
-      <div className="image-list">
+      <div className="image-list" data-columns>
         { ImageNodes }
       </div>
     )
