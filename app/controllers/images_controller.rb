@@ -4,15 +4,20 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @presenter = {
-      :images => Image.all
-      # :form => {
-      #   :action => comments_path,
-      #   :csrf_param => request_forgery_protection_token,
-      #   :csrf_token => form_authenticity_token
-      # }
-    }
-    # @images = Image.all
+    if params[:tag]
+      @presenter = {
+        :images => Images.tagged_with(params[:tag])
+      }
+    else
+      @presenter = {
+        :images => current_user.images.all
+        # :form => {
+        #   :action => comments_path,
+        #   :csrf_param => request_forgery_protection_token,
+        #   :csrf_token => form_authenticity_token
+        # }
+      }
+    end
   end
 
   # GET /images/1
@@ -33,6 +38,7 @@ class ImagesController < ApplicationController
   # POST /images.json
   def create
     @image = Image.new(file: params[:file])
+    @image.user_id = current_user.id if current_user
 
     if @image.save!
       respond_to do |format|
@@ -44,13 +50,23 @@ class ImagesController < ApplicationController
   # PATCH/PUT /images/1
   # PATCH/PUT /images/1.json
   def update
-    respond_to do |format|
-      if @image.update(image_params)
-        format.html { redirect_to @image, notice: 'Image was successfully updated.' }
-        format.json { render :show, status: :ok, location: @image }
-      else
-        format.html { render :edit }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
+    @image = Image.find_by_id(params[:id])
+    if @image.update_attributes(params[:image])
+
+      respond_to do |format|
+        format.html {
+                    flash[:success] = "success"
+                    redirect_to image_path
+        }
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.html {
+                    flash[:error] = @image.errors.present? ? @image.errors.full_messages.join('<br />') : "Oops! There is some problem with category update."
+                    render :edit
+        }
+        format.js
       end
     end
   end
@@ -65,6 +81,26 @@ class ImagesController < ApplicationController
     end
   end
 
+  def edit_upload
+    @image = Image.find(params[:id])
+
+    # if @image.update_attributes(params[:image])
+    respond_to do |format|
+      format.js
+      format.html { render :nothing => true, :notice => 'Update SUCCESSFUL!' }
+      format.json { render json: @image, status: :created, location: @image }
+    end
+    # else
+    #   respond_to do |format|
+    #     format.html {
+    #                 flash[:error] = @image.errors.present? ? @image.errors.full_messages.join('<br />') : "Oops! There is some problem with category update."
+    #                 render :edit
+    #     }
+    #     format.js
+    #   end
+    # end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_image
@@ -73,6 +109,6 @@ class ImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:file)
+      params.require(:image).permit(:file, :tag_list)
     end
 end

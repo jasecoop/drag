@@ -26,5 +26,7 @@ module Img
     config.react.addons = true
 
     config.assets.paths << Rails.root.join("app", "assets", "img")
+
+    config.assets.initialize_on_precompile = false
   end
 end

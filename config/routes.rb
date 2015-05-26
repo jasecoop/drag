@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'image/new'
 
   get 'image/create'
@@ -6,6 +7,11 @@ Rails.application.routes.draw do
   get 'image/edit'
 
   resources :images
+
+  get 'tags/:tag', to: 'images#index', as: :tag
+
+  post 'edit_upload/:id' => 'images#edit_upload'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -4,39 +4,26 @@
 //= require react
 //= require react_ujs
 //= require components
+//= require upload
+//= require save_tags
 
-$(function() {
-  Dropzone.autoDiscover = false;
-  var imageUpload;
 
-  Dropzone.options.mediaDropzone = {
-    // previewsContainer: '.dz-custom',
-    previewTemplate: $('.preview-template').html(),
-    dictDefaultMessage: 'UPLOAD',
-    clickable: false
-    // init: function() {
-    //   this.on("success", function(file) {
-    //     $('.dz-upload-message').
-    //   });
-    // }
-  };
 
-  imageUpload = new Dropzone("#media-dropzone");
+$(document).ready(function() {
+  $("body").on('click', '.tag-save-button', function() {
 
-  return imageUpload.on("success", function(file, responseText) {
-    var imageUrl;
-    imageUrl = responseText.file.url;
+    var form = $(this).parent('form');
+    var post_url = $(form).attr('action');
+    console.log(post_url)
+    var post_data = form.serialize();
+    $.ajax({
+      type: 'POST',
+      url: post_url,
+      data: post_data,
+      success: function(msg) {
+        console.log(post_data);
+      }
+    });
+    return false;
   });
-
 });
-
-// $( window ).on('load', function() {
-//   var container = document.querySelector('.image-list');
-//   $('.image-list').masonry({
-//     itemSelector: '.image-list__item',
-//     // set columnWidth a fraction of the container width
-//     columnWidth: function( containerWidth ) {
-//       return containerWidth / 5;
-//     }
-//   });
-// });
