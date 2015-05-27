@@ -4,20 +4,9 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    if params[:tag]
-      @presenter = {
-        :images => Images.tagged_with(params[:tag])
-      }
-    else
-      @presenter = {
-        :images => current_user.images.all
-        # :form => {
-        #   :action => comments_path,
-        #   :csrf_param => request_forgery_protection_token,
-        #   :csrf_token => form_authenticity_token
-        # }
-      }
-    end
+    @presenter = {
+      :images => current_user.images
+    }
   end
 
   # GET /images/1
@@ -109,6 +98,6 @@ class ImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:file, :tag_list)
+      params.require(:image).permit(:file, :all_tags)
     end
 end
