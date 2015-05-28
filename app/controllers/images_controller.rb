@@ -40,6 +40,7 @@ class ImagesController < ApplicationController
   # PATCH/PUT /images/1.json
   def update
     @image = Image.find_by_id(params[:id])
+    @image.update(image_params)
     if @image.update_attributes(params[:image])
 
       respond_to do |format|
@@ -72,6 +73,10 @@ class ImagesController < ApplicationController
 
   def edit_upload
     @image = Image.find(params[:id])
+    @tag_list = @image.tag_list
+    # @image.update_attributes(image_params)
+    @image.tag_list = 'sdfsdf'
+    @image.save
 
     # if @image.update_attributes(params[:image])
     respond_to do |format|
@@ -98,6 +103,6 @@ class ImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:file, :tag_list)
+      params.require(:image).permit(:file, :tag_list => [])
     end
 end
