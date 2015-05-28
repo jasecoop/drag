@@ -25,7 +25,7 @@
         <div class="dz-filename"><span data-dz-name></span></div>
         <div class="dz-size" data-dz-size></div>
         <div class="tag-field">
-          <%= form_for('save_Tags', remote: true) do |f| %>
+          <%= form_for(/image/, remote: true) do |f| %>
             <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
             <input type="text" name="all_tags" class="input-tags" placeholder="Tags seperated by comma" />
             <button class="tag-save-button" name="commit" />sdf</button>
