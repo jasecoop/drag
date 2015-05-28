@@ -3,15 +3,15 @@
 }
 
 .uploadItem {
-  @extend .row;
+  @extend .row !optional;
   overflow: hidden;
   margin-bottom: 1em;
 }
 
 .uploadItem__thumbnail {
   background: #3B3B3B;
-  @extend .columns;
-  @extend .four;
+  @extend .columns !optional;
+  @extend .four !optional;
   text-align: center;
 }
 
@@ -22,8 +22,8 @@
 }
 
 .uploadItem__content {
-  @extend .columns;
-  @extend .eight;
+  @extend .columns !optional;
+  @extend .eight !optional;
 }
 
 .dz-progress {
