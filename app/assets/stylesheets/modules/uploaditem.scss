@@ -1,17 +1,21 @@
+@import 'vendor/skeleton';
+
 .upload-item-example {
   display: none;
 }
 
 .uploadItem {
-  @extend .row !optional;
+  @extend .row;
   overflow: hidden;
   margin-bottom: 1em;
+  z-index: 1;
+  position: relative;
 }
 
 .uploadItem__thumbnail {
   background: #3B3B3B;
-  @extend .columns !optional;
-  @extend .four !optional;
+  @extend .cols;
+  @extend .four;
   text-align: center;
 }
 
@@ -22,8 +26,8 @@
 }
 
 .uploadItem__content {
-  @extend .columns !optional;
-  @extend .eight !optional;
+  @extend .cols;
+  @extend .eight;
 }
 
 .dz-progress {
@@ -58,4 +62,64 @@
   content: "U P L O A D  C O M P L E T E";
 }
 
+.dz-filename {
+  visibility: hidden;
+}
+
+.uploadItem-form input[type="text"] {
+  background: none;
+  border: none;
+  border-bottom: solid 1px rgba(225,225,225,.30);
+  border-radius: 0;
+  padding: 5px 0;
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  outline: none;
+
+  &::-webkit-input-placeholder {
+     color: rgba(225,225,225,.30);
+  }
+
+  &:-moz-placeholder { /* Firefox 18- */
+     color: rgba(225,225,225,.30);
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+     color: rgba(225,225,225,.30);
+  }
+
+  &:-ms-input-placeholder {
+     color: rgba(225,225,225,.30);
+  }
+
+  &:hover {
+    border-bottom: solid 1px rgba(225,225,225,.80);
+    &::-webkit-input-placeholder {
+       color: rgba(225,225,225,.80);
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+       color: rgba(225,225,225,.80);
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+       color: rgba(225,225,225,.80);
+    }
+
+    &:-ms-input-placeholder {
+       color: rgba(225,225,225,.80);
+    }
+  }
+
+  &:focus {
+    outline: none;
+    border: none;
+    border-bottom: solid 1px #fff;
+  }
+}
+
+.uploadItem-form .field-action {
+  margin-top: 30px;
+}
 

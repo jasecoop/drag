@@ -23,10 +23,21 @@ $(function() {
   imageUpload = new Dropzone("#media-dropzone");
 
   return imageUpload.on("success", function(file, responseText) {
+
     var imageUrl;
     imageUrl = responseText.file.url;
     $(file.previewElement).find('.tag-field form').attr('action', '/edit_upload/' + responseText.id)
     $(file.previewElement).find('.tag-field form').attr('data-id', responseText.id)
+
+    var name       = $('.dz-filename span').html();
+    var $nameInput = $('.tag-field form .uploadItem-form__name input');
+    console.log(name);
+    $nameInput.attr('value', name);
+  });
+
+  $( "body" ).on( "click", '#upload-close', function(e) {
+    e.preventDefault();
+    console.log('sdfsdfsdf')
   });
 
 });
