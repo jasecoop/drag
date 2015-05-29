@@ -72,10 +72,16 @@ class ImagesController < ApplicationController
   end
 
   def edit_upload
+    @user  = current_user
     @image = Image.find(params[:id])
-    @tag_list = @image.tag_list
+    tl = params[:tag_list]
     # @image.update_attributes(image_params)
-    @image.tag_list = 'sdfsdf'
+    @image.tag_list = tl
+
+    puts 'PARRRRAM ==========='
+    puts tl
+
+    # set_owner_tag_list_on(current_user, :tags, tl)
     @image.save
 
     # if @image.update_attributes(params[:image])

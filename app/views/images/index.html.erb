@@ -25,10 +25,9 @@
         <div class="dz-filename"><span data-dz-name></span></div>
         <div class="dz-size" data-dz-size></div>
         <div class="tag-field">
-          <%= form_for '/images/', remote: true, html: {:class => "tag-field"} do |f| %>
+          <%= form_tag('/image/', remote: true, html: {:class => "tag-field"}) do %>
             <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-            <!-- <input type="text" name="file" class="input-tags" placeholder="Tags seperated by comma" /> -->
-            <%= f.text_field :tag_list %>
+            <input type="text" name="tag_list" class="input-tags" placeholder="Tags seperated by comma" />
             <button class="tag-save-button" name="commit" />sdf</button>
           <% end %>
         </div>

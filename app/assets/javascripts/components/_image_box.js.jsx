@@ -4,7 +4,7 @@ var ImageBox = React.createClass({
   },
 render: function () {
     return (
-      <div className="image-box">
+      <div className="image-box" id="grid">
 
         <ImageList images={ this.state.images } />
 
