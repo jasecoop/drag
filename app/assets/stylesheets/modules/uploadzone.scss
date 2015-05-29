@@ -6,6 +6,7 @@
   z-index: 99999;
   background: none;
   top: 0;
+  pointer-events: none
 }
 
 .dropzone.dz-drag-hover,
@@ -16,6 +17,7 @@
   height: 100%;
   width: 100%;
   color: #fff;
+  overflow-y: scroll;
 }
 
 .dz-header {

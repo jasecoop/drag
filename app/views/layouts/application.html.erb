@@ -4,13 +4,30 @@
   <title>Img</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
+  <%= javascript_include_tag 'application' %>
 </head>
 <body>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
+
+<%= javascript_include_tag :defaults %>
+
+
+<% if user_signed_in? %>
+  <li>
+  <%= link_to 'Logout', '/users/sign_out', :method => :delete %>
+  </li>
+<% else %>
+  <li>
+  <%= link_to('Login', new_user_session_path)  %>
+  </li>
+<% end %>
+
 <%= yield %>
 
-<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+
 
 </body>
 </html>

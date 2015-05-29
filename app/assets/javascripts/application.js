@@ -1,4 +1,5 @@
 //= require jquery
+//= require jquery_ujs
 //= require vendor/salvatorre
 //= require dropzone
 //= require react
