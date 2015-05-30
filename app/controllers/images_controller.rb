@@ -76,12 +76,9 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
     tl = params[:tag_list]
     # @image.update_attributes(image_params)
-    @image.tag_list = tl
+    # @image.tag_list = tl
+    @user.tag(@image, :with => tl, :on => :tags)
 
-    puts 'PARRRRAM ==========='
-    puts tl
-
-    # set_owner_tag_list_on(current_user, :tags, tl)
     @image.save
 
     # if @image.update_attributes(params[:image])
