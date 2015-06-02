@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   post 'edit_upload/:id' => 'images#edit_upload'
 
+  resources :tags
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,5 +1,11 @@
 <%= link_to 'New Image', new_image_path %>
 
+<%= react_component('TagsBox', {:prerender => true}) %>
+
+<% @tags.each do |tag| %>
+  <%= link_to tag.name, tag_path(tag.name) %>
+<% end %>
+
 <div class="dz-message">
   <%= image_tag 'uploadzone_message.svg' %>
 </div>

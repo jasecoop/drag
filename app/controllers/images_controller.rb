@@ -4,9 +4,29 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @presenter = {
-      :images => current_user.images
-    }
+    @tags = current_user.owned_tags
+    # @tags_presenter = render json: @tags
+
+    if params[:tag]
+
+      # @articles = Article.tagged_with(params[:tag])
+
+      @presenter = {
+        :images => current_user.images.tagged_with(params[:tag])
+      }
+
+    else
+
+      @presenter = {
+        :images => current_user.images
+      }
+
+    end
+  end
+
+  def user_tags
+    @tags = current_user.owned_tags
+    render json: @tags
   end
 
   # GET /images/1
