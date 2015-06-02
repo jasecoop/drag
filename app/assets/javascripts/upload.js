@@ -13,16 +13,31 @@ $(function() {
   var previewTemplate = document.querySelector('.preview-template').innerHTML;
   previewNode.parentNode.removeChild(previewNode);
 
-  Dropzone.options.mediaDropzone = {
+  Dropzone.options.body = {
     // previewsContainer: '.dz-custom',
     previewTemplate: previewTemplate,
     dictDefaultMessage: 'UPLOAD',
     clickable: false
   };
 
-  imageUpload = new Dropzone("#media-dropzone");
+  imageUpload = new Dropzone(document.body, // Make the whole body a dropzone
+    {
+        url: '/images',
+        previewTemplate: previewTemplate,
+        dictDefaultMessage: 'UPLOAD',
+        headers: {
+          'X-Transaction': 'POST Example',
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        previewsContainer: '.previewsContainer'
+        // more options if needed
+
+    }
+  );
 
   return imageUpload.on("success", function(file, responseText) {
+
+    $('.previewsContainer').addClass('active');
 
     var imageUrl;
     imageUrl = responseText.file.url;
@@ -33,11 +48,7 @@ $(function() {
     var $nameInput = $('.tag-field form .uploadItem-form__name input');
     console.log(name);
     $nameInput.attr('value', name);
-  });
 
-  $( "body" ).on( "click", '#upload-close', function(e) {
-    e.preventDefault();
-    console.log('sdfsdfsdf')
   });
 
 });
