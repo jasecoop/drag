@@ -6,11 +6,12 @@
   z-index: 99999;
   background: none;
   top: 0;
-  // pointer-events: none
+  // pointer-events: none;
 }
 
 .dropzone.dz-drag-hover,
-.dropzone.dz-started {
+.dropzone.dz-started,
+.previewsContainer {
   background: rgba(00,00,00,.92);
   border: none;
   position: fixed;
@@ -20,18 +21,24 @@
   overflow-y: scroll;
 }
 
-.dropzone.dz-started {
+.dropzone.dz-started,
+.previewsContainer {
+  display: none;
   background: rgba(255,255,255,.92);
+  top: 0;
+  width: 90%;
+  padding: 5% 5% 0 5%;
+}
+
+.previewsContainer.active {
+  display: block;
 }
 
 .dz-header {
-  display: none;
-}
-
-.dz-started .dz-header {
   display: block;
   position: relative;
   z-index: 1;
+  color: #000;
 }
 
 .dz-bg {
@@ -46,21 +53,29 @@
   z-index: 0;
 }
 
-.dropzone .dz-message {
+.dz-message {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: rgba(00,00,00,.9);
   font-size: 10em;
   font-weight: bold;
   color: #fff;
-  position: absolute;
+  position: fixed;
   top: 0;
   margin: 0;
   color: #fff;
 }
 
-.dropzone .dz-message img {
+.dz-message img {
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
+}
+
+.dz-drag-hover .dz-message {
+  display: block;
 }
 
 .dropzone .dz-message {
@@ -90,8 +105,8 @@
 .dz-header__action a {
   display: block;
   font-size: 1.5em;
-  background: rgba(225,225,225,1);
-  color: rgba(00,00,00,.6);
+  background: #000;
+  color: #fff;
   padding: 10px;
   line-height: 1em;
   text-decoration: none;

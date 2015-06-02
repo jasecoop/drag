@@ -1,19 +1,8 @@
 <%= link_to 'New Image', new_image_path %>
 
-<%= form_tag @image, :html => {:multipart => true}, method: :post, class: "dropzone", id: "media-dropzone" do %>
-  <div class="dz-bg"></div>
-  <div class="fallback">
-    <%= file_field_tag "media", multiple: true%>
-  </div>
-  <div class="dz-message">
-    <%= image_tag 'uploadzone_message.svg' %>
-  </div>
-
-  <div class="dz-header">
-    <div class="dz-header__title">Uploaded to the Internet</div>
-    <div class="dz-header__action"><a id="upload-close" href="#">✘</a></div>
-  </div>
-<% end %>
+<div class="dz-message">
+  <%= image_tag 'uploadzone_message.svg' %>
+</div>
 
 <div id="previewtemplate" >
 <div class="upload-item-example dz-preview preview-template dz-custom dz-file-preview">
@@ -56,6 +45,13 @@
     <div class="dz-error-message"><span data-dz-errormessage></span></div>
   </div>
 </div>
+</div>
+
+<div class="previewsContainer">
+  <div class="dz-header">
+    <div class="dz-header__title">Uploaded to the Internet</div>
+    <div class="dz-header__action"><a id="upload-close" href="#">✘</a></div>
+  </div>
 </div>
 
 
