@@ -1,0 +1,15 @@
+header {
+  display: block;
+  width: 100%;
+  position: fixed;
+  z-index: 5;
+  font-size: 12px;
+  top: 0;
+}
+
+.header-menu {
+  position: relative;
+  z-index: 5;
+  float: right;
+  font-size: 12px;
+}

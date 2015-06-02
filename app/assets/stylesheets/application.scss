@@ -2,6 +2,8 @@
 @import 'vendor/skeleton';
 @import 'vendor/dropzone';
 
+@import 'modules/buttons';
+
 @import 'mixins/box-shadow.css.scss';
 
 @import 'modules/input-hench';
@@ -10,3 +12,4 @@
 @import 'modules/uploadzone';
 @import 'modules/imagelist';
 @import 'modules/tag-list';
+@import 'modules/header';

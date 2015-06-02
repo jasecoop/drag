@@ -11,15 +11,17 @@ class ImagesController < ApplicationController
 
       # @articles = Article.tagged_with(params[:tag])
 
-      @presenter = {
-        :images => current_user.images.tagged_with(params[:tag])
-      }
+      @images = current_user.images.tagged_with(params[:tag])
+      # @presenter = {
+      #   :images => current_user.images.tagged_with(params[:tag])
+      # }
 
     else
 
-      @presenter = {
-        :images => current_user.images
-      }
+      @images = current_user.images
+      # @presenter = {
+      #   :images => current_user.images
+      # }
 
     end
   end

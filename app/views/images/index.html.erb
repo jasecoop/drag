@@ -1,66 +1,12 @@
-<%= link_to 'New Image', new_image_path %>
-
-<%= react_component('TagsBox', {:prerender => true}) %>
-
-<% @tags.each do |tag| %>
-  <%= link_to tag.name, tag_path(tag.name) %>
-<% end %>
-
 <div class="dz-message">
   <%= image_tag 'uploadzone_message.svg' %>
 </div>
 
-<div id="previewtemplate" >
-<div class="upload-item-example dz-preview preview-template dz-custom dz-file-preview">
-  <div class="uploadItem">
-    <div class="uploadItem__container dz-details">
-      <div class="uploadItem__thumbnail">
-        <img data-dz-thumbnail />
+<%= render "previewTemplate" %>
 
-        <div class="dz-progress">
-          <span class="dz-upload" data-dz-uploadprogress></span>
-        </div>
+<div id="app">
 
-      </div>
-      <div class="uploadItem__content">
-        <!-- <div class="dz-filename"><span data-dz-name></span></div> -->
-        <!-- <div class="dz-size" data-dz-size></div> -->
-        <div class="tag-field uploadItem-form">
-          <%= form_tag('/image/', remote: true, :class => "tag-field") do %>
-            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-            <div class="field uploadItem-form__name">
-              <div class="dz-filename"><span data-dz-name></span></div>
-              <input type="text" name="name" class="input-tags" placeholder="Name" />
-            </div>
-            <div class="field uploadItem-form__source">
-              <input type="text" name="source" class="input-tags" placeholder="Add source" />
-            </div>
-            <div class="field uploadItem-form__tags">
-              <input type="text" name="tag_list" class="input-tags" placeholder="Tags seperated by comma" />
-            </div>
-
-            <div class="field field-action">
-              <button class="tag-save-button" name="commit" />Save</button>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <!--  <div class="dz-success-mark"><span>✔</span></div>
-    <div class="dz-error-mark"><span>✘</span></div> -->
-    <div class="dz-error-message"><span data-dz-errormessage></span></div>
-  </div>
-</div>
 </div>
 
-<div class="previewsContainer">
-  <div class="dz-header">
-    <div class="dz-header__title">Uploaded to the Internet</div>
-    <div class="dz-header__action"><a id="upload-close" href="#">✘</a></div>
-  </div>
-</div>
+<script>App.start();</script>
 
-
-<%= react_component('ImageBox',
-                    {:presenter => @presenter.to_json, :imgSrc => image_path("http://placehold.it/500x500")},
-                    {:prerender => true}) %>

@@ -1,15 +1,12 @@
 //= require jquery
 //= require jquery_ujs
-//= require vendor/salvatorre
 //= require dropzone
 //= require react
 //= require react_ujs
+//= require app
 //= require components
 //= require upload
-//= require save_tags
-
-
-
+//= require vendor/salvatorre
 
 $(document).ready(function() {
 

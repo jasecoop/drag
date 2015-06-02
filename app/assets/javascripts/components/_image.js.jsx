@@ -1,16 +1,13 @@
 var Image = React.createClass({
   render: function () {
 
-    // imageURL: function (image) {
-    //   imageId = image.id;
-    //   return ('/images/' + imageId);
-    // };
-
-    var imageURL = '/images/' + this.props.id;
+    var image    = this.props.image;
+    var imageURL = '/images/' + image.id;
+    var imageSrc = image.file.file.url
 
     return (
       <div className="image-list__item">
-        <a href={imageURL}><img src= { this.props.file.url } /></a>
+        <a href={imageURL}><img src= { imageSrc } /></a>
       </div>
     )
   }

@@ -1,10 +1,18 @@
 .tags-box {
-  display: block;
+  display: none;
   width: 90%;
   height: 100%;
   padding: 5%;
   position: fixed;
   overflow-y: scroll;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  background: rgba(255,255,255,.4);
+}
+
+.tags-box.active {
+  display: block;
 }
 
 .tags-list {
