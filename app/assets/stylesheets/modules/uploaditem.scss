@@ -5,29 +5,34 @@
 }
 
 .uploadItem {
-  @extend .row;
   overflow: hidden;
   margin-bottom: 1em;
   z-index: 1;
   position: relative;
+  background: #ECECEC;
+  width: 30%;
+  margin: 0 5% 20px 0;
+  float: left;
+  @extend .animated;
+  @extend .fadeInUp;
+}
+
+.uploadItem:nth-child(4n) {
+  margin-right: 0;
 }
 
 .uploadItem__thumbnail {
-  background: #ECECEC;
-  @extend .cols;
-  @extend .four;
   text-align: center;
 }
 
 .uploadItem__thumbnail img {
   display: inline-block;
-  padding: 4em 0;
+  padding: 2em 0;
   max-width: 100%;
 }
 
 .uploadItem__content {
-  @extend .cols;
-  @extend .eight;
+  padding: 0 1em 1em 1em;
 }
 
 .dz-progress {
