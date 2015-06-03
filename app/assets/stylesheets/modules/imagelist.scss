@@ -1,5 +1,8 @@
-#grid[data-columns]::before {
-  content: '3 .column.size-1of3';
+.image-list {
+  -webkit-column-count: 3;
+  -webkit-column-gap: 50px;
+  column-count: 3;
+  column-gap: 50px;
 }
 
 .column {
@@ -11,7 +14,9 @@
 .size-1of2 { width: 50%; }
 
 .image-list__item {
-  margin: 50px;
+  display: inline-block;
+    margin: 0 0 1em;
+    width: 100%;
   text-align: center;
 }
 
