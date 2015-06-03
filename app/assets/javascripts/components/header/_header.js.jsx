@@ -1,11 +1,14 @@
 Header = React.createClass({
+    handleClick: function() {
+      this.props.onToggleTags();
+    },
     render: function () {
-        return <header>
-            <div className="container">
-              <div className="header-menu">
-                <div id="tags-button"></div>
-              </div>
-            </div>
-        </header>
+      return <header>
+        <div className="container">
+          <div className="header-menu" id="header-menu">
+            <span onClick={this.handleClick} >Tags</span>
+          </div>
+        </div>
+      </header>
     }
 });

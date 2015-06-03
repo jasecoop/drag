@@ -1,7 +1,7 @@
 var TagsBox = React.createClass({
   getInitialState: function () {
     // return JSON.parse(this.props.presenter);
-    return { tags: [], showTags: false };
+    return { tags: [] };
   },
   componentWillMount: function () {
     this.fetchUsersTags();
@@ -23,25 +23,12 @@ var TagsBox = React.createClass({
         }
     });
   },
-  hideTags: function () {
-    TagButton.setState({showTags: !TagButton.state.showTags});
-  },
   render: function () {
     return (
       <div className="tags-box">
-
-        // <span className="button-close b-c-black b-c-topright" onClick={this.hideTags}></span>
-
-        {this.state.showTags ? <TagList tags={this.state.tags} /> : null }
-
+        {this.props.showTags ? <TagsList tags={this.state.tags} /> : null }
       </div>
     );
   }
 });
 
-React.render(
-  <span checked={true} onClick={console.log.bind(console)}>
-    Tags
-  </span>,
-  document.getElementById('tags-button')
-);
