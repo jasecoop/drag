@@ -4,6 +4,13 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
+
+    @user = current_user
+
+    @presenter = {
+      :user => @user
+    }
+
     @tags = current_user.owned_tags
     # @tags_presenter = render json: @tags
 

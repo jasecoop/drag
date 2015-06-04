@@ -12,9 +12,7 @@
 <p class="alert"><%= alert %></p>
 
 <% if user_signed_in? %>
-  <li>
-  <%= link_to 'Logout', '/users/sign_out', :method => :delete %>
-  </li>
+
 <% else %>
   <li>
   <%= link_to('Login', new_user_session_path)  %>
