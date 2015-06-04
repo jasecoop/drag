@@ -3,6 +3,7 @@
 //= require dropzone
 //= require react
 //= require react_ujs
+//= require vendor/react-router
 //= require app
 //= require components
 //= require upload

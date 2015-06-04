@@ -1,0 +1,10 @@
+<div class="dz-message">
+  <%= image_tag 'uploadzone_message.svg' %>
+</div>
+
+<%= render "images/previewTemplate" %>
+
+<div id="app">
+  <%= react_component('App', props={current_user: current_user}) %>
+</div>
+
