@@ -8,7 +8,10 @@
   z-index: 2;
   left: 0;
   top: 0;
-  background: rgba(255,255,255,.4);
+  background: image-url('tags_header.svg') rgba(255,255,255,.8);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100%;
 }
 
 .tags-box.active {
@@ -24,7 +27,18 @@
 }
 
 .tag {
-  font-size: 3em;
+  font-size: 5em;
   display: inline-block;
   width: 100%;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+.tag a {
+  font-weight: bold;
+  color: rgba(00,00,00,.8);
+  &:hover {
+    color: #000;
+    background: #fff;
+  }
 }
