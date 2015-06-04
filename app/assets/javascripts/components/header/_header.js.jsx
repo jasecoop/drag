@@ -5,11 +5,13 @@ Header = React.createClass({
     render: function () {
       return <header>
         <div className="header-user">
-          <span>jasecoop</span>
+          <span>{this.props.user.username}</span>
         </div>
         <div className="header-menu" id="header-menu">
-          <span onClick={this.handleClick} >Tags</span>
-          <a rel="nofollow" data-method="delete" href="/users/sign_out">Logout</a>
+          <ul>
+            <li><span onClick={this.handleClick} >Tags</span></li>
+            <li><a rel="nofollow" data-method="delete" href="/users/sign_out">Logout</a></li>
+          </ul>
         </div>
       </header>
     }

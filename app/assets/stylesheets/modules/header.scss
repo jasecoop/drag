@@ -1,10 +1,15 @@
 header {
   display: block;
-  width: 100%;
+  width: 95%;
   position: fixed;
   z-index: 5;
   font-size: 12px;
   top: 0;
+  padding: 10px 2.5%;
+}
+
+.header-user {
+  float: left;
 }
 
 .header-menu {
@@ -12,4 +17,15 @@ header {
   z-index: 5;
   float: right;
   font-size: 12px;
+}
+
+.header-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-menu li {
+  display: inline-block;
+  margin-left: 20px;
 }
