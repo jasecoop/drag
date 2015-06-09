@@ -5,6 +5,6 @@
 <%= render "images/previewTemplate" %>
 
 <div id="app">
-  <%= react_component('App', props={current_user: current_user}) %>
+  <%= react_component('DragApp', props={current_user: current_user, images: @images.reverse, tags: @tags}) %>
 </div>
 

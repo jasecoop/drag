@@ -19,7 +19,7 @@ class ImagesController < ApplicationController
 
     else
 
-      @images = current_user.images
+      @images = current_user.images.sort_by(&:created_at)
       # @presenter = {
       #   :images => current_user.images
       # }

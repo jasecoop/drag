@@ -9,7 +9,7 @@ render: function () {
 
         <ul className="image-list" id="grid" data-columns="">
           {this.state.images.map(function (image) {
-            return <Image image={ image } />
+            return <Image image={ image } key={image.id} />
           })}
         </ul>
 

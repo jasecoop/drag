@@ -3,7 +3,7 @@ var Image = React.createClass({
 
     var image    = this.props.image;
     var imageURL = '/images/' + image.id;
-    var imageSrc = image.file.file.url
+    var imageSrc = image.file.url
 
     return (
       <div className="image-list__item">

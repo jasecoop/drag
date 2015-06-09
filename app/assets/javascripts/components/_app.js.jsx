@@ -1,15 +1,17 @@
-var App = React.createClass({
+var app = app || {};
+
+var DragApp = React.createClass({
 
   getInitialState: function () {
 
-    // this._fetchImages();
-
     return {
-      showTags: false,
-      current_user: this.props.current_user,
-      images: []
+      showTags     : false,
+      current_user : this.props.current_user,
+      images       : this.props.images,
+      tags         : this.props.tags
     };
   },
+
   _handleToggleTags: function() {
     this.setState({
       showTags: !this.state.showTags
@@ -18,32 +20,27 @@ var App = React.createClass({
 
   _fetchImages: function() {
     $.ajax({
-        url:       '/images',
-        dataType:  'json',
-        data:      { format: 'json' },
-        success: function (result) {
-          this.setState({ images: result });
-          console.log(this.state.images)
-        }.bind(this),
-        error: function () {
-            alert('error getting posts. please try again later');
-        }
+      url:       '/images',
+      dataType:  'json',
+      data:      { format: 'json' },
+      success: function (result) {
+        DragApp.setState({ images: result });
+      }.bind(this),
+      error: function () {
+          alert('error getting posts. please try again later');
+      }
     });
   },
 
-  componentDidMount: function () {
-    this._fetchImages();
-  },
-
   render: function () {
+
     return <div>
       <Header
         onToggleTags={ this._handleToggleTags }
         user={this.props.current_user}
       />
 
-      <TagsBox showTags={this.state.showTags}/>
-
+      <TagsBox tags={this.state.tags} showTags={this.state.showTags}/>
 
       <div id="images">
           <ImageBox images={this.state.images}/>
