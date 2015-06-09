@@ -1,10 +1,14 @@
-var App = React.createClass({
+var app = app || {};
+
+var DragApp = React.createClass({
 
   getInitialState: function () {
-    console.log('react')
+
     return {
-      showTags: false,
-      current_user: this.props.current_user
+      showTags     : false,
+      current_user : this.props.current_user,
+      images       : this.props.images,
+      tags         : this.props.tags
     };
   },
 
@@ -14,17 +18,32 @@ var App = React.createClass({
     })
   },
 
+  _fetchImages: function() {
+    $.ajax({
+      url:       '/images',
+      dataType:  'json',
+      data:      { format: 'json' },
+      success: function (result) {
+        DragApp.setState({ images: result });
+      }.bind(this),
+      error: function () {
+          alert('error getting posts. please try again later');
+      }
+    });
+  },
+
   render: function () {
+
     return <div>
       <Header
         onToggleTags={ this._handleToggleTags }
         user={this.props.current_user}
       />
 
-      <TagsBox showTags={this.state.showTags}/>
+      <TagsBox tags={this.state.tags} showTags={this.state.showTags}/>
 
       <div id="images">
-          <ImageBox/>
+          <ImageBox images={this.state.images}/>
       </div>
     </div>;
   }

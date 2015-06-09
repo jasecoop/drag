@@ -10,11 +10,11 @@
 
 $(document).ready(function() {
 
-  $( "body" ).on( "click", '#upload-close', function(e) {
-    e.preventDefault();
-    $('.uploadItem').remove();
-    $('.previewsContainer').removeClass('active');
-  });
+  // $( "body" ).on( "click", '#upload-close', function(e) {
+  //   e.preventDefault();
+  //   $('.uploadItem').remove();
+  //   $('.previewsContainer').removeClass('active');
+  // });
 
 
 this.body = $('body').get(0)
