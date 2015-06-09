@@ -9,10 +9,7 @@
   // pointer-events: none;
 }
 
-.dropzone.dz-drag-hover,
-.dropzone.dz-started,
 .previewsContainer {
-  background: rgba(00,00,00,.92);
   border: none;
   position: fixed;
   height: 100%;
@@ -20,6 +17,60 @@
   color: #fff;
   overflow-y: scroll;
 }
+
+.dragging .dz-message {
+  display: block;
+  background: rgba(00,00,00,.92);
+  border: none;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  overflow-y: scroll;
+  z-index: 9999;
+  &:before {
+    content: "";
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: image-url('uploadzone_message.svg') no-repeat top center;
+    background-size: 100%;
+    z-index: 99999;
+  }
+}
+
+.dz-message .progress {
+  display: block;
+  width: 100%;
+  height: 0;
+  position: fixed;
+  background: #0033CC;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  -webkit-transition: all 700ms ease-in-out;
+  -moz-transition: all 700ms ease-in-out;
+  -ms-transition: all 700ms ease-in-out;
+  -o-transition: all 700ms ease-in-out;
+  transition: all 700ms ease-in-out;
+}
+
+.dz-message.pre-hide .progress {
+  height: 100%;
+}
+
+.dz-message.hide {
+  height: 0px;
+-webkit-transition: all 500ms ease-in-out;
+-moz-transition: all 500ms ease-in-out;
+-ms-transition: all 500ms ease-in-out;
+-o-transition: all 500ms ease-in-out;
+transition: all 500ms ease-in-out;
+}
+
 
 .dropzone.dz-started,
 .previewsContainer {
@@ -32,6 +83,18 @@
 
 .previewsContainer.active {
   display: block;
+  &:before {
+    content: "";
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: image-url('uploadzone_message.svg') no-repeat top center;
+    background-size: 100%;
+    z-index: 0;
+  }
 }
 
 .dz-header {

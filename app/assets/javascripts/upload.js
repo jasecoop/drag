@@ -22,21 +22,37 @@ $(function() {
 
   imageUpload = new Dropzone(document.body, // Make the whole body a dropzone
     {
-        url: '/images',
-        previewTemplate: previewTemplate,
-        dictDefaultMessage: 'UPLOAD',
-        headers: {
-          'X-Transaction': 'POST Example',
-          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        },
-        previewsContainer: '.previewsContainer'
-        // more options if needed
+      url: '/images',
+      previewTemplate: previewTemplate,
+      dictDefaultMessage: 'UPLOAD',
+      headers: {
+        'X-Transaction': 'POST Example',
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      },
+      previewsContainer: '.previewsContainer',
+      init: function() {
+        this.on("dragenter", function() {
+          $('body').addClass('dragging');
+        });
+        this.on("dragleave", function() {
+          if( window.event.pageX == 0 || window.event.pageY == 0 ) {
+            $('body').removeClass('dragging');
+          }
+        });
+        this.on("drop", function() {
+          $('.dz-message').addClass('pre-hide');
+          setTimeout(function(){
+            $('.dz-message').addClass('hide');
+          }, 700);
+        });
+      }
 
     }
   );
 
   return imageUpload.on("success", function(file, responseText) {
 
+    setTimeout(function(){
     $('.previewsContainer').addClass('active');
 
     var imageUrl;
@@ -48,7 +64,12 @@ $(function() {
     var $nameInput = $('.tag-field form .uploadItem-form__name input');
     console.log(name);
     $nameInput.attr('value', name);
+    }, 700);
 
+  });
+
+  return imageUpload.on("dragenter", function(file) {
+    console.log('start')
   });
 
 });
