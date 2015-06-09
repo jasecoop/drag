@@ -1,23 +1,7 @@
 var ImageBox = React.createClass({
 getInitialState: function () {
   // return JSON.parse(this.props.presenter);
-  return { images: [] };
-},
-componentWillMount: function () {
-  this.fetchUsersImages();
-},
-fetchUsersImages: function () {
-  $.ajax({
-      url:       '/images',
-      dataType:  'json',
-      data:      { format: 'json' },
-      success: function (result) {
-        this.setState({ images: result });
-      }.bind(this),
-      error: function () {
-          alert('error getting posts. please try again later');
-      }
-  });
+  return { images: this.props.images };
 },
 render: function () {
     return (

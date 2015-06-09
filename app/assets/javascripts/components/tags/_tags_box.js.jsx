@@ -10,7 +10,6 @@ var TagsBox = React.createClass({
   fetchUsersTags: function () {
     // this.setState({ tags: JSON.parse(this.props.presenter) });
     // console.log(this.props.presenter);
-    console.log('dsf')
     $.ajax({
         url:       '/tags',
         dataType:  'json',
