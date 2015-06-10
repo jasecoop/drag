@@ -1,0 +1,25 @@
+.image-settings {
+  display: block;
+  background: blue;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 40px;
+}
+
+.image-settings__b,
+.image-settings__w {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: solid 1px #000;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.image-settings__b {
+  background: #000;
+}
+
+.image-settings__w {
+  background: #fff;
+}

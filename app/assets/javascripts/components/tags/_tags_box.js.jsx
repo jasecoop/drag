@@ -29,7 +29,6 @@ var TagsBox = React.createClass({
 
     return (
       <div className="tags-box">
-        // {this.props.showTags ? <TagsList tags={this.state.tags} /> : null }
         {tagList}
       </div>
     );

@@ -8,7 +8,8 @@ var DragApp = React.createClass({
       current_user    : this.props.current_user,
       images          : this.props.images,
       tags            : this.props.tags,
-      image_filter    : ''
+      image_filter    : '',
+      image_bg        : this.props.current_user.setting_bg
     };
   },
 
@@ -43,11 +44,19 @@ var DragApp = React.createClass({
     });
   },
 
+  _setBackground: function(colour, item) {
+    this.setState({
+      image_bg : colour
+    });
+  },
+
   componentWillMount: function () {
     this._fetchImages('/images');
   },
 
   render: function () {
+
+    var bgColor = this.state.image_bg
 
     return <div>
       <Header
@@ -62,9 +71,14 @@ var DragApp = React.createClass({
         onToggleTags={ this._handleToggleTags }
       />
 
-      <div id="images">
-        <div className="image-box" id="grid">
+      <div id="images" style={{backgroundColor: bgColor}}>
 
+        <div className="image-settings">
+          <span onClick={this._setBackground.bind(this, '#000000')} className="image-settings__b"></span>
+          <span onClick={this._setBackground.bind(this, '#ffffff')} dataColor={bgColor} className="image-settings__w"></span>
+        </div>
+
+        <div className="image-box" id="grid">
           <ul className="image-list" id="grid" data-columns="">
             {this.state.images.map(function (image) {
               return <div className="image-list__item">

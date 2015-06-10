@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => {email: true, login: false}
   has_many :images
+  before_create :set_image_settings
   acts_as_tagger
 
   def login=(login)
@@ -12,6 +13,11 @@ class User < ActiveRecord::Base
 
   def login
     @login || self.username || self.email
+  end
+
+  def set_image_settings
+    self.setting_bg   = "#ffffff"
+    self.setting_size = 5
   end
 
   def self.find_for_database_authentication(warden_conditions)
