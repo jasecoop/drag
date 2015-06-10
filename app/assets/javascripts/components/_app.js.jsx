@@ -48,6 +48,22 @@ var DragApp = React.createClass({
     this.setState({
       image_bg : colour
     });
+    this._postSettings(colour)
+  },
+
+  _postSettings: function(colour) {
+    $.ajax({
+      type: "PUT",
+      url: 'update_user',
+      dataType:  'json',
+      data: {setting_bg : colour},
+      success: function (result) {
+        console.log('success')
+      }.bind(this),
+      error: function () {
+        console.log("error ");
+      }
+    });
   },
 
   componentWillMount: function () {
