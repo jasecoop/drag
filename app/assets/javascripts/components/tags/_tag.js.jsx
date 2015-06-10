@@ -2,8 +2,6 @@ Tag = React.createClass({
 
   handleClick: function() {
     var tagName  = this.props.tag.name;
-    console.log('TagClicked' + tagName)
-    console.log(this.props)
     this.props.onTagClick(tagName);
   },
 

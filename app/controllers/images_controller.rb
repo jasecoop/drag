@@ -4,26 +4,12 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-
     @tags = current_user.owned_tags
-    # @tags_presenter = render json: @tags
 
     if params[:tag]
-
-      # @articles = Article.tagged_with(params[:tag])
-
-      @images = current_user.images.tagged_with(params[:tag])
-      # @presenter = {
-      #   :images => current_user.images.tagged_with(params[:tag])
-      # }
-
+      @images = current_user.images.tagged_with(params[:tag]).sort_by(&:created_at).reverse
     else
-
-      @images = current_user.images.sort_by(&:created_at)
-      # @presenter = {
-      #   :images => current_user.images
-      # }
-
+      @images = current_user.images.sort_by(&:created_at).reverse
     end
   end
 

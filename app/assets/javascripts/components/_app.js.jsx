@@ -3,7 +3,6 @@ var app = app || {};
 var DragApp = React.createClass({
 
   getInitialState: function () {
-
     return {
       showTags        : false,
       current_user    : this.props.current_user,
@@ -23,23 +22,33 @@ var DragApp = React.createClass({
     this.setState({
       filter : filter
     });
+    var url = '/tags/'+filter
+    this._fetchImages(url);
   },
 
-  _fetchImages: function() {
+  _fetchImages: function(url) {
     $.ajax({
-      url:       '/images',
+      url:       url,
       dataType:  'json',
       data:      { format: 'json' },
       success: function (result) {
-        DragApp.setState({ images: result });
+        this.setState({ images: result });
+        console.log(result)
+
       }.bind(this),
+
       error: function () {
           alert('error getting posts. please try again later');
       }
     });
   },
 
+  componentWillMount: function () {
+    this._fetchImages('/images');
+  },
+
   render: function () {
+
     return <div>
       <Header
         onToggleTags={ this._handleToggleTags }
@@ -50,13 +59,21 @@ var DragApp = React.createClass({
         tags={this.state.tags}
         showTags={this.state.showTags}
         filterTags={this._setFilter}
+        onToggleTags={ this._handleToggleTags }
       />
 
       <div id="images">
-        <ImageBox
-          images={this.state.images}
-          filter={this.state.filter}
-        />
+        <div className="image-box" id="grid">
+
+          <ul className="image-list" id="grid" data-columns="">
+            {this.state.images.map(function (image) {
+              return <div className="image-list__item">
+                <img src= { image.url } />
+              </div>
+            })}
+          </ul>
+
+        </div>
       </div>
     </div>
   }
