@@ -138,7 +138,7 @@ var DragApp = React.createClass({
     }
 
 
-    return <div>
+    return <div className="DragApp" style={{backgroundColor: bgColor}}>
       <Header
         onToggleTags={ this._handleToggleTags }
         onToggleSettings={ this._toggleImageSettings }
