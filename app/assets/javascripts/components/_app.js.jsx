@@ -123,6 +123,8 @@ var DragApp = React.createClass({
           <div className="image-settings__bg">
             <span onClick={this._setBackground.bind(this, '#000000')} className="image-settings__b"></span>
             <span onClick={this._setBackground.bind(this, '#ffffff')} dataColor={bgColor} className="image-settings__w"></span>
+            <span onClick={this._setBackground.bind(this, '#F1F1F1')} dataColor={bgColor} className="image-settings__g"></span>
+
           </div>
 
           <div className="image-settings__size">

@@ -20,7 +20,8 @@
 }
 
 .image-settings__b,
-.image-settings__w {
+.image-settings__w,
+.image-settings__g {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -35,6 +36,11 @@
 
 .image-settings__w {
   background: #fff;
+  border: solid 1px #000;
+}
+
+.image-settings__g {
+  background: #f1f1f1;
   border: solid 1px #000;
 }
 
