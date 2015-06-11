@@ -1,25 +1,50 @@
 .image-settings {
   display: block;
-  background: blue;
   width: 100%;
   overflow: hidden;
   margin-top: 40px;
 }
 
+.image-settings-black {
+  background: #000000;
+}
+
+.image-settings-white {
+  background: #ffffff;
+}
+
+.image-settings__bg,
+.image-settings__size {
+  float: left;
+  padding: 20px;
+}
+
 .image-settings__b,
 .image-settings__w {
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   border: solid 1px #000;
   cursor: pointer;
-  margin: 10px;
 }
 
 .image-settings__b {
   background: #000;
+  border: solid 1px #fff;
 }
 
 .image-settings__w {
   background: #fff;
+  border: solid 1px #000;
+}
+
+.image-settings__size input {
+  width: 300px;
+}
+
+.image-settings__close {
+  color: #fff;
+  float: right;
+  font-size: 40px;
+  margin: 4px 17px 0 0;
 }
