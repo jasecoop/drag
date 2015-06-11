@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post 'edit_upload/:id' => 'images#edit_upload'
 
   put 'update_user' => 'pages#update_user'
+  put 'update_user_size' => 'pages#update_user_size'
 
   resources :tags
 

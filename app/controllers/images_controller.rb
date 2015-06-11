@@ -96,6 +96,7 @@ class ImagesController < ApplicationController
       format.html { render :nothing => true, :notice => 'Update SUCCESSFUL!' }
       format.json { render json: @image, status: :created, location: @image }
     end
+
     # else
     #   respond_to do |format|
     #     format.html {

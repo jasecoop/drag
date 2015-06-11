@@ -9,7 +9,8 @@ var DragApp = React.createClass({
       images          : this.props.images,
       tags            : this.props.tags,
       image_filter    : '',
-      image_bg        : this.props.current_user.setting_bg
+      image_bg        : this.props.current_user.setting_bg,
+      image_size      : this.props.current_user.setting_size
     };
   },
 
@@ -61,7 +62,33 @@ var DragApp = React.createClass({
         console.log('success')
       }.bind(this),
       error: function () {
-        console.log("error ");
+        console.log("error");
+      }
+    });
+  },
+
+  _setSize: function(e) {
+    var newSize = e.target.value;
+    newSize     = Math.round(newSize);
+    newSize     = parseInt(newSize);
+    var sizeClass = 'col-' + newSize;
+    this.setState({
+      image_size : newSize
+    });
+    this._postSize(newSize)
+  },
+
+  _postSize: function(size) {
+    $.ajax({
+      type: "PUT",
+      url: 'update_user_size',
+      dataType:  'json',
+      data: {setting_size : size},
+      success: function (result) {
+        console.log('success')
+      }.bind(this),
+      error: function () {
+        console.log("error");
       }
     });
   },
@@ -72,7 +99,10 @@ var DragApp = React.createClass({
 
   render: function () {
 
-    var bgColor = this.state.image_bg
+    var bgColor   = this.state.image_bg
+    var imageSize = this.state.image_size
+    console.log(imageSize);
+    var sizeClass = 'col-'+imageSize
 
     return <div>
       <Header
@@ -90,12 +120,18 @@ var DragApp = React.createClass({
       <div id="images" style={{backgroundColor: bgColor}}>
 
         <div className="image-settings">
-          <span onClick={this._setBackground.bind(this, '#000000')} className="image-settings__b"></span>
-          <span onClick={this._setBackground.bind(this, '#ffffff')} dataColor={bgColor} className="image-settings__w"></span>
+          <div className="image-settings__bg">
+            <span onClick={this._setBackground.bind(this, '#000000')} className="image-settings__b"></span>
+            <span onClick={this._setBackground.bind(this, '#ffffff')} dataColor={bgColor} className="image-settings__w"></span>
+          </div>
+
+          <div className="image-settings__size">
+            <input onChange={this._setSize} type="range" min="1" max="8" step="0.2" value={imageSize} />
+          </div>
         </div>
 
         <div className="image-box" id="grid">
-          <ul className="image-list" id="grid" data-columns="">
+          <ul className={"image-list col-" + this.state.image_size} id="grid" data-columns="">
             {this.state.images.map(function (image) {
               return <div className="image-list__item">
                 <img src= { image.url } />
