@@ -6,9 +6,20 @@ Header = React.createClass({
       this.props.onToggleTags();
     },
     render: function () {
+
+      var active_tag = this.props.activeTag
+      console.log(active_tag);
+
+      var activeTagSpan = ""
+      if (active_tag) {
+        activeTagSpan =
+        <span className="header-user__tag">{active_tag}</span>
+      }
+
       return <header>
         <div className="header-user">
           <span>{this.props.user.username}</span>
+          {activeTagSpan}
         </div>
         <div className="header-menu" id="header-menu">
           <ul>

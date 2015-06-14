@@ -6,6 +6,10 @@ header {
   font-size: 12px;
   top: 0;
   padding: 10px 2.5%;
+  opacity: .4;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .header-user {
@@ -28,4 +32,9 @@ header {
 .header-menu li {
   display: inline-block;
   margin-left: 20px;
+}
+
+.header-user__tag:before {
+  content: ">";
+  padding: 0 10px;
 }

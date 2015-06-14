@@ -8,7 +8,7 @@ var DragApp = React.createClass({
       current_user      : this.props.current_user,
       images            : this.props.images,
       tags              : this.props.tags,
-      image_filter      : '',
+      active_tag        : '',
       image_bg          : this.props.current_user.setting_bg,
       image_size        : this.props.current_user.setting_size,
       showImageSettings : false
@@ -27,11 +27,11 @@ var DragApp = React.createClass({
     });
   },
 
-  _setFilter: function(filter) {
+  _setActiveTag: function(tag) {
     this.setState({
-      filter : filter
+      active_tag : tag
     });
-    var url = '/tags/'+filter
+    var url = '/tags/'+tag
     this._fetchImages(url);
   },
 
@@ -42,7 +42,6 @@ var DragApp = React.createClass({
       data:      { format: 'json' },
       success: function (result) {
         this.setState({ images: result });
-        console.log(result)
 
       }.bind(this),
 
@@ -108,7 +107,6 @@ var DragApp = React.createClass({
 
     var bgColor   = this.state.image_bg
     var imageSize = this.state.image_size
-    console.log(imageSize);
     var sizeClass = 'col-'+imageSize;
     if (bgColor=="#ffffff"){
       var settingsBgColor = "#000000";
@@ -137,18 +135,20 @@ var DragApp = React.createClass({
         </div>;
     }
 
+    console.log(this.state.active_tag)
 
     return <div className="DragApp" style={{backgroundColor: bgColor}}>
       <Header
         onToggleTags={ this._handleToggleTags }
         onToggleSettings={ this._toggleImageSettings }
         user={this.props.current_user}
+        activeTag={this.state.active_tag}
       />
 
       <TagsBox
         tags={this.state.tags}
         showTags={this.state.showTags}
-        filterTags={this._setFilter}
+        filterTags={this._setActiveTag}
         onToggleTags={ this._handleToggleTags }
       />
 
