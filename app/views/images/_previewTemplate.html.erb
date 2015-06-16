@@ -24,6 +24,9 @@
             <div class="field uploadItem-form__tags">
               <input type="text" name="tag_list" class="input-tags" placeholder="Tags seperated by comma" />
             </div>
+            <div class="field uploadItem-form__collection">
+              <%= select_tag "Collection", options_from_collection_for_select(@collections, 'id', 'name'), {:prompt => 'Add to Collection'} %>
+            </div>
 
             <div class="field field-action">
               <button class="tag-save-button" name="commit" />Save</button>

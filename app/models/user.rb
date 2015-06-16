@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => {email: true, login: false}
   has_many :images
+  has_many :collections
   before_create :set_image_settings
   acts_as_tagger
 

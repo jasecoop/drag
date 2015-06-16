@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  setting_bg: MyString
+  setting_size: 1
+  setting_public: false
+
+two:
+  name: MyString
+  setting_bg: MyString
+  setting_size: 1
+  setting_public: false

@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  get 'collections/new'
+
+  get 'collections/create'
+
+  get 'collections/update'
+
+  get 'collections/edit'
+
+  get 'collections/destroy'
+
+  get 'collections/index'
+
+  get 'collections/show'
+
   devise_for :users
   get 'image/new'
 

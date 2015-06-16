@@ -11,21 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610204214) do
+ActiveRecord::Schema.define(version: 20150615224627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "collections", force: :cascade do |t|
+    t.string   "name"
+    t.string   "setting_bg"
+    t.integer  "setting_size"
+    t.boolean  "setting_public"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "user_id"
+  end
 
   create_table "images", force: :cascade do |t|
     t.string   "url"
     t.string   "source"
     t.string   "title"
     t.string   "desc"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "file_name"
     t.string   "file"
     t.integer  "user_id"
+    t.integer  "collection_id"
+  end
+
+  create_table "tag_settings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -34,8 +50,11 @@ ActiveRecord::Schema.define(version: 20150610204214) do
     t.string   "taggable_type"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "context",       limit: 128
+    t.string   "context",         limit: 128
     t.datetime "created_at"
+    t.string   "setting_bg"
+    t.integer  "setting_size"
+    t.boolean  "setting_private"
   end
 
   add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree

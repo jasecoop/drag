@@ -5,6 +5,7 @@ class PagesController < ActionController::Base
   def home
 
     @tags = current_user.owned_tags
+    @collections = current_user.collections
 
     if params[:tag]
 
