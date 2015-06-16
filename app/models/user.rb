@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
     @login = login
   end
 
+  def to_param
+    username
+  end
+
   def login
     @login || self.username || self.email
   end

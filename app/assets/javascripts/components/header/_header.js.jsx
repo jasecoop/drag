@@ -2,6 +2,9 @@ Header = React.createClass({
     handleSettingsClick: function() {
       this.props.onToggleSettings();
     },
+    handleCollectionsClick: function() {
+      this.props.onToggleCollections();
+    },
     handleClick: function() {
       this.props.onToggleTags();
     },
@@ -24,6 +27,7 @@ Header = React.createClass({
         <div className="header-menu" id="header-menu">
           <ul>
             <li><span onClick={this.handleSettingsClick}>Settings</span></li>
+            <li><span onClick={this.handleCollectionsClick} >Collections</span></li>
             <li><span onClick={this.handleClick} >Tags</span></li>
             <li><a rel="nofollow" data-method="delete" href="/users/sign_out">Logout</a></li>
           </ul>

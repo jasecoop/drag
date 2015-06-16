@@ -7,6 +7,22 @@
   opacity: 1;
 }
 
+.page-fade {
+  display: block;
+  width: 90%;
+  height: 100%;
+  padding: 5%;
+  position: fixed;
+  overflow-y: scroll;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  background: rgba(255,255,255,.8);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100%;
+}
+
 .tags-list {
   display: block;
   width: 90%;

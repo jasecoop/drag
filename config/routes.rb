@@ -9,8 +9,6 @@ Rails.application.routes.draw do
 
   get 'collections/destroy'
 
-  get 'collections/index'
-
   get 'collections/show'
 
   devise_for :users
@@ -23,6 +21,8 @@ Rails.application.routes.draw do
   resources :images
 
   get 'tags/:tag', to: 'images#index', as: :tag
+
+  get ':username/:collection', to: 'images#collection_index'
 
   post 'edit_upload/:id' => 'images#edit_upload'
 

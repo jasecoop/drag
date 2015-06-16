@@ -4,13 +4,18 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @tags        = current_user.owned_tags
+    @tags = current_user.owned_tags
 
     if params[:tag]
       @images = current_user.images.tagged_with(params[:tag]).sort_by(&:created_at).reverse
     else
       @images = current_user.images.sort_by(&:created_at).reverse
     end
+  end
+
+  def collection_index
+    @collection        = current_user.collections.find_by(name: params[:collection])
+    @images = @collection.images
   end
 
   def user_tags

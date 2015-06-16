@@ -5,14 +5,22 @@ var DragApp = React.createClass({
   getInitialState: function () {
     return {
       showTags          : false,
+      showCollections   : false,
       current_user      : this.props.current_user,
       images            : this.props.images,
       tags              : this.props.tags,
+      collections       : this.props.collections,
       active_tag        : '',
       image_bg          : this.props.current_user.setting_bg,
       image_size        : this.props.current_user.setting_size,
       showImageSettings : false
     };
+  },
+
+  _handleToggleCollections: function() {
+    this.setState({
+      showCollections: !this.state.showCollections
+    });
   },
 
   _handleToggleTags: function() {
@@ -27,11 +35,20 @@ var DragApp = React.createClass({
     });
   },
 
+  _setActiveCollection: function(collection) {
+    this.setState({
+      active_tag : collection
+    });
+    var username = this.state.current_user.username
+    var url = username +'/'+collection
+    this._fetchImages(url);
+  },
+
   _setActiveTag: function(tag) {
     this.setState({
       active_tag : tag
     });
-    var url = '/tags/'+tag
+    var url = '/tags/'+ tag
     this._fetchImages(url);
   },
 
@@ -42,7 +59,6 @@ var DragApp = React.createClass({
       data:      { format: 'json' },
       success: function (result) {
         this.setState({ images: result });
-
       }.bind(this),
 
       error: function () {
@@ -139,10 +155,19 @@ var DragApp = React.createClass({
 
     return <div className="DragApp" style={{backgroundColor: bgColor}}>
       <Header
+        onToggleCollections={ this._handleToggleCollections }
         onToggleTags={ this._handleToggleTags }
         onToggleSettings={ this._toggleImageSettings }
         user={this.props.current_user}
         activeTag={this.state.active_tag}
+      />
+
+      <CollectionsBox
+        username={this.state.current_user.username}
+        collections={this.state.collections}
+        showCollections={this.state.showCollections}
+        filterCollections={this._setActiveCollection}
+        onToggleCollections={ this._handleToggleCollections }
       />
 
       <TagsBox
