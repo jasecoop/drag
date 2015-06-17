@@ -1,0 +1,38 @@
+html,
+body {
+  height: 100%;
+}
+
+.page-container {
+  padding: 2%;
+  width: 96%;
+  min-height: 96%;
+  // position: relative;
+}
+
+.page__header {
+  margin-bottom: 1em;
+}
+
+.session form,
+.registration form {
+  position: absolute;
+  bottom: 20px;
+  width: 50%;
+  margin-bottom: 0;
+}
+
+.session {
+  background: image-url('bg_text_login.svg') no-repeat top center;
+  background-size: 100%;
+}
+
+.registration {
+  background: image-url('bg_text_signup.svg') no-repeat top center;
+  background-size: 100%;
+}
+
+.session input[type="submit"],
+.registration input[type="submit"] {
+  margin-bottom: 0;
+}

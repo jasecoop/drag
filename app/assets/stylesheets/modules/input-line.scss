@@ -1,0 +1,38 @@
+.input-line input[type="email"],
+.input-line input[type="number"],
+.input-line input[type="search"],
+.input-line input[type="text"],
+.input-line input[type="tel"],
+.input-line input[type="url"],
+.input-line input[type="password"] {
+  border: none;
+  border-bottom: solid 1px rgba(00,00,00,.1);
+  padding-left: 0;
+  padding-right: 0;
+  background: none;
+}
+
+
+.input-half input[type="email"],
+.input-half input[type="number"],
+.input-half input[type="search"],
+.input-half input[type="text"],
+.input-half input[type="tel"],
+.input-half input[type="url"],
+.input-half input[type="password"] {
+  width: 50%;
+}
+
+.input-full input[type="email"],
+.input-full input[type="number"],
+.input-full input[type="search"],
+.input-full input[type="text"],
+.input-full input[type="tel"],
+.input-full input[type="url"],
+.input-full input[type="password"] {
+  width: 100%;
+}
+
+
+
+
