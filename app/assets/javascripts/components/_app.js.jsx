@@ -152,8 +152,6 @@ var DragApp = React.createClass({
         </div>;
     }
 
-    console.log(this.state.active_tag)
-
     return <div className="DragApp" style={{backgroundColor: bgColor}}>
       <Header
         onToggleCollections={ this._handleToggleCollections }
@@ -180,16 +178,10 @@ var DragApp = React.createClass({
 
       <div id="images" style={{backgroundColor: bgColor}}>
         {imageSettings}
-        <div className="image-box" id="grid">
-          <ul className={"image-list col-" + this.state.image_size} id="grid" data-columns="">
-            {this.state.images.map(function (image) {
-              return <div className="image-list__item">
-                <img src= { image.url } />
-              </div>
-            })}
-          </ul>
-
-        </div>
+        <ImageBox
+          images={this.state.images}
+          image_size={this.state.image_size}
+        />
       </div>
     </div>
   }

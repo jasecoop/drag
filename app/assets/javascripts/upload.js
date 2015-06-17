@@ -41,8 +41,9 @@ $(function() {
         });
         this.on("drop", function() {
           $('.dz-message').addClass('pre-hide');
+          $('.image-box-empty').hide();
           setTimeout(function(){
-            $('.dz-message').addClass('hide');
+            $('.dz-message').hide();
           }, 700);
         });
       }
