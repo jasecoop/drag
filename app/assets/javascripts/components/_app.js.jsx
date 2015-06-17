@@ -46,7 +46,7 @@ var DragApp = React.createClass({
 
   _setActiveTag: function(tag) {
     this.setState({
-      active_tag : tag
+      active_tag : tag,
     });
     var url = '/tags/'+ tag
     this._fetchImages(url);
@@ -124,10 +124,11 @@ var DragApp = React.createClass({
     var bgColor   = this.state.image_bg
     var imageSize = this.state.image_size
     var sizeClass = 'col-'+imageSize;
-    if (bgColor=="#ffffff"){
-      var settingsBgColor = "#000000";
+
+    if (bgColor=="#F1F1F1"){
+      var settingsBgColor = "#fff";
     } else {
-      var settingsBgColor = "#ffffff";
+      var settingsBgColor = "#F1F1F1";
     }
 
     var imageSettings = "";

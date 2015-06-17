@@ -1,15 +1,17 @@
 .image-settings {
   display: block;
-  width: 100%;
+  width: 95%;
   overflow: hidden;
+  margin: 0 2.5% 20px 2.5%;
+  border-radius: 4px;
 }
 
 .image-settings-black {
-  background: #000000;
+  background: #fff;
 }
 
 .image-settings-white {
-  background: #ffffff;
+  background: #000;
 }
 
 .image-settings__bg,
@@ -48,8 +50,21 @@
 }
 
 .image-settings__close {
-  color: #fff;
+  color: rgba(00,00,00,.5);
   float: right;
   font-size: 40px;
   margin: 4px 17px 0 0;
+  cursor: pointer;
+  &:hover {
+    color: rgba(00,00,00,.9);
+  }
 }
+
+.image-settings__b .image-settings_close {
+  color: rgba(255,255,255,.5);
+  &:hover {
+    color: rgba(255,255,255,.8);
+  }
+}
+
+
