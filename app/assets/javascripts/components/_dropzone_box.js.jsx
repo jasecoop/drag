@@ -19,7 +19,7 @@ var onDragDrop = function() {
   $('.dz-message').fadeOut();
   $('.image-box-empty').hide();
   setTimeout(function(){
-    // $('.dz-message').hide();
+    $('body').removeClass('dragging');
   }, 700);
 }
 

@@ -19,7 +19,7 @@
 }
 
 .dragging .dz-message {
-  display: block;
+  display: block !important;
   // background: rgba(00,00,00,.92);
   border: none;
   position: fixed;

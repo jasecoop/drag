@@ -1,8 +1,6 @@
 {
   "name": "Drag",
   "devDependencies": {
-    "browserify-incremental": "^3.0.0",
-    "reactify": "^1.1.0"
   },
   "license": "MIT",
   "engines": {
@@ -10,6 +8,8 @@
   },
   "dependencies": {
     "browserify": "^10.2.4",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "browserify-incremental": "^3.0.0",
+    "reactify": "^1.1.0"
   }
 }
