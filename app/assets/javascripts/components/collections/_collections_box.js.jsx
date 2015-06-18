@@ -39,3 +39,4 @@ var CollectionsBox = React.createClass({
   }
 });
 
+module.exports = CollectionsBox;

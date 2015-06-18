@@ -35,3 +35,4 @@ var TagsBox = React.createClass({
   }
 });
 
+module.exports = TagsBox;

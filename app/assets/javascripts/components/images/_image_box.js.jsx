@@ -36,3 +36,5 @@ var ImageBox = React.createClass({
     )
   }
 });
+
+module.exports = ImageBox;

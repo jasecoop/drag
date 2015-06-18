@@ -1,8 +1,8 @@
 Tag = React.createClass({
 
   handleClick: function() {
-    var tagName  = this.props.tag.name;
-    this.props.onTagClick(tagName);
+    var tag_name  = this.props.tag.name;
+    this.props.onTagClick(tag_name);
   },
 
   render: function () {

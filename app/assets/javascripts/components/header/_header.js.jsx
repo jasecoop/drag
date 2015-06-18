@@ -35,3 +35,5 @@ Header = React.createClass({
       </header>
     }
 });
+
+module.exports = Header;
