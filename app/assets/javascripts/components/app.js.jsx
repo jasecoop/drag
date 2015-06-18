@@ -1,8 +1,7 @@
-window.Header = require('components/header/_header');
-
 var DragApp = React.createClass({
 
   getInitialState: function () {
+
     return {
       showTags          : false,
       showCollections   : false,
@@ -59,6 +58,7 @@ var DragApp = React.createClass({
       data:      { format: 'json' },
       success: function (result) {
         this.setState({ images: result });
+        console.log('fetched')
       }.bind(this),
 
       error: function () {
@@ -132,6 +132,7 @@ var DragApp = React.createClass({
     }
 
     var imageSettings = "";
+
     if(this.state.showImageSettings) {
       imageSettings =
         <div className="image-settings" style={{background: settingsBgColor}}>
@@ -174,6 +175,10 @@ var DragApp = React.createClass({
         showTags={this.state.showTags}
         filterTags={this._setActiveTag}
         onToggleTags={ this._handleToggleTags }
+      />
+
+      <DropzoneBox
+        uploadComplete={this._fetchImages}
       />
 
       <div id="images" style={{backgroundColor: bgColor}}>
