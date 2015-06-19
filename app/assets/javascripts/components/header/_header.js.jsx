@@ -28,7 +28,6 @@ Header = React.createClass({
           <ul>
             <li><span onClick={this.handleSettingsClick}>Settings</span></li>
             <li><span onClick={this.handleCollectionsClick} >Collections</span></li>
-            <li><span onClick={this.handleClick} >Tags</span></li>
             <li><a rel="nofollow" data-method="delete" href="/users/sign_out">Logout</a></li>
           </ul>
         </div>
