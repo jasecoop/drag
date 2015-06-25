@@ -179,6 +179,7 @@ var DragApp = React.createClass({
 
       <DropzoneBox
         uploadComplete={this._fetchImages}
+        currentUser={this.state.current_user}
       />
 
       <div id="images" style={{backgroundColor: bgColor}}>

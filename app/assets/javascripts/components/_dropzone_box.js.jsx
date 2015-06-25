@@ -30,13 +30,13 @@ var hideProgress = function() {
 var DropzoneBox = React.createClass({
   getInitialState: function () {
     return {
-      fileUploaded : false,
+      fileUploaded  : false,
+      currentUserId : this.props.currentUser.id
     };
   },
 
   renderNewImages: function() {
     this.props.uploadComplete('/images');
-    console.log('gofetch')
   },
 
   render: function () {
@@ -70,7 +70,6 @@ var DropzoneBox = React.createClass({
 
 
     var onDragEnter = function() {
-      console.log('onDragEnter')
       addDragFlash();
     };
 
@@ -78,10 +77,35 @@ var DropzoneBox = React.createClass({
       removeDragFlashOnLeave();
     };
 
-    var onDrop = function() {
+    var onDrop = function(file) {
       // removeDragFlash();
       onDragDrop();
+
+      var Image = Parse.Object.extend("Images");
+      var image = new Image();
+
     };
+
+    var addedFile = function(file) {
+      var Image   = Parse.Object.extend("Images");
+      var image   = new Image();
+      var f       = new Parse.File(file.name, file);
+      image.set("file", f);
+      image.set("title", file.name);
+      image.set("width", file.width);
+      image.set("height", file.height);
+      image.set("type", file.type);
+      image.set("user_id", this.state.currentUserId);
+      image.save(null, {
+        success: function(image) {
+          // Execute any logic that should take place after the object is saved.
+        },
+        error: function(image, error) {
+
+        }
+      });
+
+    }.bind(this);;
 
     var onSuccess = function() {
       // setTimeout(hideProgress(), 2000);
@@ -104,7 +128,7 @@ var DropzoneBox = React.createClass({
         dragover: null,
         dragleave: onDragLeave,
         // All of these receive the file as first parameter:
-        addedfile: null,
+        addedfile: addedFile,
         removedfile: null,
         thumbnail: null,
         error: null,

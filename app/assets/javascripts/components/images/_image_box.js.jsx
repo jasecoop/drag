@@ -1,8 +1,17 @@
 var ImageBox = React.createClass({
+  mixins: [ParseReact.Mixin]
   getInitialState: function () {
     return {
       // collections: this.props.collections,
       // username: this.props.username
+    };
+  },
+
+  observe: function() {
+    // Subscribe to all Comment objects, ordered by creation date
+    // The results will be available at this.data.comments
+    return {
+      images: (new Parse.Query('Images')).ascending('createdAt')
     };
   },
 
