@@ -8,10 +8,12 @@ Header = React.createClass({
     handleClick: function() {
       this.props.onToggleTags();
     },
+    _logoutClick: function() {
+      this.props.logout();
+    },
     render: function () {
 
       var active_tag = this.props.activeTag
-      console.log(active_tag);
 
       var activeTagSpan = ""
       if (active_tag) {
@@ -28,7 +30,7 @@ Header = React.createClass({
           <ul>
             <li><span onClick={this.handleSettingsClick}>Settings</span></li>
             <li><span onClick={this.handleCollectionsClick} >Collections</span></li>
-            <li><a rel="nofollow" data-method="delete" href="/users/sign_out">Logout</a></li>
+            <li><span onClick={this._logoutClick}>Logout</span></li>
           </ul>
         </div>
       </header>

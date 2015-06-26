@@ -1,28 +1,7 @@
-<% if user_signed_in? %>
   <div class="dz-message">
     <div class="progress"></div>
   </div>
 
   <%= render "images/previewTemplate" %>
 
-  <div id="app">
-    <%= react_component('DragApp', props={current_user: current_user, images: @images.reverse, tags: @tags, collections: @collections}) %>
-  </div>
-
-<% else %>
-
-  <div class="page page-home">
-    <div class="page-container">
-      <div class="page__header">
-        <div><strong>Drag</strong></div>
-        <div>Image collections</div>
-      </div>
-
-      <div><%= link_to 'Sign up', new_user_registration_path %></div>
-      <div><%= link_to 'Login', new_user_session_path %></div>
-    </div>
-  </div>
-
-<% end %>
-
-
+  <div id="app"></div>

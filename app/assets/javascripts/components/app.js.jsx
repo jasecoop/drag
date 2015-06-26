@@ -1,19 +1,46 @@
 var DragApp = React.createClass({
-
+  mixins: [ParseReact.Mixin],
   getInitialState: function () {
 
     return {
       showTags          : false,
       showCollections   : false,
-      current_user      : this.props.current_user,
-      images            : this.props.images,
-      tags              : this.props.tags,
-      collections       : this.props.collections,
+      current_user      : Parse.User.current(),
+      images            : '',
+      tags              : '',
+      collections       : '',
       active_tag        : '',
-      image_bg          : this.props.current_user.setting_bg,
-      image_size        : this.props.current_user.setting_size,
+      image_bg          : '',
+      image_size        : '',
       showImageSettings : false
     };
+  },
+
+  observe: function() {
+    var currentUser = this.state.current_user;
+    var query = new Parse.Query('Images');
+    return {
+      images: (query.equalTo("createdBy", currentUser).descending('createdAt'))
+    };
+  },
+
+  _refresh: function(x) {
+    this.refreshQueries(x);
+    console.log('refresh')
+  },
+
+  _logout: function() {
+    console.log('logout')
+    Parse.User.logOut();
+    this.setState({
+      current_user: Parse.User.current()
+    });
+  },
+
+  _setCurrentUser: function() {
+    this.setState({
+      current_user: Parse.User.current()
+    });
   },
 
   _handleToggleCollections: function() {
@@ -51,19 +78,9 @@ var DragApp = React.createClass({
     this._fetchImages(url);
   },
 
-  _fetchImages: function(url) {
-    $.ajax({
-      url:       url,
-      dataType:  'json',
-      data:      { format: 'json' },
-      success: function (result) {
-        this.setState({ images: result });
-        console.log('fetched')
-      }.bind(this),
-
-      error: function () {
-          alert('error getting posts. please try again later');
-      }
+  _fetchImages: function() {
+    this.setState({
+      images : this.data.images
     });
   },
 
@@ -116,7 +133,7 @@ var DragApp = React.createClass({
   },
 
   componentWillMount: function () {
-    this._fetchImages('/images');
+    this._fetchImages();
   },
 
   render: function () {
@@ -153,45 +170,67 @@ var DragApp = React.createClass({
         </div>;
     }
 
-    return <div className="DragApp" style={{backgroundColor: bgColor}}>
-      <Header
-        onToggleCollections={ this._handleToggleCollections }
-        onToggleTags={ this._handleToggleTags }
-        onToggleSettings={ this._toggleImageSettings }
-        user={this.props.current_user}
-        activeTag={this.state.active_tag}
-      />
+    var y = "";
+    if (this.state.current_user) {
+      y =
+        <div className="DragApp" style={{backgroundColor: bgColor}}>
+          <Header
+            onToggleCollections={ this._handleToggleCollections }
+            onToggleTags={ this._handleToggleTags }
+            onToggleSettings={ this._toggleImageSettings }
+            user='{this.props.current_user}'
+            activeTag={this.state.active_tag}
+            logout={this._logout}
+          />
 
-      <CollectionsBox
-        username={this.state.current_user.username}
-        collections={this.state.collections}
-        showCollections={this.state.showCollections}
-        filterCollections={this._setActiveCollection}
-        onToggleCollections={ this._handleToggleCollections }
-      />
+          <CollectionsBox
+            username=''
+            collections={this.state.collections}
+            showCollections={this.state.showCollections}
+            filterCollections={this._setActiveCollection}
+            onToggleCollections={ this._handleToggleCollections }
+          />
 
-      <TagsBox
-        tags={this.state.tags}
-        showTags={this.state.showTags}
-        filterTags={this._setActiveTag}
-        onToggleTags={ this._handleToggleTags }
-      />
+          <TagsBox
+            tags={this.state.tags}
+            showTags={this.state.showTags}
+            filterTags={this._setActiveTag}
+            onToggleTags={ this._handleToggleTags }
+          />
 
-      <DropzoneBox
-        uploadComplete={this._fetchImages}
-        currentUser={this.state.current_user}
-      />
-
-      <div id="images" style={{backgroundColor: bgColor}}>
-        {imageSettings}
-        <ImageBox
-          images={this.state.images}
-          image_size={this.state.image_size}
+          <div id="images" style={{backgroundColor: bgColor}}>
+            {imageSettings}
+            <ImageBox
+              images={this.data.images}
+              image_size={this.state.image_size}
+              currentUser={this.state.current_user}
+            />
+          </div>
+          <DropzoneBox
+            uploadComplete={this._refreshQueries}
+            currentUser={this.state.current_user}
+            refresh={this._refresh}
+          />
+        </div>
+    } else {
+      y =
+        <SignUp
+          setCurrentUser={this._setCurrentUser}
         />
+    }
+
+    return (
+      <div>
+        {y}
       </div>
-    </div>
+    )
   }
 });
+
+React.render(
+  <DragApp />,
+  document.getElementById('app')
+);
 
 module.exports = DragApp;
 

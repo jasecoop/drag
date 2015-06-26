@@ -35,11 +35,8 @@ var DropzoneBox = React.createClass({
     };
   },
 
-  renderNewImages: function() {
-    this.props.uploadComplete('/images');
-  },
-
   render: function () {
+    mixins: [ParseReact.Mixin]
 
     var componentConfig = {
       allowedFiletypes: ['.jpg', '.png', '.gif'],
@@ -59,16 +56,6 @@ var DropzoneBox = React.createClass({
         )
     };
 
-    /**
-     * If you want to attach multiple callbacks, simply
-     * create an array filled with all your callbacks.
-     * @type {Array}
-     */
-    var simpleCallBack = function () {
-        this.uploadComplete();
-    }.bind(this);
-
-
     var onDragEnter = function() {
       addDragFlash();
     };
@@ -86,31 +73,60 @@ var DropzoneBox = React.createClass({
 
     };
 
-    var addedFile = function(file) {
-      var Image   = Parse.Object.extend("Images");
-      var image   = new Image();
-      var f       = new Parse.File(file.name, file);
-      image.set("file", f);
-      image.set("title", file.name);
-      image.set("width", file.width);
-      image.set("height", file.height);
-      image.set("type", file.type);
-      image.set("user_id", this.state.currentUserId);
-      image.save(null, {
-        success: function(image) {
-          // Execute any logic that should take place after the object is saved.
-        },
-        error: function(image, error) {
+    observe = function() {
+      var currentUser = this.props.currentUser;
+      var query = new Parse.Query('Images');
+      return {
+        images: (query.equalTo("createdBy", currentUser).descending('createdAt'))
+      };
+    };
 
-        }
+    var createImage = function(file) {
+      var self = this;
+      var f       = new Parse.File(file.name, file);
+      f.save().then(function() {
+        ParseReact.Mutation.Create('Images', {
+          file      : f,
+          title     : file.name,
+          width     : file.width,
+          height    : file.height,
+          type      : file.type,
+          createdBy : Parse.User.current()
+        }).dispatch()
+        .then(function() {
+          self.props.refresh('images');
+        }.bind(this));
       });
 
-    }.bind(this);;
+      // self.props.refresh('images');
+    }.bind(this);
+
+    // var addedFile = function(file) {
+
+
+    //   var self    = this;
+    //   var Image   = Parse.Object.extend("Images");
+    //   var image   = new Image();
+    //   var f       = new Parse.File(file.name, file);
+    //   image.set("file", f);
+    //   image.set("title", file.name);
+    //   image.set("width", file.width);
+    //   image.set("height", file.height);
+    //   image.set("type", file.type);
+    //   image.set("createdBy", Parse.User.current());
+    //   image.save(null, {
+    //     success: function(image) {
+    //       // Execute any logic that should take place after the object is saved.
+    //       // self.props.uploadComplete()
+    //     },
+    //     error: function(image, error) {
+    //       alert(error.message)
+    //     }
+    //   });
+
+    // }.bind(this);;
 
     var onSuccess = function() {
-      // setTimeout(hideProgress(), 2000);
-      // setTimeout(this.renderNewImages, 2000);
-      this.renderNewImages()
       setTimeout(function() { hideProgress(); },2000);
     }.bind(this);
 
@@ -128,7 +144,7 @@ var DropzoneBox = React.createClass({
         dragover: null,
         dragleave: onDragLeave,
         // All of these receive the file as first parameter:
-        addedfile: addedFile,
+        addedfile: createImage,
         removedfile: null,
         thumbnail: null,
         error: null,

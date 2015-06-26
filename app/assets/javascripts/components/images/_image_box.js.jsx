@@ -1,5 +1,5 @@
 var ImageBox = React.createClass({
-  mixins: [ParseReact.Mixin]
+  mixins: [ParseReact.Mixin],
   getInitialState: function () {
     return {
       // collections: this.props.collections,
@@ -8,10 +8,10 @@ var ImageBox = React.createClass({
   },
 
   observe: function() {
-    // Subscribe to all Comment objects, ordered by creation date
-    // The results will be available at this.data.comments
+    var currentUser = this.props.currentUser;
+    var query = new Parse.Query('Images');
     return {
-      images: (new Parse.Query('Images')).ascending('createdAt')
+      images: (query.equalTo("createdBy", currentUser).descending('createdAt'))
     };
   },
 
@@ -19,13 +19,12 @@ var ImageBox = React.createClass({
 
     var imageList = "";
 
-    if( this.props.images.length > 0) {
-      console.log('roo')
+    if( this.data.images.length > 0) {
       imageList =
         <ul className={"image-list col-" + this.props.image_size} id="grid" data-columns="">
-          {this.props.images.map(function (image) {
+          {this.data.images.map(function (image) {
             return <div className="image-list__item">
-              <img src= { image.url } />
+              <img src= { image.file._url } />
             </div>
           })}
         </ul>;
@@ -38,8 +37,8 @@ var ImageBox = React.createClass({
         </div>;
     }
 
-    return(
-      <div className="image-box" id="grid">
+    return (
+       <div className="image-box" id="grid">
         {imageList}
       </div>
     )
