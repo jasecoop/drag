@@ -220,7 +220,7 @@ var DragApp = React.createClass({
     }
 
     return (
-      <div>
+      <div className="page registration">
         {y}
       </div>
     )

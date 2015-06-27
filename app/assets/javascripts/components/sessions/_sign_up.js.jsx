@@ -41,12 +41,22 @@ var SignUp = React.createClass({
 
   render: function () {
     return(
-      <form>
-        <input onChange= {this._handleInputChange} ref="signupUsername" type="text" placeholder="Username"></input>
-        <input onChange= {this._handleInputChange} ref="signupEmail" type="email" placeholder="Email address"></input>
-        <input onChange= {this._handleInputChange} ref="signupPassword" type="password"></input>
-        <button onClick={this._onSignUpClick}>Sign up</button>
-      </form>
+      <div className="page-container">
+        <form>
+          <div className="input input-line input-full">
+            <input onChange= {this._handleInputChange} ref="signupUsername" type="text" placeholder="Username"></input>
+          </div>
+          <div className="input input-line input-full">
+            <input onChange= {this._handleInputChange} ref="signupEmail" type="email" placeholder="Email address"></input>
+          </div>
+          <div className="input input-line input-full">
+            <input onChange= {this._handleInputChange} ref="signupPassword" type="password" placeholder="Password"></input>
+          </div>
+          <div className="input button-hench">
+            <button onClick={this._onSignUpClick}>Sign up</button>
+          </div>
+        </form>
+      </div>
     )
   }
 });
