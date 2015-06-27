@@ -214,13 +214,15 @@ var DragApp = React.createClass({
         </div>
     } else {
       y =
-        <SignUp
-          setCurrentUser={this._setCurrentUser}
-        />
+        <div className="page registration">
+          <SignUp
+            setCurrentUser={this._setCurrentUser}
+          />
+        </div>
     }
 
     return (
-      <div className="page registration">
+      <div>
         {y}
       </div>
     )
