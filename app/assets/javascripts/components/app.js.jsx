@@ -12,7 +12,9 @@ var DragApp = React.createClass({
       collections       : '',
       image_bg          : '',
       image_size        : '',
-      showImageSettings : false
+      showImageSettings : false,
+      active_images     : [],
+      showBatchEdit     : false
     };
   },
 
@@ -210,8 +212,14 @@ var DragApp = React.createClass({
               images={this.data.images}
               image_size={this.state.image_size}
               currentUser={this.state.current_user}
+              onImageClick={this._onImageClick}
+              toggleBatchEdit={this._toggleBatchEdit}
             />
           </div>
+          <BatchEditBox
+            showBatchEdit={this.state.showBatchEdit}
+            collections={this.data.collections}
+          />
           <DropzoneBox
             uploadComplete={this._refreshQueries}
             currentUser={this.state.current_user}

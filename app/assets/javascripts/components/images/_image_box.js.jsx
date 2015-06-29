@@ -5,18 +5,17 @@ var ImageBox = React.createClass({
   },
 
   render: function () {
-    var imageList = "";
+    var il = "";
+    var _this = this;
     if( this.props.images.length > 0) {
-      imageList =
-        <ul className={"image-list col-" + this.props.image_size} id="grid" data-columns="">
-          {this.props.images.map(function (image) {
-            return <div className="image-list__item">
-              <img src= { image.file._url } />
-            </div>
-          })}
-        </ul>;
+      il =
+        <ImageList
+          images = {this.props.images}
+          onImageClick = {this._imageClicked}
+          toggleBatchEdit = {_this.props.toggleBatchEdit}
+        />
     } else {
-      imageList =
+      il =
         <div className="image-box-empty">
 
           Drag images here to upload them
@@ -26,7 +25,7 @@ var ImageBox = React.createClass({
 
     return (
        <div className="image-box" id="grid">
-        {imageList}
+        {il}
       </div>
     )
   }

@@ -1,0 +1,22 @@
+.batchedit {
+  display: block;
+  width: 33.3%;
+  background: #021C31;
+  color: #fff;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding: 20px 2.5%;
+  z-index: 2;
+}
+
+.batchedit__close {
+  display: block;
+  float: right;
+  font-size: 2em;
+  color: rgba(225,225,225,.7);
+  cursor: pointer;
+  &:hover {
+    color: rgba(225,225,225,1);
+  }
+}
