@@ -23,7 +23,7 @@ Header = React.createClass({
 
       return <header>
         <div className="header-user">
-          <span>{this.props.user.username}</span>
+          <span>{Parse.User.current().getUsername()}</span>
           {activeTagSpan}
         </div>
         <div className="header-menu" id="header-menu">

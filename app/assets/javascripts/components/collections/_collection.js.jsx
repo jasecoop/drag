@@ -1,23 +1,41 @@
+classNames = require('classnames');
+
 var Collection = React.createClass({
-  getInitialState: function () {
-    return {
-      username: this.props.username
-    };
-  },
 
   handleClick: function() {
-    var collectionName  = this.props.collection.name;
-    this.props.onCollectionClick(collectionName);
+    this.props.collectionClick(this.props.collection);
   },
 
   render: function () {
-    var collection = this.props.collection;
+    var collection       = this.props.collection;
+    var active           = false;
+    var activeCollection = this.props.activeCollection;
+
+    if (!activeCollection) {
+      if (this.props.index == 0) {
+        active = true;
+      }
+    }
+
+    console.log(collection)
+    if (activeCollection && activeCollection.objectId == collection.objectId) {
+      active = true;
+      console.log("THIS IS TRUE");
+    }
+
+    var classes = classNames({
+      'collection' : true,
+      'collection-active' : active
+    })
+
     return (
-      <li className="collection">
+      <li className={classes}>
         <span className="collection__name" onClick={this.handleClick}>
-          {collection.name}
+          {this.props.collectionName}
         </span>
       </li>
     );
   }
 });
+
+module.exports = Collection;

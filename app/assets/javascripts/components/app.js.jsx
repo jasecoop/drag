@@ -5,32 +5,50 @@ var DragApp = React.createClass({
     return {
       showTags          : false,
       showCollections   : false,
+      activeCollection  : '',
       current_user      : Parse.User.current(),
       images            : '',
       tags              : '',
       collections       : '',
-      active_tag        : '',
       image_bg          : '',
       image_size        : '',
       showImageSettings : false
     };
   },
 
-  observe: function() {
-    var currentUser = this.state.current_user;
-    var query = new Parse.Query('Images');
-    return {
-      images: (query.equalTo("createdBy", currentUser).descending('createdAt'))
-    };
+  observe: function(props, state) {
+    var currentUser      = Parse.User.current();
+    var userId           = currentUser.id
+    var imagesQuery      = new Parse.Query('Images');
+    var collectionsQuery = new Parse.Query('Collection');
+    var activeCollection = new Parse.Object(state.activeCollection);
+
+    if (state.activeCollection) {
+
+      imagesQuery.include('user');
+      imagesQuery.equalTo("imageCollection", {
+        __type: "Pointer",
+        className: "Collection",
+        objectId: activeCollection.id
+      });
+
+      return {
+        images: imagesQuery.descending('createdAt'),
+        collections: (collectionsQuery.equalTo("createdBy", currentUser))
+      }
+    } else {
+      return {
+        images: (imagesQuery.equalTo("createdBy", currentUser).descending('createdAt')),
+        collections: (collectionsQuery.equalTo("createdBy", currentUser))
+      }
+    }
   },
 
   _refresh: function(x) {
     this.refreshQueries(x);
-    console.log('refresh')
   },
 
   _logout: function() {
-    console.log('logout')
     Parse.User.logOut();
     this.setState({
       current_user: Parse.User.current()
@@ -63,19 +81,10 @@ var DragApp = React.createClass({
 
   _setActiveCollection: function(collection) {
     this.setState({
-      active_tag : collection
+      activeCollection : collection
     });
-    var username = this.state.current_user.username
-    var url = username +'/'+collection
-    this._fetchImages(url);
-  },
-
-  _setActiveTag: function(tag) {
-    this.setState({
-      active_tag : tag,
-    });
-    var url = '/tags/'+ tag
-    this._fetchImages(url);
+    console.log(this.state.activeCollection);
+    // this.refreshQueries();
   },
 
   _fetchImages: function() {
@@ -148,27 +157,25 @@ var DragApp = React.createClass({
       var settingsBgColor = "#F1F1F1";
     }
 
-    var imageSettings = "";
+    // if(this.state.showImageSettings) {
+    //   imageSettings =
+    //     <div className="image-settings" style={{background: settingsBgColor}}>
+    //       <div className="image-settings__bg">
+    //         <span onClick={this._setBackground.bind(this, '#000000')} className="image-settings__b"></span>
+    //         <span onClick={this._setBackground.bind(this, '#ffffff')} dataColor={bgColor} className="image-settings__w"></span>
+    //         <span onClick={this._setBackground.bind(this, '#F1F1F1')} dataColor={bgColor} className="image-settings__g"></span>
 
-    if(this.state.showImageSettings) {
-      imageSettings =
-        <div className="image-settings" style={{background: settingsBgColor}}>
-          <div className="image-settings__bg">
-            <span onClick={this._setBackground.bind(this, '#000000')} className="image-settings__b"></span>
-            <span onClick={this._setBackground.bind(this, '#ffffff')} dataColor={bgColor} className="image-settings__w"></span>
-            <span onClick={this._setBackground.bind(this, '#F1F1F1')} dataColor={bgColor} className="image-settings__g"></span>
+    //       </div>
 
-          </div>
+    //       <div className="image-settings__size">
+    //         <input onChange={this._setSize} type="range" min="1" max="8" step="0.2" value={imageSize} />
+    //       </div>
 
-          <div className="image-settings__size">
-            <input onChange={this._setSize} type="range" min="1" max="8" step="0.2" value={imageSize} />
-          </div>
-
-          <div className="image-settings__close">
-            <span class="" onClick={this._toggleImageSettings}>✘</span>
-          </div>
-        </div>;
-    }
+    //       <div className="image-settings__close">
+    //         <span class="" onClick={this._toggleImageSettings}>✘</span>
+    //       </div>
+    //     </div>;
+    // }
 
     var y = "";
     if (this.state.current_user) {
@@ -178,16 +185,16 @@ var DragApp = React.createClass({
             onToggleCollections={ this._handleToggleCollections }
             onToggleTags={ this._handleToggleTags }
             onToggleSettings={ this._toggleImageSettings }
-            user='{this.props.current_user}'
+            user={this.props.current_user}
             activeTag={this.state.active_tag}
             logout={this._logout}
           />
 
           <CollectionsBox
-            username=''
-            collections={this.state.collections}
+            collections={this.data.collections}
+            activeCollection={this.state.activeCollection}
             showCollections={this.state.showCollections}
-            filterCollections={this._setActiveCollection}
+            setActiveCollection={this._setActiveCollection}
             onToggleCollections={ this._handleToggleCollections }
           />
 
@@ -199,7 +206,6 @@ var DragApp = React.createClass({
           />
 
           <div id="images" style={{backgroundColor: bgColor}}>
-            {imageSettings}
             <ImageBox
               images={this.data.images}
               image_size={this.state.image_size}
@@ -210,6 +216,7 @@ var DragApp = React.createClass({
             uploadComplete={this._refreshQueries}
             currentUser={this.state.current_user}
             refresh={this._refresh}
+            collections={this.data.collections}
           />
         </div>
     } else {

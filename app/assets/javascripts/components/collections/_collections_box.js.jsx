@@ -1,30 +1,34 @@
 var CollectionsBox = React.createClass({
+  // mixins: [ParseReact.Mixin],
+
   getInitialState: function () {
     return {
-      collections: this.props.collections,
-      username: this.props.username
+      showCollections : this.props.showCollections
     };
   },
 
-  collectionClicked: function(collection) {
-    this.props.filterCollections(collection);
+  collectionClick: function(collection) {
+    this.props.setActiveCollection(collection);
     this.props.onToggleCollections();
   },
 
   render: function () {
 
-    var collectionList;
+    var collectionList = "";
     var _this = this;
+
     if(this.props.showCollections) {
       collectionList =
         <div className="collection-list page-fade">
           <ul>
-            {this.state.collections.map(function (collection) {
+            {this.props.collections.map(function (collection, index) {
               return <Collection
                 collection={collection}
+                collectionName={collection.name}
                 key={collection.id}
-                onCollectionClick={ _this.collectionClicked }
-                username={_this.state.username}
+                collectionClick={ _this.collectionClick.bind(null, collection)}
+                activeCollection={_this.props.activeCollection}
+                index={index}
               />
             })}
           </ul>
