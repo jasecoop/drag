@@ -1,5 +1,19 @@
 Parse.Cloud.afterSave(Parse.User, function(request) {
   if(request.object.existed() == false) {
+
+    setCollection = function(collection) {
+      user.set("rootCollection", collection.id);
+      user.save(null, {
+        success: function(user) {
+        },
+        error: function(user, error) {
+          // Execute any logic that should take place if the save fails.
+          // error is a Parse.Error with an error code and message.
+          alert('Failed to create new object, with error code: ' + error.message);
+        }
+      });
+    };
+
     var Collection = Parse.Object.extend("Collection");
     var collection = new Collection();
 
@@ -12,6 +26,7 @@ Parse.Cloud.afterSave(Parse.User, function(request) {
 
     collection.save(null, {
       success: function(collection) {
+        setCollection(collection);
       },
       error: function(collection, error) {
         // Execute any logic that should take place if the save fails.
