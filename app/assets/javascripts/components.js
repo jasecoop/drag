@@ -12,4 +12,7 @@ window.DropzoneBox    = require('components/_dropzone_box');
 window.SignUp         = require('components/sessions/_sign_up');
 window.BatchEdit      = require('components/batchedit/_batch_edit');
 window.BatchEditBox   = require('components/batchedit/_batch_edit_box');
+
+window.SiteWrapper    = require('components/site_wrapper');
+window.AppWrapper     = require('components/app_wrapper');
 window.DragApp        = require('components/app');

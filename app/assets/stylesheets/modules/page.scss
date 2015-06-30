@@ -1,6 +1,8 @@
 html,
 body,
-#app {
+#app,
+#app > div,
+.dragapp-container {
   height: 100%;
 }
 
@@ -56,9 +58,10 @@ body,
 .session form,
 .registration form {
   position: absolute;
-  bottom: 20px;
   width: 50%;
-  margin-bottom: 0;
+  margin-left: -25%;
+  left: 50%;
+  top: 50%;
 }
 
 .session {
