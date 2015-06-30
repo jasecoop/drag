@@ -198,6 +198,7 @@ var AppWrapper = React.createClass({
           user={this.props.current_user}
           activeTag={this.state.active_tag}
           logout={this._logout}
+          activeCollection={this.state.activeCollection}
         />
 
         <CollectionsBox

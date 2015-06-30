@@ -28,7 +28,7 @@ var DragApp = React.createClass({
     }
 
     return (
-      <div class="dragapp">{content}</div>
+      <div className="dragapp">{content}</div>
     )
   }
 });

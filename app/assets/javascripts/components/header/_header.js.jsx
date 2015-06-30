@@ -13,18 +13,18 @@ Header = React.createClass({
     },
     render: function () {
 
-      var active_tag = this.props.activeTag
+      var activeCollection = this.props.activeCollection
 
-      var activeTagSpan = ""
-      if (active_tag) {
-        activeTagSpan =
-        <span className="header-user__tag">{active_tag}</span>
+      var activeCollectionSpan = ""
+      if (activeCollection) {
+        activeCollectionSpan =
+        <span className="header-user__tag">{activeCollection.name}</span>
       }
 
       return <header>
         <div className="header-user">
           <span>{Parse.User.current().getUsername()}</span>
-          {activeTagSpan}
+          {activeCollectionSpan}
         </div>
         <div className="header-menu" id="header-menu">
           <ul>
