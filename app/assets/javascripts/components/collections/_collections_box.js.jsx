@@ -1,9 +1,8 @@
 var CollectionsBox = React.createClass({
-  // mixins: [ParseReact.Mixin],
 
   getInitialState: function () {
     return {
-      showCollections : this.props.showCollections
+      showAddCollection : false
     };
   },
 
@@ -12,14 +11,41 @@ var CollectionsBox = React.createClass({
     this.props.onToggleCollections();
   },
 
+  _addCollectionClick:function() {
+    this.setState({
+      showAddCollection : !this.state.showAddCollection
+    });
+  },
+
+  _closeClick: function() {
+    this.props.onToggleCollections();
+  },
+
   render: function () {
 
     var collectionList = "";
     var _this = this;
 
+    var addCollection;
+    if(this.state.showAddCollection) {
+      addCollection =
+        <AddCollection
+          refresh={this.props.refresh}
+          createCollection={this.props.createCollection}
+          toggleAddCollection={this._addCollectionClick}
+        />
+    }
+
     if(this.props.showCollections) {
       collectionList =
         <div className="collection-list page-fade">
+          <div className="page-actions">
+            <div className="page-actions__close" onClick={_this._closeClick}>✘</div>
+            <div className="page-actions__add" onClick={_this._addCollectionClick}>Add Collection</div>
+          </div>
+
+          {addCollection}
+
           <ul>
             {this.props.collections.map(function (collection, index) {
               return <Collection

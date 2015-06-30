@@ -14,40 +14,49 @@ var DragApp = React.createClass({
       image_size        : '',
       showImageSettings : false,
       active_images     : [],
-      showBatchEdit     : false
+      showBatchEdit     : false,
+      rootCollection    : ''
     };
   },
 
   observe: function(props, state) {
-    var currentUser      = Parse.User.current();
-    var userId           = currentUser.id
-    var imagesQuery      = new Parse.Query('Images');
-    var collectionsQuery = new Parse.Query('Collection');
-    var activeCollection = new Parse.Object(state.activeCollection);
+    if (Parse.User.current()) {
+      var currentUser      = Parse.User.current();
+      var userId           = currentUser.id
+      var imagesQuery      = new Parse.Query('Images');
+      var collectionsQuery = new Parse.Query('Collection');
+      var activeCollection = new Parse.Object(state.activeCollection);
 
-    if (state.activeCollection) {
+      if (state.activeCollection) {
+        imagesQuery.equalTo("imageCollection", {
+          __type: "Pointer",
+          className: "Collection",
+          objectId: activeCollection.id
+        });
 
-      imagesQuery.include('user');
-      imagesQuery.equalTo("imageCollection", {
-        __type: "Pointer",
-        className: "Collection",
-        objectId: activeCollection.id
-      });
+        return {
+          images: imagesQuery.descending('createdAt'),
+          collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
+        }
+      } else {
 
-      return {
-        images: imagesQuery.descending('createdAt'),
-        collections: (collectionsQuery.equalTo("createdBy", currentUser))
-      }
-    } else {
-      return {
-        images: (imagesQuery.equalTo("createdBy", currentUser).descending('createdAt')),
-        collections: (collectionsQuery.equalTo("createdBy", currentUser))
+
+        imagesQuery.equalTo("imageCollection", {
+          __type: "Pointer",
+          className: "Collection",
+          objectId: state.rootCollection
+        });
+        return {
+          images: (imagesQuery.descending('createdAt')),
+          collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
+        }
       }
     }
   },
 
-  _refresh: function(x) {
-    this.refreshQueries(x);
+  _refresh: function() {
+    console.log('refresh')
+    this.refreshQueries();
   },
 
   _logout: function() {
@@ -85,8 +94,6 @@ var DragApp = React.createClass({
     this.setState({
       activeCollection : collection
     });
-    console.log(this.state.activeCollection);
-    // this.refreshQueries();
   },
 
   _fetchImages: function() {
@@ -143,41 +150,48 @@ var DragApp = React.createClass({
     });
   },
 
+  _toggleBatchEdit: function() {
+    this.setState({
+      showBatchEdit: !this.state.showBatchEdit
+    });
+  },
+
+  _createCollection: function(name) {
+    var Co   = Parse.Object.extend("Collection");
+    var co   = new Co();
+    var self = this;
+    co.save().then(function() {
+      ParseReact.Mutation.Create('Collection', {
+        name       : name,
+        setting_bg : '#ffffff',
+        setting_size : 3,
+        createdBy  : Parse.User.current(),
+        setting_public : true
+      }).dispatch()
+      .then(function(collection) {
+        self._setActiveCollection(collection);
+        self._handleToggleCollections();
+        self._refresh();
+      }.bind(this));
+    });
+  },
+
   componentWillMount: function () {
+    var _this = this;
+    this.state.current_user.fetch().then(function(fetchedUser){
+        var rc = fetchedUser.get('rootCollection');
+        _this.setState({
+          rootCollection: rc
+        });
+    }, function(error){
+        //Handle the error
+    });
     this._fetchImages();
   },
 
   render: function () {
 
-    var bgColor   = this.state.image_bg
-    var imageSize = this.state.image_size
-    var sizeClass = 'col-'+imageSize;
-
-    if (bgColor=="#F1F1F1"){
-      var settingsBgColor = "#fff";
-    } else {
-      var settingsBgColor = "#F1F1F1";
-    }
-
-    // if(this.state.showImageSettings) {
-    //   imageSettings =
-    //     <div className="image-settings" style={{background: settingsBgColor}}>
-    //       <div className="image-settings__bg">
-    //         <span onClick={this._setBackground.bind(this, '#000000')} className="image-settings__b"></span>
-    //         <span onClick={this._setBackground.bind(this, '#ffffff')} dataColor={bgColor} className="image-settings__w"></span>
-    //         <span onClick={this._setBackground.bind(this, '#F1F1F1')} dataColor={bgColor} className="image-settings__g"></span>
-
-    //       </div>
-
-    //       <div className="image-settings__size">
-    //         <input onChange={this._setSize} type="range" min="1" max="8" step="0.2" value={imageSize} />
-    //       </div>
-
-    //       <div className="image-settings__close">
-    //         <span class="" onClick={this._toggleImageSettings}>✘</span>
-    //       </div>
-    //     </div>;
-    // }
+    var pendingQueries = this.pendingQueries();
 
     var y = "";
     if (this.state.current_user) {
@@ -198,6 +212,8 @@ var DragApp = React.createClass({
             showCollections={this.state.showCollections}
             setActiveCollection={this._setActiveCollection}
             onToggleCollections={ this._handleToggleCollections }
+            refresh={this._refresh}
+            createCollection={this._createCollection}
           />
 
           <TagsBox
@@ -214,6 +230,7 @@ var DragApp = React.createClass({
               currentUser={this.state.current_user}
               onImageClick={this._onImageClick}
               toggleBatchEdit={this._toggleBatchEdit}
+              pendingQueries={pendingQueries}
             />
           </div>
           <BatchEditBox
@@ -225,6 +242,7 @@ var DragApp = React.createClass({
             currentUser={this.state.current_user}
             refresh={this._refresh}
             collections={this.data.collections}
+            activeCollection={this.state.activeCollection}
           />
         </div>
     } else {

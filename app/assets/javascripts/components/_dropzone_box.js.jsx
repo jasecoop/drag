@@ -74,6 +74,7 @@ var DropzoneBox = React.createClass({
     };
 
     var createImage = function(file) {
+      var user = Parse.User.current();
 
       if (this.props.activeCollection) {
         var collection = this.props.activeCollection;
@@ -81,8 +82,9 @@ var DropzoneBox = React.createClass({
         var collection = this.props.collections[0];
       }
 
-      var self = this;
+      var self    = this;
       var f       = new Parse.File(file.name, file);
+
       f.save().then(function() {
         ParseReact.Mutation.Create('Images', {
           file       : f,
@@ -90,11 +92,11 @@ var DropzoneBox = React.createClass({
           width      : file.width,
           height     : file.height,
           type       : file.type,
-          createdBy  : Parse.User.current(),
-          collection : collection
+          createdBy  : user,
+          imageCollection : collection
         }).dispatch()
         .then(function() {
-          self.props.refresh('images');
+          self.props.refresh();
         }.bind(this));
       });
 

@@ -17,10 +17,8 @@ var Collection = React.createClass({
       }
     }
 
-    console.log(collection)
     if (activeCollection && activeCollection.objectId == collection.objectId) {
       active = true;
-      console.log("THIS IS TRUE");
     }
 
     var classes = classNames({

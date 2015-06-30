@@ -5,18 +5,21 @@ var BatchEditBox = React.createClass({
   },
 
   render: function () {
-    var batchEdit;
+    var batchEditBox;
     var _this = this;
     if(this.props.showBatchEdit) {
-      batchEdit = <BatchEdit
-        collections={this.prop.collections}
-      />
+      batchEditBox =
+        <div className="batchedit-box">
+          <BatchEdit
+            collections={this.props.collections}
+          />
+        </div>;
     }
     return (
-      <div className="batchedit-box">
-        {batchEdit}
+      <div>
+        {batchEditBox}
       </div>
-    )
+    );
   }
 });
 

@@ -8,7 +8,7 @@ var Image = React.createClass({
     return(
       <span className={this.props.classNames} onClick={this._handleClick.bind(null, this.props.imageId)}>
         <div className={'image__container'}>
-          <img src={ this.props.image.url } />
+          <img src={ this.props.image.file._url } />
         </div>
       </span>
     )

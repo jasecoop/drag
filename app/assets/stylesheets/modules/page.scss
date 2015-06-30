@@ -15,6 +15,40 @@ body,
   // position: relative;
 }
 
+.page-actions__close {
+  display: block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  float: right;
+  font-size: .4em;
+  color: #fff;
+  background: rgba(00,00,00,.6);
+  text-align: center;
+  margin-left: 10px;
+  cursor: pointer;
+  &:hover {
+    background: #000;
+  }
+}
+
+.page-actions__add {
+  display: block;
+  width: auto;
+  padding: 0 20px;
+  height: 50px;
+  line-height: 50px;
+  float: right;
+  font-size: .4em;
+  color: rgba(00,00,00,.6);
+  background: #33F1FF;
+  cursor: pointer;
+  text-align: center;
+  &:hover {
+    background: darken(#33F1FF, 15);
+  }
+}
+
 .page__header {
   margin-bottom: 1em;
 }

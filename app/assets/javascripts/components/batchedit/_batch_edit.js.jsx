@@ -9,6 +9,7 @@ var BatchEdit = React.createClass({
   },
 
   render: function () {
+
     return (
       <div className="batchedit">
         <span>Edit these images</span>
