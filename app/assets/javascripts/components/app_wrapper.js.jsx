@@ -14,7 +14,9 @@ var AppWrapper = React.createClass({
       showImageSettings : false,
       active_images     : [],
       showBatchEdit     : false,
-      rootCollection    : ''
+      showSettings      : false,
+      rootCollection    : '',
+      appBg             : ''
     };
   },
 
@@ -38,8 +40,6 @@ var AppWrapper = React.createClass({
           collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
         }
       } else {
-
-
         imagesQuery.equalTo("imageCollection", {
           __type: "Pointer",
           className: "Collection",
@@ -73,6 +73,10 @@ var AppWrapper = React.createClass({
     this.setState({
       showCollections: !this.state.showCollections
     });
+
+    if (this.state.showSettings) {
+      this.toggleSettings();
+    }
   },
 
   _handleToggleTags: function() {
@@ -81,9 +85,9 @@ var AppWrapper = React.createClass({
     });
   },
 
-  _toggleImageSettings: function() {
+  _toggleSettings: function() {
     this.setState ({
-      showImageSettings: !this.state.showImageSettings
+      showSettings: !this.state.showSettings
     });
   },
 
@@ -91,6 +95,7 @@ var AppWrapper = React.createClass({
     this.setState({
       activeCollection : collection
     });
+    this._setBackground(collection.setting_bg)
   },
 
   _fetchImages: function() {
@@ -99,51 +104,9 @@ var AppWrapper = React.createClass({
     });
   },
 
-  _setBackground: function(colour, item) {
+  _setBackground: function(colour) {
     this.setState({
-      image_bg : colour
-    });
-    this._postSettings(colour)
-  },
-
-  _postSettings: function(colour) {
-    $.ajax({
-      type: "PUT",
-      url: 'update_user',
-      dataType:  'json',
-      data: {setting_bg : colour},
-      success: function (result) {
-        console.log('success')
-      }.bind(this),
-      error: function () {
-        console.log("error");
-      }
-    });
-  },
-
-  _setSize: function(e) {
-    var newSize = e.target.value;
-    newSize     = Math.round(newSize);
-    newSize     = parseInt(newSize);
-    var sizeClass = 'col-' + newSize;
-    this.setState({
-      image_size : newSize
-    });
-    this._postSize(newSize)
-  },
-
-  _postSize: function(size) {
-    $.ajax({
-      type: "PUT",
-      url: 'update_user_size',
-      dataType:  'json',
-      data: {setting_size : size},
-      success: function (result) {
-        console.log('success')
-      }.bind(this),
-      error: function () {
-        console.log("error");
-      }
+      appBg : colour
     });
   },
 
@@ -173,13 +136,44 @@ var AppWrapper = React.createClass({
     });
   },
 
+  fetchAndSetAppBg: function(coId) {
+    var _this = this;
+    var Collection = Parse.Object.extend("Collection");
+    var query = new Parse.Query(Collection);
+    query.get(coId, {
+      success: function(collection) {
+        var colour = collection.get("setting_bg");
+        _this.setState({
+          appBg: colour
+        });
+      },
+      error: function(object, error) {
+        console.log('Couldnt get rootCollectionObject:' + error.message)
+      }
+    });
+  },
+
+  _updateBgColour: function(colour) {
+    this.setState({
+      appBg: colour
+    });
+    console.log('updated colour')
+  },
+
   componentWillMount: function () {
     var _this = this;
+
+    //Set root collection
     this.state.current_user.fetch().then(function(fetchedUser){
         var rc = fetchedUser.get('rootCollection');
         _this.setState({
           rootCollection: rc
         });
+
+        // setAppBg if no active collection
+        if(!_this.state.activeCollection) {
+          _this.fetchAndSetAppBg(rc);
+        }
     }, function(error){
         //Handle the error
     });
@@ -189,12 +183,32 @@ var AppWrapper = React.createClass({
   render: function () {
 
     var pendingQueries = this.pendingQueries();
+    var activeCollection = this.state.activeCollection;
+    var appClasses;
+    var appBg = this.state.appBg;
+
+    if (pendingQueries.length == 0) {
+      appClasses = classNames({
+        'dragapp_app'       : true,
+        'dragapp-container' : true,
+        'dragapp-light'     : activeCollection.setting_bg=="#ffffff" || activeCollection.setting_bg=="#F1F1F1",
+        'dragapp-dark'      : activeCollection.setting_bg=="#000000"
+      });
+    } else {
+      appClasses = classNames({
+        'dragapp_app'       : true,
+        'dragapp-container' : true
+      })
+    }
+
+
+
     return (
-      <div className="dragapp__app dragapp-container">
+      <div className={appClasses} style={{background: appBg}}>
         <Header
           onToggleCollections={ this._handleToggleCollections }
           onToggleTags={ this._handleToggleTags }
-          onToggleSettings={ this._toggleImageSettings }
+          onToggleSettings={ this._toggleSettings }
           user={this.props.current_user}
           activeTag={this.state.active_tag}
           logout={this._logout}
@@ -218,6 +232,16 @@ var AppWrapper = React.createClass({
           onToggleTags={ this._handleToggleTags }
         />
 
+        <SettingsBox
+          activeCollection={activeCollection}
+          showSettings={this.state.showSettings}
+          collections={this.data.collections}
+          toggleSettings={this._toggleSettings}
+          refresh={this._refresh}
+          setActiveCollection={this._setActiveCollection}
+          updateBgColour={this._updateBgColour}
+        />
+
         <div id="images">
           <ImageBox
             images={this.data.images}
@@ -226,6 +250,7 @@ var AppWrapper = React.createClass({
             onImageClick={this._onImageClick}
             toggleBatchEdit={this._toggleBatchEdit}
             pendingQueries={pendingQueries}
+            activeCollection={activeCollection}
           />
         </div>
         <BatchEditBox

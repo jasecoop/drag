@@ -2,8 +2,10 @@
   display: block;
   width: 95%;
   overflow: hidden;
-  margin: 0 2.5% 20px 2.5%;
+  margin: 40px 2.5% 20px 2.5%;
   border-radius: 4px;
+  z-index: 2;
+  position: relative;
 }
 
 .image-settings-black {

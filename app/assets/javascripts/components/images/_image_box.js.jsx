@@ -7,10 +7,12 @@ var ImageBox = React.createClass({
   render: function () {
     var il = "";
     var _this = this;
+    var activeCollection     = '';
 
-    pendingQueries = this.props.pendingQueries
-    imagesPending  = (pendingQueries.indexOf("images") > -1);
-    console.log(pendingQueries)
+    pendingQueries       = this.props.pendingQueries;
+    imagesPending        = (pendingQueries.indexOf("images") > -1);
+    activeCollection     = this.props.activeCollection;
+    // console.log(activeCollection)
 
     if (!imagesPending) {
       if( this.props.images.length > 0) {
