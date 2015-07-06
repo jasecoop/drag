@@ -22,7 +22,6 @@ var AppWrapper = React.createClass({
   },
 
   observe: function(props, state) {
-    console.log('observe')
     if (Parse.User.current()) {
       var currentUser      = Parse.User.current();
       var userId           = currentUser.id
@@ -31,11 +30,12 @@ var AppWrapper = React.createClass({
       var activeCollection = new Parse.Object(state.activeCollection);
 
       if (state.activeCollection) {
-        console.log(this.state.activeCollection.id)
+        console.log('with state.ActiveCo')
+        console.log(state.activeCollection.id.objectId)
         imagesQuery.equalTo("imageCollection", {
           __type: "Pointer",
           className: "Collection",
-          objectId: this.state.activeCollection.id
+          objectId: state.activeCollection.id.objectId
         });
 
         return {
@@ -43,6 +43,7 @@ var AppWrapper = React.createClass({
           collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
         }
       } else {
+        console.log('without state.ActiveCo')
         imagesQuery.equalTo("imageCollection", {
           __type: "Pointer",
           className: "Collection",
@@ -57,7 +58,6 @@ var AppWrapper = React.createClass({
   },
 
   _refresh: function() {
-    console.log('refresh')
     this.refreshQueries();
   },
 
@@ -163,7 +163,6 @@ var AppWrapper = React.createClass({
     this.setState({
       appBg: colour
     });
-    console.log('updated colour')
   },
 
  _setBackground: function(colour) {
@@ -176,7 +175,6 @@ var AppWrapper = React.createClass({
   },
 
   _setSize: function(value) {
-    // console.log('setsize sizeval:' + size);
     this.setState({
       size: value
     })
@@ -185,11 +183,9 @@ var AppWrapper = React.createClass({
 
   _saveSize: function(value) {
     var collection = this._findCollection();
-    // console.log('sizeval:' + sizeVal);
     ParseReact.Mutation.Set(collection.id, {
       setting_size: value
     }).dispatch();
-    console.log('saved')
   },
 
   _findCollection: function() {
