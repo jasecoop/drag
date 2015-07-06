@@ -21,7 +21,11 @@ Header = React.createClass({
         <span className="header-user__tag">{activeCollection.name}</span>
       }
 
-      return <header>
+      var classes = classNames({
+        'collapsed' : this.props.showBatchEdit
+      });
+
+      return <header className={classes}>
         <div className="header-user">
           <span>{Parse.User.current().getUsername()}</span>
           {activeCollectionSpan}

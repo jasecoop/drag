@@ -282,12 +282,14 @@ var AppWrapper = React.createClass({
         'dragapp_app'       : true,
         'dragapp-container' : true,
         'dragapp-light'     : activeCollection.setting_bg=="#ffffff" || activeCollection.setting_bg=="#F1F1F1",
-        'dragapp-dark'      : activeCollection.setting_bg=="#000000"
+        'dragapp-dark'      : activeCollection.setting_bg=="#000000",
+        'collapsed'         : this.state.showBatchEdit
       });
     } else {
       appClasses = classNames({
         'dragapp_app'       : true,
-        'dragapp-container' : true
+        'dragapp-container' : true,
+        'collapsed'         : this.state.showBatchEdit
       })
     }
 
@@ -303,6 +305,7 @@ var AppWrapper = React.createClass({
           activeTag={this.state.active_tag}
           logout={this._logout}
           activeCollection={this.state.activeCollection}
+          showBatchEdit={this.state.showBatchEdit}
         />
 
         <CollectionsBox

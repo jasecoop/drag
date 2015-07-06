@@ -6,6 +6,14 @@ body,
   min-height: 100%;
 }
 
+.collapsed {
+  width: 70%;
+}
+
+header.collapsed {
+  width: 60%;
+}
+
 .dragapp-container {
   padding-top: 40px;
 }
