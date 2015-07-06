@@ -2,45 +2,28 @@ var ImageList = React.createClass({
 
   getInitialState: function () {
     return {
-      images        : this.props.images,
-      activeImages : []
+      images        : this.props.images
     };
   },
 
-  _imageIsActive: function(string) {
-    var arr = this.state.activeImages;
+  _imageIsSelected: function(string) {
+    var arr = this.props.selectedImages;
     return (arr.indexOf(string) > -1);
   },
 
-  _addActiveImage: function(imageId) {
-    var currentActiveImages = this.state.activeImages;
-    currentActiveImages.push(imageId)
-    this.setState({activeImages: currentActiveImages});
-
-    if(this.state.activeImages.length == 1) {
-      this.props.toggleBatchEdit();
-    }
+  _addSelectedImage: function(imageId) {
+    this.props.addSelectedImage(imageId);
   },
 
-  _removeActiveImage: function(imageId) {
-    var array = this.state.activeImages;
-    var index = array.indexOf(imageId);
-    array.splice(index, 1);
-    this.setState({activeImages: array});
-
-    if(this.state.activeImages.length == 0) {
-      this.props.toggleBatchEdit();
-    }
+  _removeSelectedImage: function(imageId) {
+    this.props.removeSelectedImage(imageId);
   },
 
   _setActiveImage: function(imageId) {
-
-    var arr = this.state.activeImages;
-
-    if(this._imageIsActive(imageId)) {
-      this._removeActiveImage(imageId);
+    if(this._imageIsSelected(imageId)) {
+      this._removeSelectedImage(imageId);
     } else {
-      this._addActiveImage(imageId);
+      this._addSelectedImage(imageId);
     }
   },
 
@@ -55,7 +38,7 @@ var ImageList = React.createClass({
 
           var cx = classNames({
             'image' : true,
-            'active': _this._imageIsActive('img-'+image.id)
+            'active': _this._imageIsSelected(image)
           })
 
           return <Image

@@ -12,7 +12,7 @@ var AppWrapper = React.createClass({
       image_bg          : '',
       image_size        : '',
       showImageSettings : false,
-      active_images     : [],
+      selectedImages    : [],
       showBatchEdit     : false,
       showSettings      : false,
       rootCollection    : '',
@@ -30,7 +30,6 @@ var AppWrapper = React.createClass({
       var activeCollection = new Parse.Object(state.activeCollection);
 
       if (state.activeCollection) {
-        console.log('with state.ActiveCo')
         console.log(state.activeCollection.id.objectId)
         imagesQuery.equalTo("imageCollection", {
           __type: "Pointer",
@@ -43,7 +42,6 @@ var AppWrapper = React.createClass({
           collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
         }
       } else {
-        console.log('without state.ActiveCo')
         imagesQuery.equalTo("imageCollection", {
           __type: "Pointer",
           className: "Collection",
@@ -72,6 +70,31 @@ var AppWrapper = React.createClass({
     });
   },
 
+  _addSelectedImage: function(imageId) {
+    var currentSelectedImages = this.state.selectedImages;
+    currentSelectedImages.push(imageId)
+    this.setState({selectedImages: currentSelectedImages});
+
+    if(this.state.selectedImages.length == 1) {
+      this._toggleBatchEdit();
+    }
+  },
+
+  _removeSelectedImage: function(imageId) {
+    var array = this.state.selectedImages;
+    var index = array.indexOf(imageId);
+    array.splice(index, 1);
+    this.setState({selectedImages: array});
+
+    if(this.state.selectedImages.length == 0) {
+      this._toggleBatchEdit();
+    }
+  },
+
+  _removeAllSelectedImages: function() {
+    this.setState({selectedImages: []});
+  },
+
   _handleToggleCollections: function() {
     this.setState({
       showCollections: !this.state.showCollections
@@ -79,6 +102,30 @@ var AppWrapper = React.createClass({
     if (this.state.showSettings) {
       this._toggleSettings();
     }
+    if (this.state.showBatchEdit) {
+      this._toggleBatchEdit();
+    }
+    this._removeAllSelectedImages();
+  },
+
+  _editImage: function(image, title, source, desc, collection) {
+    ParseReact.Mutation.Set(image.id, {
+      title           : title,
+      source          : source,
+      description     : desc,
+      imageCollection : collection
+    }).dispatch()
+    .then(function(collection) {
+      this._toggleBatchEdit();
+      this._removeAllSelectedImages();
+      this._refresh();
+    }.bind(this));
+  },
+
+  _imagesEdited: function() {
+    this._toggleBatchEdit();
+    this._removeAllSelectedImages();
+    this._refresh();
   },
 
   _handleToggleTags: function() {
@@ -94,7 +141,6 @@ var AppWrapper = React.createClass({
   },
 
   _setActiveCollection: function(collection) {
-    console.log(collection)
     this.setState({
       activeCollection : collection
     });
@@ -226,6 +272,7 @@ var AppWrapper = React.createClass({
     } else {
       activeCollection = this.data.collections[0];
     }
+    // console.log(activeCollection.setting_bg);
 
     var appClasses;
     var appBg = this.state.appBg;
@@ -298,11 +345,21 @@ var AppWrapper = React.createClass({
             pendingQueries={pendingQueries}
             activeCollection={activeCollection}
             size={this.state.size}
+            addSelectedImage={this._addSelectedImage}
+            removeSelectedImage={this._removeSelectedImage}
+            selectedImages={this.state.selectedImages}
           />
         </div>
         <BatchEditBox
           showBatchEdit={this.state.showBatchEdit}
           collections={this.data.collections}
+          activeCollection={activeCollection}
+          selectedImages={this.state.selectedImages}
+          toggleBatchEdit={this._toggleBatchEdit}
+          refresh={this._refresh}
+          removeAllSelectedImages={this._removeAllSelectedImages}
+          editImage={this._editImage}
+          imagesEdited={this._imagesEdited}
         />
         <DropzoneBox
           uploadComplete={this._refreshQueries}
