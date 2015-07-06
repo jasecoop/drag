@@ -10,28 +10,7 @@
       </div>
       <div class="uploadItem__content">
         <!-- <div class="dz-filename"><span data-dz-name></span></div> -->
-        <!-- <div class="dz-size" data-dz-size></div> -->
-        <div class="tag-field uploadItem-form">
-          <%= form_tag('/image/', remote: true, :class => "tag-field") do %>
-            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-            <div class="field uploadItem-form__name">
-              <div class="dz-filename"><span data-dz-name></span></div>
-              <input type="text" name="name" class="input-tags" placeholder="Name" />
-            </div>
-            <div class="field uploadItem-form__source">
-              <input type="text" name="source" class="input-tags" placeholder="Add source" />
-            </div>
-            <div class="field uploadItem-form__tags">
-              <input type="text" name="tag_list" class="input-tags" placeholder="Tags seperated by comma" />
-            </div>
-            <div class="field uploadItem-form__collection">
-              <%= select_tag "Collection", options_from_collection_for_select(@collections, 'id', 'name'), {:prompt => 'Add to Collection'} %>
-            </div>
-
-            <div class="field field-action">
-              <button class="tag-save-button" name="commit" />Save</button>
-            </div>
-          <% end %>
+        <!-- <div class="dz-size" data-dz-size></div> --> -->
         </div>
       </div>
     </div>

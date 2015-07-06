@@ -2,7 +2,7 @@
   display: block;
   width: 95%;
   overflow: hidden;
-  margin: 40px 2.5% 20px 2.5%;
+  margin: 0 2.5% 20px 2.5%;
   border-radius: 4px;
   z-index: 2;
   position: relative;
@@ -69,4 +69,49 @@
   }
 }
 
+        .slider {
+            width: 300px;
+            max-width: 500px;
+            height: 20px;
+            border: 1px solid grey;
+        }
+        .handle {
+            font-size: 0.9em;
+            text-align: center;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+        .handle.active {
+            background-color: grey;
+        }
+        .bar {
+            position: relative;
+            background: #ddd;
+        }
+        .bar.bar-1 {
+            background: #f00;
+        }
+        .bar.bar-2 {
+            background: #0f0;
+        }
+        .slider .bar {
+            top: 20px;
+            height: 10px;
+        }
+        .slider .handle {
+            top: 1px;
+            width: 28px;
+            height: 28px;
+            margin-top: -4px;
+            // line-height: 48px;
+        }
+        #horizontal-0,
+        #horizontal-1, #horizontal-2, #horizontal-3,
+        #vertical {
+            margin: 20px 10px;
+        }
+        #horizontal-2 .bar.bar-2 {
+            background: #ddd;
+        }
 

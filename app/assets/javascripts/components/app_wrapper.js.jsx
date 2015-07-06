@@ -16,11 +16,13 @@ var AppWrapper = React.createClass({
       showBatchEdit     : false,
       showSettings      : false,
       rootCollection    : '',
-      appBg             : ''
+      appBg             : '',
+      size              : ''
     };
   },
 
   observe: function(props, state) {
+    console.log('observe')
     if (Parse.User.current()) {
       var currentUser      = Parse.User.current();
       var userId           = currentUser.id
@@ -29,10 +31,11 @@ var AppWrapper = React.createClass({
       var activeCollection = new Parse.Object(state.activeCollection);
 
       if (state.activeCollection) {
+        console.log(this.state.activeCollection.id)
         imagesQuery.equalTo("imageCollection", {
           __type: "Pointer",
           className: "Collection",
-          objectId: activeCollection.id
+          objectId: this.state.activeCollection.id
         });
 
         return {
@@ -73,9 +76,8 @@ var AppWrapper = React.createClass({
     this.setState({
       showCollections: !this.state.showCollections
     });
-
     if (this.state.showSettings) {
-      this.toggleSettings();
+      this._toggleSettings();
     }
   },
 
@@ -92,6 +94,7 @@ var AppWrapper = React.createClass({
   },
 
   _setActiveCollection: function(collection) {
+    console.log(collection)
     this.setState({
       activeCollection : collection
     });
@@ -143,8 +146,11 @@ var AppWrapper = React.createClass({
     query.get(coId, {
       success: function(collection) {
         var colour = collection.get("setting_bg");
+        var size   = collection.get("setting_size");
+
         _this.setState({
-          appBg: colour
+          appBg: colour,
+          size: size
         });
       },
       error: function(object, error) {
@@ -160,14 +166,48 @@ var AppWrapper = React.createClass({
     console.log('updated colour')
   },
 
+ _setBackground: function(colour) {
+    var collection = this._findCollection();
+    ParseReact.Mutation.Set(collection.id, {
+      setting_bg: colour
+    }).dispatch();
+    this._updateBgColour(colour);
+    // this._refresh();
+  },
+
+  _setSize: function(value) {
+    // console.log('setsize sizeval:' + size);
+    this.setState({
+      size: value
+    })
+    // this._refresh();
+  },
+
+  _saveSize: function(value) {
+    var collection = this._findCollection();
+    // console.log('sizeval:' + sizeVal);
+    ParseReact.Mutation.Set(collection.id, {
+      setting_size: value
+    }).dispatch();
+    console.log('saved')
+  },
+
+  _findCollection: function() {
+    if(this.state.activeCollection) {
+      return this.state.activeCollection
+    } else {
+      return this.data.collections[0]
+    }
+  },
+
   componentWillMount: function () {
     var _this = this;
 
     //Set root collection
     this.state.current_user.fetch().then(function(fetchedUser){
-        var rc = fetchedUser.get('rootCollection');
+        var rc   = fetchedUser.get('rootCollection');
         _this.setState({
-          rootCollection: rc
+          rootCollection    : rc
         });
 
         // setAppBg if no active collection
@@ -183,7 +223,14 @@ var AppWrapper = React.createClass({
   render: function () {
 
     var pendingQueries = this.pendingQueries();
-    var activeCollection = this.state.activeCollection;
+
+    var activeCollection;
+    if(this.state.activeCollection) {
+      activeCollection = this.state.activeCollection;
+    } else {
+      activeCollection = this.data.collections[0];
+    }
+
     var appClasses;
     var appBg = this.state.appBg;
 
@@ -240,17 +287,21 @@ var AppWrapper = React.createClass({
           refresh={this._refresh}
           setActiveCollection={this._setActiveCollection}
           updateBgColour={this._updateBgColour}
+          size={this.state.size}
+          setSize={this._setSize}
+          saveSize={this._saveSize}
+          setBg={this._setBackground}
         />
 
         <div id="images">
           <ImageBox
             images={this.data.images}
-            image_size={this.state.image_size}
             currentUser={this.state.current_user}
             onImageClick={this._onImageClick}
             toggleBatchEdit={this._toggleBatchEdit}
             pendingQueries={pendingQueries}
             activeCollection={activeCollection}
+            size={this.state.size}
           />
         </div>
         <BatchEditBox

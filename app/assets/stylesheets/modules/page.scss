@@ -3,7 +3,11 @@ body,
 #app,
 #app > div,
 .dragapp-container {
-  height: 100%;
+  min-height: 100%;
+}
+
+.dragapp-container {
+  padding-top: 40px;
 }
 
 .dragapp-dark {

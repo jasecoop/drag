@@ -8,11 +8,11 @@ var ImageBox = React.createClass({
     var il = "";
     var _this = this;
     var activeCollection     = '';
+    var sizeVal = this.props.size;
 
     pendingQueries       = this.props.pendingQueries;
     imagesPending        = (pendingQueries.indexOf("images") > -1);
     activeCollection     = this.props.activeCollection;
-    // console.log(activeCollection)
 
     if (!imagesPending) {
       if( this.props.images.length > 0) {
@@ -21,6 +21,7 @@ var ImageBox = React.createClass({
             images = {this.props.images}
             onImageClick = {this._imageClicked}
             toggleBatchEdit = {_this.props.toggleBatchEdit}
+            image_size = {sizeVal}
           />
       } else {
         il =
