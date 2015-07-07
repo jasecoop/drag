@@ -75,15 +75,12 @@ var DropzoneBox = React.createClass({
 
     var createImage = function(file) {
       var user = Parse.User.current();
-
-      if (this.props.activeCollection) {
-        var collection = this.props.activeCollection;
-      } else {
-        var collection = this.props.collections[0];
-      }
-
       var self    = this;
       var f       = new Parse.File(file.name, file);
+
+      var Collection = Parse.Object.extend("Collection");
+      var collection = new Collection();
+      collection.id  = self.props.activeCollection;
 
       f.save().then(function() {
         ParseReact.Mutation.Create('Images', {

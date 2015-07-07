@@ -1,14 +1,12 @@
 var CollectionsBox = React.createClass({
-
   getInitialState: function () {
     return {
       showAddCollection : false
     };
   },
-
   collectionClick: function(collection) {
-    this.props.setActiveCollection(collection);
-    this.props.onToggleCollections();
+    this.props.setActiveCollection(collection.objectId);
+    this.props.toggleCollections();
   },
 
   _addCollectionClick:function() {
@@ -18,7 +16,31 @@ var CollectionsBox = React.createClass({
   },
 
   _closeClick: function() {
-    this.props.onToggleCollections();
+    this.props.toggleCollections();
+  },
+
+  _createCollection: function(name) {
+    var Co   = Parse.Object.extend("Collection");
+    var co   = new Co();
+    var self = this;
+    co.save().then(function() {
+      ParseReact.Mutation.Create('Collection', {
+        name       : name,
+        setting_bg : '#ffffff',
+        setting_size : 3,
+        setting_title: false,
+        setting_source : false,
+        setting_description: false,
+        createdBy  : Parse.User.current(),
+        setting_public : true
+      }).dispatch()
+      .then(function(collection) {
+        var coid = collection.objectId;
+        self.props.setActiveCollection(coid);
+        self.props.toggleCollections();
+        self.props.refresh();
+      }.bind(this));
+    });
   },
 
   render: function () {
@@ -31,7 +53,7 @@ var CollectionsBox = React.createClass({
       addCollection =
         <AddCollection
           refresh={this.props.refresh}
-          createCollection={this.props.createCollection}
+          createCollection={this._createCollection}
           toggleAddCollection={this._addCollectionClick}
         />
     }

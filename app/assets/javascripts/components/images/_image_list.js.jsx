@@ -32,7 +32,7 @@ var ImageList = React.createClass({
     var _this = this;
 
     return (
-      <ul className={"image-list col-" + this.props.image_size} id="grid" data-columns="">
+      <ul className={"image-list col-" + this.props.setting_size} id="grid" data-columns="">
 
         {this.state.images.map(function (image, i ) {
 

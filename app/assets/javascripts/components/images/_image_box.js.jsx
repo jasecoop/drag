@@ -18,13 +18,14 @@ var ImageBox = React.createClass({
       if( this.props.images.length > 0) {
         il =
           <ImageList
-            images = {this.props.images}
-            onImageClick = {this._imageClicked}
-            toggleBatchEdit = {_this.props.toggleBatchEdit}
-            image_size = {sizeVal}
-            addSelectedImage={this.props.addSelectedImage}
-            removeSelectedImage={this.props.removeSelectedImage}
-            selectedImages={this.props.selectedImages}
+            images              = {this.props.images}
+            onImageClick        = {this._imageClicked}
+            toggleBatchEdit     = {_this.props.toggleBatchEdit}
+            image_size          = {sizeVal}
+            addSelectedImage    ={this.props.addSelectedImage}
+            removeSelectedImage ={this.props.removeSelectedImage}
+            selectedImages      ={this.props.selectedImages}
+            setting_size        ={this.props.setting_size}
           />
       } else {
         il =

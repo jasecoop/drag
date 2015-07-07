@@ -3,7 +3,7 @@ Header = React.createClass({
       this.props.onToggleSettings();
     },
     handleCollectionsClick: function() {
-      this.props.onToggleCollections();
+      this.props.toggleCollections();
     },
     handleClick: function() {
       this.props.onToggleTags();
@@ -13,12 +13,25 @@ Header = React.createClass({
     },
     render: function () {
 
-      var activeCollection = this.props.activeCollection
+      var activeCollection = this.props.activeCollection;
+      var activeCollectionSpan;
 
-      var activeCollectionSpan = ""
-      if (activeCollection) {
-        activeCollectionSpan =
-        <span className="header-user__tag">{activeCollection.name}</span>
+      if(activeCollection) {
+
+        if (activeCollection == this.props.rootCollection) {
+          console.log('nope')
+          activeCollectionSpan =
+            <div className="header-user">
+              <span>{Parse.User.current().getUsername()}</span>
+            </div>
+        } else {
+          console.log('yep')
+          activeCollectionSpan =
+            <div className="header-user">
+              <span>{Parse.User.current().getUsername()}</span>
+              <span className="header-user__tag">{this.props.activeCollectionName}</span>
+            </div>
+        }
       }
 
       var classes = classNames({
@@ -26,10 +39,7 @@ Header = React.createClass({
       });
 
       return <header className={classes}>
-        <div className="header-user">
-          <span>{Parse.User.current().getUsername()}</span>
-          {activeCollectionSpan}
-        </div>
+        {activeCollectionSpan}
         <div className="header-menu" id="header-menu">
           <ul>
             <li><span onClick={this.handleSettingsClick}>Settings</span></li>

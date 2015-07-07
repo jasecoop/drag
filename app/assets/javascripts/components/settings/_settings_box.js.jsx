@@ -7,22 +7,34 @@ var SettingsBox = React.createClass({
     };
   },
 
+  _saveBackground: function(colour) {
+    var collectionId = this.props.activeCollection;
+    ParseReact.Mutation.Set({className: 'Collection', objectId: collectionId}, {
+      setting_bg: colour
+    }).dispatch();
+  },
+
+  _saveSize: function(value) {
+    var collectionId = this.props.activeCollection;
+    ParseReact.Mutation.Set({className: 'Collection', objectId: collectionId}, {
+      setting_size: value
+    }).dispatch();
+  },
+
   _onBgChange: function(colour) {
-    this.props.setBg(colour);
+    this.props.setBackground(colour);
+    this._saveBackground(colour);
   },
 
   _onSizeChange: function(value) {
     var roundedValue = Math.round(value);
-    this.setState({
-      sizeVal : roundedValue
-    })
-    // this.refs.size.getDOMNode().value
+    this._saveSize(roundedValue);
     this.props.setSize(roundedValue);
   },
 
   _onAfterChange: function(value) {
     var roundedValue = Math.round(value);
-    this.props.saveSize(roundedValue);
+    this._saveSize(roundedValue);
   },
 
   _toggleImageSettings: function() {
@@ -30,18 +42,16 @@ var SettingsBox = React.createClass({
   },
 
   render: function () {
-    var settingsBox = '';
-    var collection = this.props.activeCollection
+    var settingsBox  = '';
+    var collection   = this.props.activeCollection
+    var setting_size = this.props.size;
+    var setting_bg   = this.props.bg;
     var settingsBoxBg;
-    var size = this.props.size;
-    // var sizeVal    = this.props.activeCollection.setting_size
 
-    if(collection) {
-      if(collection.setting_bg=="#000000" || collection.setting_bg=="#F1F1F1") {
-        settingsBoxBg = "#ffffff"
-      } else if (collection.setting_bg=="#ffffff") {
-        settingsBoxBg = "#F1F1F1"
-      }
+    if(setting_bg=="#000000" || setting_bg=="#F1F1F1") {
+      settingsBoxBg = "#ffffff"
+    } else if (setting_bg=="#ffffff") {
+      settingsBoxBg = "#F1F1F1"
     }
 
     if (this.props.showSettings) {

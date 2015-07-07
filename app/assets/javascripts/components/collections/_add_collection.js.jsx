@@ -16,7 +16,7 @@ var AddCollection = React.createClass({
       <div className="collection-add">
         <form>
           <input ref="name" type="text" placeholder="Collection name" autofocus></input>
-          <input type="submit" onClick={this._onClick}>Add Collection</input>
+          <input type="submit" onClick={this._onClick}></input>
         </form>
       </div>
     );

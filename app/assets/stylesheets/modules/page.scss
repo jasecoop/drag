@@ -1,8 +1,16 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
 html,
 body,
 #app,
-#app > div,
-.dragapp-container {
+.dragapp,
+.dragapp-container,
+.app-content {
   min-height: 100%;
 }
 

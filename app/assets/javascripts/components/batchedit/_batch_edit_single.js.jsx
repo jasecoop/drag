@@ -11,6 +11,20 @@ var BatchEdit = React.createClass({
     };
   },
 
+  _editImage: function(image, title, source, desc, collection) {
+    ParseReact.Mutation.Set(image.id, {
+      title           : title,
+      source          : source,
+      description     : desc,
+      imageCollection : collection
+    }).dispatch()
+    .then(function(collection) {
+      this.props.toggleBatchEdit();
+      this.props.removeAllSelectedImages();
+      this.props.refresh();
+    }.bind(this));
+  },
+
   _handleTitleChange: function(e) {
     this.setState({title: event.target.value});
   },
@@ -34,7 +48,7 @@ var BatchEdit = React.createClass({
     var title      = this.state.title;
     var source     = this.state.source;
     var desc       = this.state.desc;
-    this.props.editImage(image, title, source, desc, collection);
+    this._editImage(image, title, source, desc, collection);
   },
 
   componentWillMount: function () {

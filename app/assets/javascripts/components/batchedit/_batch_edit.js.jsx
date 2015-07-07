@@ -11,7 +11,6 @@ var BatchEdit = React.createClass({
     };
   },
 
-
   _handleTitleChange: function(e) {
     self = this;
     this.setState({title: event.target.value});
