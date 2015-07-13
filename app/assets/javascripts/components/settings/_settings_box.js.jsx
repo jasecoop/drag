@@ -48,15 +48,15 @@ var SettingsBox = React.createClass({
     var setting_bg   = this.props.bg;
     var settingsBoxBg;
 
-    if(setting_bg=="#000000" || setting_bg=="#F1F1F1") {
-      settingsBoxBg = "#ffffff"
-    } else if (setting_bg=="#ffffff") {
-      settingsBoxBg = "#F1F1F1"
-    }
+    // if(setting_bg=="#000000" || setting_bg=="#F1F1F1") {
+    //   settingsBoxBg = "#ffffff"
+    // } else if (setting_bg=="#ffffff") {
+    //   settingsBoxBg = "#F1F1F1"
+    // }
 
     if (this.props.showSettings) {
       settingsBox =
-        <div className="image-settings" style={{background: settingsBoxBg}}>
+        <div className="image-settings">
           <div className="image-settings__bg">
             <span onClick={this._onBgChange.bind(this, '#000000')} className="image-settings__b"></span>
             <span onClick={this._onBgChange.bind(this, '#ffffff')} className="image-settings__w"></span>
