@@ -1,24 +1,25 @@
 classNames = require('classnames');
+var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 
 var Collection = React.createClass({
 
-  handleClick: function() {
-    this.props.collectionClick(this.props.collection);
+  _handleCollectionClick: function() {
+    this.props.collectionClick();
   },
 
   render: function () {
     var collection       = this.props.collection;
+    var collectionName   = collection.name;
+    var username         = Parse.User.current().getUsername();
+    var link             = '/' + username + '/' + collectionName
     var active           = false;
     var activeCollection = this.props.activeCollection;
 
-    if (!activeCollection) {
-      if (this.props.index == 0) {
-        active = true;
-      }
-    }
-
-    if (activeCollection && activeCollection.objectId == collection.objectId) {
+    if (this.props.index == 0) {
       active = true;
+      link   = '/' + username;
     }
 
     var classes = classNames({
@@ -28,9 +29,14 @@ var Collection = React.createClass({
 
     return (
       <li className={classes}>
-        <span className="collection__name" onClick={this.handleClick}>
+        <Link to={link} onClick={this._handleCollectionClick} className="collection__name">
           {this.props.collectionName}
-        </span>
+        </Link>
+        <div className="collection__info">
+          <div className="collection_privacy">
+            Public
+          </div>
+        </div>
       </li>
     );
   }

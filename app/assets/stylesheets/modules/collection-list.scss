@@ -1,13 +1,14 @@
 .collection-list {
-  font-size: 5em;
   display: inline-block;
   font-weight: bold;
   line-height: 1.2em;
-  background: image-url('bg_text_collections_grey.svg') rgba(255,255,255,.9);
+  height: 100%;
+  background: image-url('bg_text_collections.svg') rgba(255,255,255,.9);
   background-repeat: no-repeat;
-  background-position: top -15px center;
+  background-position: bottom 100px center;
   background-size: 105%;
-  padding-top: 2%;
+  padding-top: 10rem;
+  z-index: 2;
 }
 
 .collection-list ul {
@@ -15,8 +16,8 @@
 }
 
 .collection-active {
-  color: blue;
-  cusor: pointer;
+  // color: blue;
+  // cusor: pointer;
 }
 
 .collection-add {
@@ -54,4 +55,45 @@
   position: fixed;
   top: -5000px;
   left: -50000px;
+}
+
+.collection-list ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.collection {
+  @extend .mb2;
+}
+
+.collection a {
+  color: #4F5056;
+  &:hover {
+    color: #191A1C;
+  }
+}
+
+.collection__info {
+  @extend .small;
+}
+
+.collection__name {
+  font-size: 2rem;
+  line-height: 1.5em;
+  &:after {
+    content: "";
+    display: inline-block;
+    width: 39px;
+    height: 19px;
+    background: url('../assets/hand.svg');
+    background-repeat: no-repeat;
+    margin-left: .5rem;
+  }
+  &:hover {
+    text-decoration: none;
+    &:after {
+      background-position: -39px 0;
+    }
+  }
 }

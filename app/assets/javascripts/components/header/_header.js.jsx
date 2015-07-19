@@ -1,12 +1,10 @@
+var Router       = require('react-router');
+var Link         = Router.Link;
+
+
 Header = React.createClass({
-    handleSettingsClick: function() {
-      this.props.onToggleSettings();
-    },
-    handleCollectionsClick: function() {
-      this.props.toggleCollections();
-    },
-    handleClick: function() {
-      this.props.onToggleTags();
+    _handleSettingsClick: function() {
+      this.props.toggleSettings();
     },
     _logoutClick: function() {
       this.props.logout();
@@ -14,25 +12,27 @@ Header = React.createClass({
     render: function () {
 
       var activeCollection = this.props.activeCollection;
+      var username         = this.props.username;
       var activeCollectionSpan;
-
-      if(activeCollection) {
-
-        if (activeCollection == this.props.rootCollection) {
-          console.log('nope')
-          activeCollectionSpan =
-            <div className="header-user">
-              <span>{Parse.User.current().getUsername()}</span>
-            </div>
-        } else {
-          console.log('yep')
-          activeCollectionSpan =
-            <div className="header-user">
-              <span>{Parse.User.current().getUsername()}</span>
-              <span className="header-user__tag">{this.props.activeCollectionName}</span>
-            </div>
-        }
+      var collectionsURL   = '/sdflkfdslf/collections'
+      var currentPath      = this.props.currentPath;
+      var currentPage;
+      console.log('/' + username + '/collections');
+      if (currentPath == '/' + username + '/collections') {
+        console.log('Collections' + currentPath)
+        currentPage =
+          <span className="header-user__tag">Collections</span>;
+      } else if (this.props.params.hasOwnProperty('collectionName')) {
+        console.log('Collection' + currentPath)
+        currentPage =
+          <span className="header-user__tag">{this.props.params.collectionName}</span>
       }
+
+      activeCollectionSpan =
+        <div className="header-user">
+          <Link to={'/'}>{username}</Link>
+          {currentPage}
+        </div>
 
       var classes = classNames({
         'collapsed' : this.props.showBatchEdit
@@ -42,8 +42,8 @@ Header = React.createClass({
         {activeCollectionSpan}
         <div className="header-menu" id="header-menu">
           <ul>
-            <li><span onClick={this.handleSettingsClick}>Settings</span></li>
-            <li><span onClick={this.handleCollectionsClick} >Collections</span></li>
+            <li><span onClick={this._handleSettingsClick}>Settings</span></li>
+            <li><Link to={collectionsURL}>Collections</Link></li>
             <li><span onClick={this._logoutClick}>Logout</span></li>
           </ul>
         </div>

@@ -1,41 +1,42 @@
 Rails.application.routes.draw do
-  get 'collections/new'
+  # get 'collections/new'
 
-  get 'collections/create'
+  # get 'collections/create'
 
-  get 'collections/update'
+  # get 'collections/update'
 
-  get 'collections/edit'
+  # get 'collections/edit'
 
-  get 'collections/destroy'
+  # get 'collections/destroy'
 
-  get 'collections/show'
+  # get 'collections/show'
 
-  devise_for :users
-  get 'image/new'
+  # devise_for :users
+  # get 'image/new'
 
-  get 'image/create'
+  # get 'image/create'
 
-  get 'image/edit'
+  # get 'image/edit'
 
-  resources :images
+  # resources :images
 
-  get 'tags/:tag', to: 'images#index', as: :tag
+  # get 'tags/:tag', to: 'images#index', as: :tag
 
-  get ':username/:collection', to: 'images#collection_index'
+  # get ':username/:collection', to: 'images#collection_index'
 
-  post 'edit_upload/:id' => 'images#edit_upload'
+  # post 'edit_upload/:id' => 'images#edit_upload'
 
-  put 'update_user' => 'pages#update_user'
-  put 'update_user_size' => 'pages#update_user_size'
+  # put 'update_user' => 'pages#update_user'
+  # put 'update_user_size' => 'pages#update_user_size'
+  root 'pages#home'
+  get "*path" => 'pages#home'
 
-  resources :tags
+  # resources :tags
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'pages#home'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

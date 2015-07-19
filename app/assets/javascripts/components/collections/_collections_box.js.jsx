@@ -1,12 +1,30 @@
+var ReactRouter = require('react-router');
+var Router      = ReactRouter.Router;
+var Navigation  = require('react-router').Navigation;
+
+
 var CollectionsBox = React.createClass({
+  mixins: [ Navigation, ParseReact.Mixin],
   getInitialState: function () {
     return {
       showAddCollection : false
     };
   },
-  collectionClick: function(collection) {
+
+  observe: function(props, state) {
+    var currentUser      = Parse.User.current();
+    var userId           = currentUser.id
+    var collectionsQuery = new Parse.Query('Collection');
+    return {
+      collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
+    }
+  },
+
+  _collectionClick: function(collection) {
     this.props.setActiveCollection(collection.objectId);
     this.props.toggleCollections();
+    this.props.refresh();
+    this.props.setState();
   },
 
   _addCollectionClick:function() {
@@ -49,6 +67,7 @@ var CollectionsBox = React.createClass({
     var _this = this;
 
     var addCollection;
+
     if(this.state.showAddCollection) {
       addCollection =
         <AddCollection
@@ -58,30 +77,28 @@ var CollectionsBox = React.createClass({
         />
     }
 
-    if(this.props.showCollections) {
-      collectionList =
-        <div className="collection-list page-fade">
-          <div className="page-actions">
-            <div className="page-actions__close" onClick={_this._closeClick}>✘</div>
-            <div className="page-actions__add" onClick={_this._addCollectionClick}>Add Collection</div>
-          </div>
+    collectionList =
+      <div className="collection-list page-fade">
+        <div className="page-actions">
+          <div className="page-actions__close">✘</div>
+          <div className="page-actions__add" onClick={_this._addCollectionClick}>Add Collection</div>
+        </div>
 
-          {addCollection}
+        {addCollection}
 
-          <ul>
-            {this.props.collections.map(function (collection, index) {
-              return <Collection
-                collection={collection}
-                collectionName={collection.name}
-                key={collection.id}
-                collectionClick={ _this.collectionClick.bind(null, collection)}
-                activeCollection={_this.props.activeCollection}
-                index={index}
-              />
-            })}
-          </ul>
-        </div>;
-    }
+        <ul>
+          {this.data.collections.map(function (collection, index) {
+            return <Collection
+              collection={collection}
+              collectionName={collection.name}
+              key={collection.id}
+              collectionClick={ _this._collectionClick.bind(null, collection)}
+              activeCollection={_this.props.activeCollection}
+              index={index}
+            />
+          })}
+        </ul>
+      </div>;
 
     return (
       <div className="collections-box">

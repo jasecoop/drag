@@ -31,7 +31,7 @@ var DropzoneBox = React.createClass({
   getInitialState: function () {
     return {
       fileUploaded  : false,
-      currentUserId : this.props.currentUser.id
+      currentUser   : Parse.User.current()
     };
   },
 
@@ -74,7 +74,7 @@ var DropzoneBox = React.createClass({
     };
 
     var createImage = function(file) {
-      var user = Parse.User.current();
+      var user    = Parse.User.current();
       var self    = this;
       var f       = new Parse.File(file.name, file);
 

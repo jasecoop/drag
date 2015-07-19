@@ -1,42 +1,15 @@
-var DragApp = React.createClass({
+var React = require('react');
+var Router = require('react-router');
+var app_routes = require('config/app_routes');
+var site_routes = require('config/site_routes');
 
-  getInitialState: function () {
-    return {
-      currentUser : ''
-    }
-  },
-
-  _setCurrentUser: function() {
-    this.setState({
-      current_user: Parse.User.current()
-    });
-  },
-
-  render: function() {
-    var content = '';
-
-    if (Parse.User.current()) {
-      content =
-        <AppWrapper
-          setCurrentUser={this._setCurrentUser}
-        />
-    } else {
-      content =
-        <SiteWrapper
-          setCurrentUser={this._setCurrentUser}
-        />
-    }
-
-    return (
-      <div className="dragapp">{content}</div>
-    )
-  }
-});
-
-React.render(
-  <DragApp />,
-  document.getElementById('app')
-);
-
-module.exports = DragApp;
+if(Parse.User.current()) {
+  Router.run(app_routes, Router.HistoryLocation, function(Root){
+    React.render(<Root {...this.state} />, document.getElementById('app'));
+  });
+} else {
+  Router.run(site_routes, Router.HistoryLocation, function(Root){
+    React.render(<Root />, document.getElementById('app'));
+  });
+}
 
