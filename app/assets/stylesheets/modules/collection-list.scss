@@ -7,7 +7,7 @@
   background-repeat: no-repeat;
   background-position: bottom 100px center;
   background-size: 105%;
-  padding-top: 10rem;
+  padding-top: 4rem;
   z-index: 2;
 }
 
@@ -20,42 +20,6 @@
   // cusor: pointer;
 }
 
-.collection-add {
-  width: 95%;
-  height: 100%;
-  padding: 0 2.5%;
-  position: fixed;
-  display: block;
-  background: rgba(11,13,23,.93);
-  top: 0;
-  left: 0;
-  z-index: 3;
-}
-
-.collection-add input[type="text"] {
-  width: 100%;
-  font-size: 1em;
-  line-height: 1.5em;
-  background: none;
-  color: #fff;
-  border: none;
-  outline: none;
-  height: 1.5em;
-  top: 50%;
-  position: absolute;
-  margin-top: -.75em;
-  &:focus,
-  &:active {
-    outline: none;
-    border: none;
-  }
-}
-
-.collection-add input[type="submit"] {
-  position: fixed;
-  top: -5000px;
-  left: -50000px;
-}
 
 .collection-list ul {
   list-style-type: none;

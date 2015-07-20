@@ -13,13 +13,16 @@ var ImageBox = React.createClass({
       activeCollectionId: '',
       showSettings: false,
       showCollections : false,
-      username        : ''
+      showBatchEdit   : false,
+      username        : '',
+      setting_size    : '',
+      setting_bg      : ''
     };
   },
 
   contextTypes: {
       router: React.PropTypes.func
-    },
+  },
 
   observe: function(props, state) {
     var imagesQuery = new Parse.Query('Images');
@@ -63,6 +66,26 @@ var ImageBox = React.createClass({
     }
   },
 
+  _toggleBatchEdit: function() {
+    this.setState ({showBatchEdit: !this.state.showBatchEdit});
+  },
+
+  _removeAllSelectedImages: function() {
+    this.setState({selectedImages: []});
+  },
+
+  _setBackground: function(bg) {
+   this.setState({
+    image_bg: bg
+    })
+  },
+
+  _setSize: function(value) {
+    this.setState({
+      image_size: value
+    })
+  },
+
   _setStates: function() {
     var _this = this;
     var username      = Parse.User.current().getUsername();
@@ -98,6 +121,8 @@ var ImageBox = React.createClass({
     }).then(function(collection) {
       _this.setState({
         activeCollectionName : collection.get('name'),
+        setting_bg           : collection.get('setting_bg'),
+        setting_size         : collection.get('setting_size'),
         activeCollectionId   : collection.id
       })
     }, function(error) {
@@ -128,7 +153,14 @@ var ImageBox = React.createClass({
   _refresh: function() {
     this.refreshQueries();
   },
-
+  _resetRootView: function() {
+    this._removeAllSelectedImages();
+    this.setState ({
+      showBatchEdit: false,
+      showCollections: false,
+      showSettings: false
+    });
+  },
   render: function () {
 
     var il = "";
@@ -141,8 +173,9 @@ var ImageBox = React.createClass({
     var activeCollectionName = this.state.activeCollectionName;
 
     var imagelistCx = classNames({
-      'in-bg' : this.state.showCollections,
-      'image-box' : true
+      'image-box-fixed' : this.state.showCollections,
+      'image-box' : true,
+      'image-box-editing': this.state.showBatchEdit
     })
 
     var cb = "";
@@ -155,13 +188,13 @@ var ImageBox = React.createClass({
         il =
           <ImageList
             images              = {this.data.images}
-            onImageClick        = {this._imageClicked}
             toggleBatchEdit     = {this.toggleBatchEdit}
-            image_size          = {sizeVal}
-            addSelectedImage    ={this._addSelectedImage}
-            removeSelectedImage ={this._removeSelectedImage}
-            selectedImages      ={this.state.selectedImages}
-            setting_size        ={this.setting_size}
+            setting_size        = {this.state.setting_size}
+            addSelectedImage    = {this._addSelectedImage}
+            removeSelectedImage = {this._removeSelectedImage}
+            selectedImages      = {this.state.selectedImages}
+            setting_size        = {this.state.setting_size}
+            setting_bg          = {this.state.setting_bg}
           />
       } else {
         il =
@@ -187,6 +220,7 @@ var ImageBox = React.createClass({
           toggleSettings ={this._toggleSettings}
           currentPath    ={this.state.currentPath}
           username       ={this.state.username}
+          resetRootView  ={this._resetRootView}
         />
 
         <div>
@@ -194,19 +228,30 @@ var ImageBox = React.createClass({
         </div>
 
         <SettingsBox
-          params         ={this.props.params}
-          showSettings   ={this.state.showSettings}
-          toggleSettings ={this._toggleSettings}
+          params             ={this.props.params}
+          showSettings       ={this.state.showSettings}
+          toggleSettings     ={this._toggleSettings}
+          activeCollectionId ={this.state.activeCollectionId}
+          setSize            ={this._setSize}
+          setBackground      ={this._setBackground}
         />
+
         <BatchEditBox
-          params         ={this.props.params}
-          collections    ={this.data.collections}
-          refresh        ={this._refresh}
+          params                  ={this.props.params}
+          refresh                 ={this._refresh}
+          showBatchEdit           ={this.state.showBatchEdit}
+          toggleBatchEdit         ={this._toggleBatchEdit}
+          selectedImages          ={this.state.selectedImages}
+          removeSelectedImage     ={this._removeSelectedImage}
+          removeAllSelectedImages ={this._removeAllSelectedImages}
         />
 
-        <DropzoneBox />
+        <DropzoneBox
+          activeCollectionId = {this.state.activeCollectionId}
+          refresh            = {this._refresh}
+        />
 
-        <div className="imagelistCx" id="grid">
+        <div className={imagelistCx} id="grid">
           {il}
         </div>
       </div>

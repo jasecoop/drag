@@ -11,18 +11,13 @@ var AppWrapper = React.createClass({
       showCollections   : false,
       activeCollection  : '',
       current_user      : Parse.User.current(),
-      images            : '',
-      tags              : '',
-      collections       : '',
       image_bg          : '',
       image_size        : '',
       showImageSettings : false,
       selectedImages    : [],
       showBatchEdit     : false,
       showSettings      : false,
-      rootCollection    : '',
-      appBg             : '',
-      size              : ''
+      rootCollection    : ''
     };
   },
 
@@ -128,29 +123,6 @@ var AppWrapper = React.createClass({
     });
   },
 
- _setBackground: function(colour) {
-    var collection = this._findCollection();
-    ParseReact.Mutation.Set(collection.id, {
-      setting_bg: colour
-    }).dispatch();
-    this._updateBgColour(colour);
-    // this._refresh();
-  },
-
-  _setSize: function(value) {
-    this.setState({
-      size: value
-    })
-    // this._refresh();
-  },
-
-  _saveSize: function(value) {
-    var collection = this._findCollection();
-    ParseReact.Mutation.Set(collection.id, {
-      setting_size: value
-    }).dispatch();
-  },
-
   _findCollection: function() {
     if(this.state.activeCollection) {
       return this.state.activeCollection
@@ -182,7 +154,7 @@ var AppWrapper = React.createClass({
   render: function () {
 
     return (
-      <div>
+      <div className="app_wrapper">
         <RouteHandler {...this.state}/>
       </div>
     )

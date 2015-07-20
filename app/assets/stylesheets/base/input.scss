@@ -28,7 +28,8 @@ select {
 .input-full input[type="text"],
 .input-full input[type="tel"],
 .input-full input[type="url"],
-.input-full input[type="password"] {
+.input-full input[type="password"],
+.input-full textarea {
   width: 100% !important;
 }
 

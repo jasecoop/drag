@@ -80,7 +80,7 @@ var DropzoneBox = React.createClass({
 
       var Collection = Parse.Object.extend("Collection");
       var collection = new Collection();
-      collection.id  = self.props.activeCollection;
+      collection.id  = self.props.activeCollectionId;
 
       f.save().then(function() {
         ParseReact.Mutation.Create('Images', {
@@ -93,40 +93,13 @@ var DropzoneBox = React.createClass({
           imageCollection : collection
         }).dispatch()
         .then(function() {
+          hideProgress();
           self.props.refresh();
         }.bind(this));
       });
-
-      // self.props.refresh('images');
     }.bind(this);
 
-    // var addedFile = function(file) {
-
-
-    //   var self    = this;
-    //   var Image   = Parse.Object.extend("Images");
-    //   var image   = new Image();
-    //   var f       = new Parse.File(file.name, file);
-    //   image.set("file", f);
-    //   image.set("title", file.name);
-    //   image.set("width", file.width);
-    //   image.set("height", file.height);
-    //   image.set("type", file.type);
-    //   image.set("createdBy", Parse.User.current());
-    //   image.save(null, {
-    //     success: function(image) {
-    //       // Execute any logic that should take place after the object is saved.
-    //       // self.props.uploadComplete()
-    //     },
-    //     error: function(image, error) {
-    //       alert(error.message)
-    //     }
-    //   });
-
-    // }.bind(this);;
-
     var onSuccess = function() {
-      setTimeout(function() { hideProgress(); },2000);
     }.bind(this);
 
     /**

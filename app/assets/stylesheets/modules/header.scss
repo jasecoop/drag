@@ -1,11 +1,13 @@
 header {
   display: block;
-  width: 95%;
+  width: 100%;
   position: fixed;
   z-index: 3;
   @extend .small;
   top: 0;
-  padding: 10px 2.5% 10px 2.5%;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 0;
   background: rgba(00,00,00,.03);
   color: rgba(00,00,00,.3);
   font-family: 'GTCinetype-Mono';
@@ -18,6 +20,10 @@ header {
     background: rgba(00,00,00,.07);
     color: rgba(00,00,00,.8);
   }
+}
+
+.header__container {
+  padding: 0 $page-x;
 }
 
 header a {

@@ -19,7 +19,7 @@ var BatchEdit = React.createClass({
       imageCollection : collection
     }).dispatch()
     .then(function(collection) {
-      this.props.toggleBatchEdit();
+      this.props.toggleform-fix();
       this.props.removeAllSelectedImages();
       this.props.refresh();
     }.bind(this));
@@ -51,6 +51,10 @@ var BatchEdit = React.createClass({
     this._editImage(image, title, source, desc, collection);
   },
 
+  _closeClick: function() {
+    this.props.closeClick()
+  },
+
   componentWillMount: function () {
     var options = [];
     this.props.collections.map(function(collection){
@@ -69,36 +73,45 @@ var BatchEdit = React.createClass({
     var _this = this;
 
     return (
-      <div className="batchedit batchedit-single">
-        <h3>Edit this image</h3>
+      <div className="form-fix form-fix-single">
+
+        <div className="form-fix__header clearfix">
+          <h3 className="form-fix__title col-left">Edit this image</h3>
+          <div className="form-fix__close col-right" onClick={this._closeClick}>✘</div>
+        </div>
 
         <form>
-          <div className="field input-full">
-            <label>Title</label>
-            <input ref="title" placeholder="source" type="text" value={this.state.title} onChange={this._handleTitleChange} name="source" placeholder="img.png"/>
+
+          <div className="form-fix__body">
+            <div className="field input-full mb1 clearfix">
+              <label>Title</label>
+              <input ref="title" placeholder="source" type="text" value={this.state.title} onChange={this._handleTitleChange} name="source" placeholder="img.png"/>
+            </div>
+            <div className="field input-full mb1 clearfix">
+              <label>Source</label>
+              <input ref="source" placeholder="source" type="text" value={this.state.source} onChange={this._handleSourceChange} name="source" placeholder="e.g. http://somedanktumblr.tumblr.com"/>
+            </div>
+            <div className="field input-full mb1 clearfix">
+              <label>Description</label>
+              <textarea ref="desc" placeholder="source" type="text" value={this.state.desc} onChange={this._handleDescChange} name="source" placeholder="This image changes everything"></textarea>
+            </div>
+            <div className="field input-full mb2 clearfix">
+              <label>Collection</label>
+              <Select
+                name="collection"
+                value='Select'
+                options={this.state.options}
+                onChange={this._handleCollectionChange}
+              />
+            </div>
           </div>
-          <div className="field input-full">
-            <label>Source</label>
-            <input ref="source" placeholder="source" type="text" value={this.state.source} onChange={this._handleSourceChange} name="source" placeholder="e.g. http://somedanktumblr.tumblr.com"/>
-          </div>
-          <div className="field input-full">
-            <label>Description</label>
-            <textarea ref="desc" placeholder="source" type="text" value={this.state.desc} onChange={this._handleDescChange} name="source" placeholder="This image changes everything"></textarea>
-          </div>
-          <div className="field input-full">
-            <label>Collection</label>
-            <Select
-              name="collection"
-              value='Select'
-              options={this.state.options}
-              onChange={this._handleCollectionChange}
-            />
-          </div>
-          <div className="field">
-            <input type="submit" onClick={this._onFormSubmit} value="Save"></input>
+
+          <div className="form-fix__footer">
+            <div className="field">
+              <input type="submit" className="btn btn-black" onClick={this._onFormSubmit} value="Save"></input>
+            </div>
           </div>
         </form>
-        <div className="batchedit__close" onClick={this._closeClick}>✘</div>
       </div>
     )
   }

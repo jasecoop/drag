@@ -1,16 +1,16 @@
 .image-settings {
   display: block;
-  width: 95%;
+  width: 100%;
   overflow: hidden;
-  margin: 36px 0 20px 0;
-  padding: 1rem 2.5% 1.5rem 2.5%;
+  margin-top: 2rem;
   z-index: 2;
-  position: relative;
-  border: solid 1px rgba(00,00,00,.1);
-  border-left: none;
-  border-right: none;
-  background: #000;
-  color: #fff;
+  position: fixed;
+}
+
+.image-settings__container {
+  padding: .5rem $page-x;
+  background: rgba(255,255,255,.96);
+  overflow: hidden;
 }
 
 .image-settings__item {
@@ -18,7 +18,7 @@
 }
 
 .image-settings__label {
-  color: rgba(225,225,225,.5);
+  color: $label-text;
   @extend .small;
   margin-bottom: .5rem;
 }
@@ -58,8 +58,8 @@
 }
 
 .image-settings__b {
-  // background: #000;
-  background: rgba(225,225,225,.1);
+  background: #000;
+  // background: rgba(225,225,225,.1);
 }
 
 .image-settings__w {
@@ -106,13 +106,13 @@
     width: 300px;
     max-width: 500px;
     height: 0px;
-    border-bottom: 1px solid grey;
-    margin-top: 1.5rem;
+    border-bottom: 1px solid $label-text;
+    margin-top: 18px;
 }
 .handle {
     font-size: 0.9em;
     text-align: center;
-    background-color: #fff;
+    background-color: #000;
     color: white;
     cursor: pointer;
 }

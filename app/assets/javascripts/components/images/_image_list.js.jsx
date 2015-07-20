@@ -32,26 +32,29 @@ var ImageList = React.createClass({
     var _this = this;
 
     return (
-      <ul className={"image-list col-" + this.props.setting_size} id="grid" data-columns="">
+      <div className="image-list" style={{background: this.props.setting_bg}}>
 
-        {this.state.images.map(function (image, i ) {
+        <div className={"image-list__container col-" + this.props.setting_size} id="grid" data-columns="">
 
-          var cx = classNames({
-            'image' : true,
-            'active': _this._imageIsSelected(image)
-          })
+          {this.state.images.map(function (image, i ) {
 
-          return <Image
-            image={image}
-            key={image.id}
-            imageId={'img-'+image.id}
-            classNames={cx}
-            setActiveImage={_this._setActiveImage}
-          />
+            var cx = classNames({
+              'image' : true,
+              'active': _this._imageIsSelected(image)
+            })
 
-        })}
+            return <Image
+              image={image}
+              key={image.id}
+              imageId={'img-'+image.id}
+              classNames={cx}
+              setActiveImage={_this._setActiveImage}
+            />
 
-      </ul>
+          })}
+
+        </div>
+      </div>
     )
   }
 });

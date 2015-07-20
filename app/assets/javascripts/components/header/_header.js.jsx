@@ -9,6 +9,9 @@ Header = React.createClass({
     _logoutClick: function() {
       this.props.logout();
     },
+    _handleRootClick: function() {
+      this.props.resetRootView();
+    },
     render: function () {
 
       var activeCollection = this.props.activeCollection;
@@ -17,20 +20,17 @@ Header = React.createClass({
       var collectionsURL   = '/sdflkfdslf/collections'
       var currentPath      = this.props.currentPath;
       var currentPage;
-      console.log('/' + username + '/collections');
       if (currentPath == '/' + username + '/collections') {
-        console.log('Collections' + currentPath)
         currentPage =
           <span className="header-user__tag">Collections</span>;
       } else if (this.props.params.hasOwnProperty('collectionName')) {
-        console.log('Collection' + currentPath)
         currentPage =
           <span className="header-user__tag">{this.props.params.collectionName}</span>
       }
 
       activeCollectionSpan =
         <div className="header-user">
-          <Link to={'/'}>{username}</Link>
+          <Link to={'/'} onClick={this._handleRootClick}>{username}</Link>
           {currentPage}
         </div>
 
@@ -39,13 +39,15 @@ Header = React.createClass({
       });
 
       return <header className={classes}>
-        {activeCollectionSpan}
-        <div className="header-menu" id="header-menu">
-          <ul>
-            <li><span onClick={this._handleSettingsClick}>Settings</span></li>
-            <li><Link to={collectionsURL}>Collections</Link></li>
-            <li><span onClick={this._logoutClick}>Logout</span></li>
-          </ul>
+        <div className="header__container">
+          {activeCollectionSpan}
+          <span className="header__settings" onClick={this._handleSettingsClick}>Settings</span>
+          <div className="header-menu" id="header-menu">
+            <ul>
+              <li><Link to={collectionsURL}>Collections</Link></li>
+              <li><span onClick={this._logoutClick}>Logout</span></li>
+            </ul>
+          </div>
         </div>
       </header>
     }

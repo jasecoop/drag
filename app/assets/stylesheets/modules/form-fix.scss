@@ -1,0 +1,49 @@
+.form-fix {
+  display: block;
+  width: 30%;
+  position: fixed;
+  top: 60px;
+  right: 2rem;
+  height: auto;
+  z-index: 2;
+}
+
+.form-fix__header,
+.form-fix__body,
+.form-fix__footer {
+  padding: 1rem;
+  @extend .clearfix;
+  background: #fff;
+  margin-bottom: 1px;
+}
+
+.form-fix__header {
+
+}
+.form-fix__body {
+
+}
+.form-fix__footer {
+
+}
+
+
+.form-fix__close {
+  display: block;
+  float: right;
+  font-size: 2em;
+  color: rgba(225,225,225,.7);
+  cursor: pointer;
+  &:hover {
+    color: rgba(225,225,225,1);
+  }
+}
+
+.form-fix__title {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 2.25em;
+  font-weight: bold;
+  float: left;
+}
+

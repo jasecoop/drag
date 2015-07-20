@@ -2,21 +2,26 @@ window.BatchEdit       = require('components/batchedit/_batch_edit');
 window.BatchEditSingle = require('components/batchedit/_batch_edit_single');
 
 var BatchEditBox = React.createClass({
+  mixins: [ParseReact.Mixin],
   getInitialState: function () {
     return {
-      selectedImages : [],
-      showBatchEdit  : false
     };
   },
 
+  observe: function(props, state) {
+    var currentUser = Parse.User.current();
+    var collectionsQuery = new Parse.Query('Collection');
+    return {
+      collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
+    }
+  },
+
   _toggleBatchEdit: function() {
-    this.setState({
-      showBatchEdit: !this.state.showBatchEdit
-    });
+    this.props.toggleBatchEdit();
   },
 
   _removeAllSelectedImages: function() {
-    this.setState({selectedImages: []});
+    this.props.removeAllSelectedImages();
   },
 
   _editImage: function(image, title, source, desc, collection) {
@@ -33,33 +38,40 @@ var BatchEditBox = React.createClass({
     }.bind(this));
   },
 
+  _closeClick: function() {
+    this.props.toggleBatchEdit();
+    this.props.removeAllSelectedImages();
+  },
+
   render: function () {
     var batchEditBox;
     var batchEdit;
     var _this = this;
 
-    if (this.state.selectedImages.length > 1) {
+    if (this.props.selectedImages.length > 1) {
       batchEdit =
         <BatchEdit
-          collections    ={this.props.collections}
-          selectedImages ={this.state.selectedImages}
+          collections    ={this.data.collections}
+          selectedImages ={this.props.selectedImages}
           imagesEdited   ={this.props.imagesEdited}
+          closeClick     ={this._closeClick}
         />;
 
     } else {
       batchEdit =
         <BatchEditSingle
-          collections     ={this.props.collections}
-          selectedImages  ={this.state.selectedImages}
-          image           ={this.state.selectedImages[0]}
+          collections     ={this.data.collections}
+          selectedImages  ={this.props.selectedImages}
+          image           ={this.props.selectedImages[0]}
           toggleBatchEdit ={this._toggleBatchEdit}
           refresh         ={this.props.refresh}
           removeAllSelectedImages ={this._removeAllSelectedImages}
           editImage       ={this._editImage}
+          closeClick      ={this._closeClick}
         />
     }
 
-    if(this.state.showBatchEdit) {
+    if(this.props.showBatchEdit) {
       batchEditBox =
         <div className="batchedit-box">
           {batchEdit}
