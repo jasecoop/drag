@@ -57,13 +57,6 @@ var AppWrapper = React.createClass({
 
   _logout: function() {
     Parse.User.logOut();
-    this.props.setCurrentUser();
-  },
-
-  _setCurrentUser: function() {
-    this.setState({
-      current_user: Parse.User.current()
-    });
   },
 
   _imagesEdited: function() {
@@ -131,28 +124,7 @@ var AppWrapper = React.createClass({
     }
   },
 
-  componentWillMount: function () {
-    var _this = this;
-
-    //Set root collection
-    this.state.current_user.fetch().then(function(fetchedUser){
-        var rc   = fetchedUser.get('rootCollection');
-        _this.setState({
-          rootCollection    : rc
-        });
-
-        // setAppBg if no active collection
-        if(!_this.state.activeCollection) {
-          _this.fetchAndSetAppBg(rc);
-        }
-    }, function(error){
-        //Handle the error
-    });
-    this._fetchImages();
-  },
-
   render: function () {
-
     return (
       <div className="app_wrapper">
         <RouteHandler {...this.state}/>

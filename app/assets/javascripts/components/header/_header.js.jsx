@@ -7,7 +7,7 @@ Header = React.createClass({
       this.props.toggleSettings();
     },
     _logoutClick: function() {
-      this.props.logout();
+      Parse.User.logOut();
     },
     _handleRootClick: function() {
       this.props.resetRootView();
@@ -48,7 +48,7 @@ Header = React.createClass({
           <div className="header-menu" id="header-menu">
             <ul>
               <li><Link to={collectionsURL}>Collections</Link></li>
-              <li><span onClick={this._logoutClick}>Logout</span></li>
+              <li><Link to={'/'} onClick={this._logoutClick}>Logout</Link></li>
             </ul>
           </div>
         </div>
