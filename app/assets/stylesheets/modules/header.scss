@@ -8,7 +8,7 @@ header {
   height: 2rem;
   line-height: 2rem;
   padding: 0;
-  background: rgba(00,00,00,.03);
+  // background: rgba(00,00,00,.03);
   color: rgba(00,00,00,.3);
   font-family: 'GTCinetype-Mono';
   -webkit-transition: all 200ms ease-in-out;
@@ -17,7 +17,7 @@ header {
   -o-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
   &:hover {
-    background: rgba(00,00,00,.07);
+    // background: rgba(00,00,00,.07);
     color: rgba(00,00,00,.8);
   }
 }
@@ -34,6 +34,35 @@ header a {
     border-color: rgba(00,00,00,.9);
   }
 }
+
+.header__settings {
+  cursor: pointer;
+}
+
+.header__settings .icon {
+  display: inline-block;
+  width: 15px;
+  height: 31px;
+  float: left;
+  background-size: 100%;
+  background-position: left center;
+  background: url('icon_settings2.svg');
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.header__settings:hover .icon {
+  background-position: -15px 0;
+}
+.header__settings .text {
+  opacity: 0;
+  margin-left: .25rem;
+}
+
+.header__settings:hover .text {
+  opacity: 1;
+}
+
 
 .header-user__tag{
   color: rgba(00,00,00,.9);

@@ -41,7 +41,10 @@ Header = React.createClass({
       return <header className={classes}>
         <div className="header__container">
           {activeCollectionSpan}
-          <span className="header__settings" onClick={this._handleSettingsClick}>Settings</span>
+          <span className="header__settings" onClick={this._handleSettingsClick}>
+            <span className="icon"></span>
+            <span className="text">Settings</span>
+          </span>
           <div className="header-menu" id="header-menu">
             <ul>
               <li><Link to={collectionsURL}>Collections</Link></li>
