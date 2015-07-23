@@ -14,7 +14,8 @@
 }
 
 .image-settings__item {
-  margin-right: 1rem;
+  margin-right: 2rem;
+  float: left;
 }
 
 .image-settings__label {
@@ -75,8 +76,37 @@
   padding: 0;
 }
 
+.image-settings__size span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: .5rem;
+  cursor: pointer;
+  position: relative;
+  border: solid 1px rgba(00,00,00,.5);
+  line-height: 20px;
+  text-align: center;
+  ::selection { background: transparent; }
+  ::-moz-selection { background: transparent; }
+}
+
+.image-settings__size span.disabled {
+  cursor: default;
+  color: rgba(00,00,00,.2);
+  border: solid 1px rgba(00,00,00,.2);
+}
+
+.image-settings__save,
+.image-settings__close {
+  float: right;
+}
+
+.image-settings__save {
+  margin: 10px 1rem 0 0;
+}
+
 .image-settings__size input {
-  width: 300px;
+  width: 150px;
 }
 
 .image-settings__close {
@@ -84,10 +114,9 @@
   float: right;
   font-size: 40px;
   line-height: 3.3rem;
-  margin: 4px 17px 0 0;
   cursor: pointer;
   &:hover {
-    color: #fff;
+    color: rgba(00,00,00,.9);
   }
 }
 

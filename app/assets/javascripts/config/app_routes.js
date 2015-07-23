@@ -1,5 +1,6 @@
 var React        = require('react');
 var AppWrapper   = require('../components/app/app_wrapper');
+var AppInit      = require('../components/app/app_init');
 var Images       = require('../components/images/_image_box');
 var Collection   = require('../components/collections/_collections_box');
 var Router       = require('react-router');
@@ -10,7 +11,6 @@ var BrowserHistory = Router.BrowserHistory;
 
 
 var rd;
-
 var appRoutes  = '';
 
 if (Parse.User.current()) {
@@ -20,10 +20,10 @@ if (Parse.User.current()) {
 
 module.exports = (
   <Route name="app" path="/" handler={AppWrapper} history={BrowserHistory}>
-    <Route name="username" path=":username" handler={Images} />
+    <Route name="username" path=":username" handler={AppInit} />
     <Route name="collections" path=":username/collections" handler={Images} />
     <Route name="collection" path=":username/:collectionName" handler={Images} />
-    <DefaultRoute handler={Images} />
+    <DefaultRoute handler={AppInit} />
     {rd}
   </Route>
 );

@@ -3,75 +3,91 @@ var SettingsBox = React.createClass({
 
   getInitialState: function () {
     return {
-      sizeVal : this.props.size
     };
   },
 
-  _saveBackground: function(colour) {
-    var collectionId = this.props.activeCollectionId
-    ParseReact.Mutation.Set({className: 'Collection', objectId: collectionId}, {
-      setting_bg: colour
-    }).dispatch();
-  },
+  _onSaveClick: function() {
+    var collectionId = this.props.collection.objectId;
 
-  _saveSize: function(value) {
-    collectionId = this.props.activeCollectionId
-    ParseReact.Mutation.Set({className: 'Collection', objectId: collectionId}, {
-      setting_size: value
-    }).dispatch();
+    ParseReact.Mutation.Set(this.props.collection.id, {
+      setting_bg  : this.props.setting_bg,
+      setting_size: this.props.setting_size
+    }).dispatch()
+    .then(function() {
+      console.log('saveees')
+    }.bind(this));
+
   },
 
   _onBgChange: function(colour) {
-    this.props.setBackground(colour);
-    // this._saveBackground(colour);
+    this.props.setBg(colour);
   },
 
   _onSizeChange: function(value) {
-    var roundedValue = Math.round(value);
-    // this._saveSize(roundedValue);
-    this.props.setSize(roundedValue);
-  },
+    var currentSize = this.props.setting_size;
+    var newSize;
 
-  _onAfterChange: function(value) {
-    var roundedValue = Math.round(value);
-    this._saveSize(roundedValue);
+    if (value == '+' && currentSize == 7) {return false}
+    if (value == '-' && currentSize == 1) {return false}
+
+    if(value == '+') {
+      newSize = parseInt(currentSize) + 1;
+
+    } else {
+
+      newSize = parseInt(currentSize) - 1;
+
+    }
+    this.props.setSize(newSize);
   },
 
   _toggleImageSettings: function() {
     this.props.toggleSettings();
   },
 
+
   render: function () {
     var settingsBox  = '';
-    var collection   = this.props.activeCollection
-    var setting_size = this.props.size;
-    var setting_bg   = this.props.bg;
+    var collection   = this.props.collection;
     var settingsBoxBg;
 
-    if (this.props.showSettings) {
-      settingsBox =
-        <div className="image-settings">
-          <div className="image-settings__container">
-            <div className="image-settings__item image-settings__bg">
-              <div className="image-settings__label">Background</div>
-              <span onClick={this._onBgChange.bind(this, '#000000')} className="image-settings__b"><span></span></span>
-              <span onClick={this._onBgChange.bind(this, '#ffffff')} className="image-settings__w"><span></span></span>
-              <span onClick={this._onBgChange.bind(this, '#F1F1F1')} className="image-settings__g"><span></span></span>
-            </div>
+    var plusSizeClass = classNames({
+      'disabled ' : this.props.setting_size == 7
+    })
 
-            <div className="image-settings__size">
-              <div className="image-settings__label">Image size</div>
-              <ReactSlider ref="size" className="slider" defaultValue={this.props.size} min={1} max={4} step={1} onChange={this._onSizeChange} onAfterChange={this._onAfterChange}/>
-            </div>
+    var minusSizeClass = classNames({
+      'disabled ' : this.props.setting_size == 1
+    })
 
-            <div className="image-settings__close">
-              <span onClick={this._toggleImageSettings}>✘</span>
-            </div>
-          </div>
-        </div>;
-    }
     return(
-      <div>{settingsBox}</div>
+      <div className="image-settings">
+        <div className="image-settings__container">
+          <div className="image-settings__item image-settings__bg">
+            <div className="image-settings__label">Background</div>
+            <span onClick={this._onBgChange.bind(this, '#000000')} className="image-settings__b"><span></span></span>
+            <span onClick={this._onBgChange.bind(this, '#ffffff')} className="image-settings__w"><span></span></span>
+            <span onClick={this._onBgChange.bind(this, '#F1F1F1')} className="image-settings__g"><span></span></span>
+          </div>
+
+          <div className="image-settings__item image-settings__size">
+            <div className="image-settings__label">Image size</div>
+            <span className={minusSizeClass} onClick={this._onSizeChange.bind(this, '-')} >-</span>
+            <span className={plusSizeClass} onClick={this._onSizeChange.bind(this, '+')} >+</span>
+          </div>
+
+          <div className="image-settings__item image-settings__privacy">
+            <div className="image-settings__label">Privacy</div>
+            <span>Coming soon</span>
+          </div>
+
+          <div className="image-settings__close">
+            <span onClick={this._toggleImageSettings}>✘</span>
+          </div>
+          <div className="image-settings__save">
+            <span className="btn btn-black" onClick={this._onSaveClick.bind(this, '')}>Save</span>
+          </div>
+        </div>
+      </div>
     )
   }
 });

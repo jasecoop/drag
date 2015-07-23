@@ -2,13 +2,18 @@ var ImageList = React.createClass({
 
   getInitialState: function () {
     return {
-      images        : this.props.images
+      images        : this.props.images,
+      isImageSelected : false
     };
   },
 
   _imageIsSelected: function(string) {
     var arr = this.props.selectedImages;
-    return (arr.indexOf(string) > -1);
+    if(arr.indexOf(string) > -1) {
+      this.setState({
+        isImageSelected : true
+      });
+    }
   },
 
   _addSelectedImage: function(imageId) {
@@ -27,28 +32,23 @@ var ImageList = React.createClass({
     }
   },
 
+
   render: function () {
 
     var _this = this;
-
     return (
       <div className="image-list" style={{background: this.props.setting_bg}}>
 
-        <div className={"image-list__container col-" + this.props.setting_size} id="grid" data-columns="">
+        <div className={"image-list__container col" + this.props.setting_size} id="grid" data-columns="">
 
           {this.state.images.map(function (image, i ) {
-
-            var cx = classNames({
-              'image' : true,
-              'active': _this._imageIsSelected(image)
-            })
 
             return <Image
               image={image}
               key={image.id}
               imageId={'img-'+image.id}
-              classNames={cx}
               setActiveImage={_this._setActiveImage}
+              isImageSelected={_this.state.isImageSelected}
             />
 
           })}

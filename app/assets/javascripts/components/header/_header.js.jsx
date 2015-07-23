@@ -17,7 +17,7 @@ Header = React.createClass({
       var activeCollection = this.props.activeCollection;
       var username         = this.props.username;
       var activeCollectionSpan;
-      var collectionsURL   = '/sdflkfdslf/collections'
+      var collectionsURL   = '/'+ username +'/collections'
       var currentPath      = this.props.currentPath;
       var currentPage;
       if (currentPath == '/' + username + '/collections') {

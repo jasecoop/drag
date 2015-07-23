@@ -4,20 +4,11 @@ var Navigation  = require('react-router').Navigation;
 
 
 var CollectionsBox = React.createClass({
-  mixins: [ Navigation, ParseReact.Mixin],
+  mixins: [ Navigation],
   getInitialState: function () {
     return {
       showAddCollection : false
     };
-  },
-
-  observe: function(props, state) {
-    var currentUser      = Parse.User.current();
-    var userId           = currentUser.id
-    var collectionsQuery = new Parse.Query('Collection');
-    return {
-      collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
-    }
   },
 
   _collectionClick: function(collection) {
@@ -87,7 +78,7 @@ var CollectionsBox = React.createClass({
         {addCollection}
 
         <ul>
-          {this.data.collections.map(function (collection, index) {
+          {this.props.collections.map(function (collection, index) {
             return <Collection
               collection={collection}
               collectionName={collection.name}
