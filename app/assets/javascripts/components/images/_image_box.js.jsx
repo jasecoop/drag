@@ -68,14 +68,12 @@ var ImageBox = React.createClass({
   },
 
   _setSize: function(size) {
-    console.log('setsize')
     this.setState ({
       setting_size : size
     })
   },
 
   _setBg: function(bg) {
-    console.log('setbg')
     this.setState ({
       setting_bg : bg
     })
@@ -96,6 +94,8 @@ var ImageBox = React.createClass({
 
     var cb;
     var settingsBox;
+
+    console.log(this.state.selectedImages)
 
     var collectionName, setting_size, setting_bg;
 

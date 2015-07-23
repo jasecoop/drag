@@ -128,14 +128,6 @@ var AppInit = React.createClass({
 
   componentWillMount: function () {
     this._init();
-    // console.log(this.pendingQueries())
-    // if (this.pendingQueries() == 0) {
-    //   this.setState({
-    //     setting_bg : this.data.collection[0].setting_bg,
-    //     setting_bg : this.data.collection[0].setting_size,
-    //     collection_name : this.data.collection[0].name
-    //   })
-    // }
   },
 
   render: function () {
