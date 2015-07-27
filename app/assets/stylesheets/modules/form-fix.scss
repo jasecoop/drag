@@ -6,6 +6,7 @@
   right: 2rem;
   height: auto;
   z-index: 2;
+  border: solid 1px rgba(00,00,00,.8);
 }
 
 .form-fix__header,
@@ -14,17 +15,16 @@
   padding: 1rem;
   @extend .clearfix;
   background: #fff;
-  margin-bottom: 1px;
 }
 
 .form-fix__header {
-
+  border-bottom: solid 1px rgba(00,00,00,.2);
 }
 .form-fix__body {
 
 }
 .form-fix__footer {
-
+  border-top: solid 1px rgba(00,00,00,.2);
 }
 
 
@@ -34,16 +34,24 @@
   font-size: 2em;
   color: rgba(225,225,225,.7);
   cursor: pointer;
+  @extend .col-right;
+  line-height: 2.9rem;
   &:hover {
     color: rgba(225,225,225,1);
   }
 }
 
 .form-fix__title {
+  @extend .h3;
   margin-top: 0;
   margin-bottom: 0;
   line-height: 2.25em;
   font-weight: bold;
+  float: left;
+}
+
+.form-fix__field-half {
+  width: 50%;
   float: left;
 }
 

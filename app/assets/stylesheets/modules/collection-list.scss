@@ -15,14 +15,10 @@
   margin-top: 100px;
 }
 
-.collection-active {
-  // color: blue;
-  // cusor: pointer;
-}
-
-
 .collection-list ul {
   list-style-type: none;
+  float: left;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -43,7 +39,8 @@
 }
 
 .collection__name {
-  font-size: 2rem;
+  @extend .h2;
+  font-weight: normal;
   line-height: 1.5em;
   &:after {
     content: "";
@@ -59,5 +56,31 @@
     &:after {
       background-position: -39px 0;
     }
+  }
+}
+
+.collections-yours,
+.collections-theirs {
+  width: 50%;
+  float: left;
+}
+
+.collections-yours h1,
+.collections-theirs h1,
+.collections-theirs p {
+  float: left;
+  margin-top: 0;
+}
+
+.collections-add {
+  background: #33F1FF;
+  padding: .3rem .5rem;
+  margin-left: 1rem;
+  margin-top: 9px;
+  display: block;
+  float: left;
+  cursor: pointer;
+  &:hover {
+    background: darken(#33F1FF, 15);
   }
 }

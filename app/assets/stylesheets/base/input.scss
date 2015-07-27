@@ -9,6 +9,10 @@ textarea,
 select {
   border-radius: 1px !important;
   border: solid 1px #50505D !important;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 

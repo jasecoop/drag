@@ -3,16 +3,7 @@ class PagesController < ActionController::Base
   layout 'application'
 
   def home
-    if current_user
-      @tags = current_user.owned_tags
-      @collections = current_user.collections
 
-      if params[:tag]
-        @images = current_user.images.tagged_with(params[:tag])
-      else
-        @images = current_user.images
-      end
-    end
   end
 
   def update_user

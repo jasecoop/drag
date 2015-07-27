@@ -21,8 +21,8 @@ var AddCollection = React.createClass({
         <div className="form-fix">
           <form>
             <div className="form-fix__header">
-              <h3 className="form-fix__title">Add collection</h3>
-              <div className="batchedit__close col-right" onClick={this._closeClick}>✘</div>
+              <div className="form-fix__title">Add collection</div>
+              <div className="form-fix__close" onClick={this._closeClick}>✘</div>
             </div>
             <div className="form-fix__body">
               <div className="field input-full">

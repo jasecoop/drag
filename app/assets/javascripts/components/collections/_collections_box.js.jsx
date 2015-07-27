@@ -70,25 +70,30 @@ var CollectionsBox = React.createClass({
 
     collectionList =
       <div className="collection-list page-fade">
-        <div className="page-actions">
-          <div className="page-actions__close">✘</div>
-          <div className="page-actions__add" onClick={_this._addCollectionClick}>Add Collection</div>
-        </div>
 
         {addCollection}
 
-        <ul>
-          {this.props.collections.map(function (collection, index) {
-            return <Collection
-              collection={collection}
-              collectionName={collection.name}
-              key={collection.id}
-              collectionClick={ _this._collectionClick.bind(null, collection)}
-              activeCollection={_this.props.activeCollection}
-              index={index}
-            />
-          })}
-        </ul>
+        <div className="collections-yours">
+          <h1>Yours</h1>
+          <span className="collections-add" onClick={_this._addCollectionClick}>Add Collection</span>
+          <ul>
+            {this.props.collections.map(function (collection, index) {
+              return <Collection
+                collection={collection}
+                collectionName={collection.name}
+                key={collection.id}
+                collectionClick={ _this._collectionClick.bind(null, collection)}
+                activeCollection={_this.props.activeCollection}
+                index={index}
+              />
+            })}
+          </ul>
+        </div>
+
+        <div className="collections-theirs">
+          <h1>Theirs</h1>
+          <p>Coming soon — you'll be able to watch other peoples public collections, they'll be available to view in a feed aswell as listed here for reference.</p>
+        </div>
       </div>;
 
     return (

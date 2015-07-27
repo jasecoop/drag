@@ -53,13 +53,20 @@ var AppInit = React.createClass({
   },
 
   _setPage: function (username) {
-    if(this.state.currentPath == "/" + this.state.username +"/collections") {
+    var currentPath = this.context.router.getCurrentPath();
+    var username    = this.props.params.username;
+    var params      = this.props.params;
+
+    console.log('setpage');
+    console.log(currentPath);
+
+    if(currentPath == "/" + username + "/collections") {
       this.setState({
         page            : 'collections',
         paramCollection : username
       });
 
-    } else if(this.state.params.hasOwnProperty('collectionName')) {
+    } else if(params.hasOwnProperty('collectionName')) {
       this.setState({
         page : 'collection',
         paramCollection : this.props.params.collectionName
@@ -84,7 +91,13 @@ var AppInit = React.createClass({
       // Get users collection
       var collectionQuery = new Parse.Query("Collection");
       collectionQuery.equalTo("createdBy", user);
-      collectionQuery.equalTo("name", _this.state.paramCollection);
+
+      if(_this.state.page == 'collections') {
+        console.log(_this.state.page);
+        collectionQuery.equalTo("name", _this.state.paramUsername);
+      } else {
+        collectionQuery.equalTo("name", _this.state.paramCollection);
+      }
       return collectionQuery.first();
     }).then(function(collection) {
       _this.setState({
@@ -108,12 +121,19 @@ var AppInit = React.createClass({
     }).dispatch();
   },
 
+  _setCollectionPath: function() {
+    var paramUsername   = this.props.params.username;
+    this.setState ({
+      currentPath : '/'+paramUsername+'/collections'
+    })
+  },
+
   _init: function () {
     var _this = this;
     var usernameCurrent = Parse.User.current().getUsername();
     var paramUsername   = this.props.params.username;
     var params          = this.props.params;
-    var currentPath     = '/newname';
+    var currentPath     = this.context.router.getCurrentPath();
 
     this.setState({
       usernameCurrent : Parse.User.current().getUsername(),
@@ -139,27 +159,30 @@ var AppInit = React.createClass({
     if(this.state.page == "collections") {
       cb =
         <CollectionsBox
+          collections={this.data.collections}
           refresh={this._refresh}
           setState={this._setState}
         />
-    }
-
-    console.log(pendingQueries)
-    if (pendingQueries.length == 0) {
-      imagebox =
-        <ImageBox
-          params         = {this.props.params}
-          pendingQueries = {pendingQueries}
-          pending        = {pending}
-          images         = {this.data.images}
-          collection     = {this.data.collection[0]}
-          showSettings   = {this.state.showSettings}
-          setSize        = {this._setSize}
-          setBg          = {this._setBg}
-        />
     } else {
-      imagebox =
-        <div className="loading"><img src="http://i.imgur.com/Drx5dG7.gif" width="200" height="200"></img></div>;
+
+      if (pendingQueries.length == 0) {
+        imagebox =
+          <ImageBox
+            params         = {this.props.params}
+            pendingQueries = {pendingQueries}
+            pending        = {pending}
+            images         = {this.data.images}
+            collection     = {this.data.collection[0]}
+            showSettings   = {this.state.showSettings}
+            setSize        = {this._setSize}
+            setBg          = {this._setBg}
+            toggleSettings = {this._toggleSettings}
+          />
+      } else {
+        imagebox =
+          <div className="loading"><img src="http://i.imgur.com/Drx5dG7.gif" width="200" height="200"></img></div>;
+      }
+
     }
 
     return (
@@ -170,6 +193,7 @@ var AppInit = React.createClass({
           currentPath    ={this.state.currentPath}
           username       ={this.state.paramUsername}
           resetRootView  ={this._resetRootView}
+          setCurrentPath ={this._setCurrentPath}
         />
 
         {cb}

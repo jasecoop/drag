@@ -12,6 +12,10 @@ Header = React.createClass({
     _handleRootClick: function() {
       this.props.resetRootView();
     },
+    _collectionsClick: function() {
+      this.props.setCollectionPath();
+    },
+
     render: function () {
 
       var activeCollection = this.props.activeCollection;
@@ -20,6 +24,8 @@ Header = React.createClass({
       var collectionsURL   = '/'+ username +'/collections'
       var currentPath      = this.props.currentPath;
       var currentPage;
+      var settingsButton;
+
       if (currentPath == '/' + username + '/collections') {
         currentPage =
           <span className="header-user__tag">Collections</span>;
@@ -34,6 +40,16 @@ Header = React.createClass({
           {currentPage}
         </div>
 
+      if(currentPath == '/'+username+'/collections') {
+        settingsButton = '';
+      } else {
+        settingsButton =
+          <span className="header__settings" onClick={this._handleSettingsClick}>
+            <span className="icon"></span>
+            <span className="text">Settings</span>
+          </span>
+      }
+
       var classes = classNames({
         'collapsed' : this.props.showBatchEdit
       });
@@ -41,13 +57,10 @@ Header = React.createClass({
       return <header className={classes}>
         <div className="header__container">
           {activeCollectionSpan}
-          <span className="header__settings" onClick={this._handleSettingsClick}>
-            <span className="icon"></span>
-            <span className="text">Settings</span>
-          </span>
+          {settingsButton}
           <div className="header-menu" id="header-menu">
             <ul>
-              <li><Link to={collectionsURL}>Collections</Link></li>
+              <li><Link to={collectionsURL} onClick={this._collectionsClick}>Collections</Link></li>
               <li><Link to={'/'} onClick={this._logoutClick}>Logout</Link></li>
             </ul>
           </div>

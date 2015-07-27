@@ -21,8 +21,8 @@ if (Parse.User.current()) {
 module.exports = (
   <Route name="app" path="/" handler={AppWrapper} history={BrowserHistory}>
     <Route name="username" path=":username" handler={AppInit} />
-    <Route name="collections" path=":username/collections" handler={Images} />
-    <Route name="collection" path=":username/:collectionName" handler={Images} />
+    <Route name="collections" path=":username/collections" handler={AppInit} />
+    <Route name="collection" path=":username/:collectionName" handler={AppInit} />
     <DefaultRoute handler={AppInit} />
     {rd}
   </Route>

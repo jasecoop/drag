@@ -95,8 +95,6 @@ var ImageBox = React.createClass({
     var cb;
     var settingsBox;
 
-    console.log(this.state.selectedImages)
-
     var collectionName, setting_size, setting_bg;
 
     if( this.props.images ) {
@@ -131,7 +129,7 @@ var ImageBox = React.createClass({
         <SettingsBox
           params             ={this.props.params}
           showSettings       ={this.props.showSettings}
-          toggleSettings     ={this._toggleSettings}
+          toggleSettings     ={this.props.toggleSettings}
           collection         ={this.props.collection}
           setting_size       ={this.state.setting_size}
           setting_bg         ={this.state.setting_bg}
