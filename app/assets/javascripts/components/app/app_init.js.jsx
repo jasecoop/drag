@@ -15,8 +15,8 @@ var AppInit = React.createClass({
       paramUsername   : '',
       params          : '',
       paramCollection : '',
-      activeCollectionName : 'newname',
-      activeCollectionId : '9niMiSw0rD',
+      activeCollectionName : '',
+      activeCollectionId : '',
       showSettings : false
     };
   },
@@ -50,6 +50,10 @@ var AppInit = React.createClass({
       collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
     }
 
+  },
+
+  _refresh: function() {
+    this.refreshQueries();
   },
 
   _setPage: function (username) {
@@ -155,6 +159,8 @@ var AppInit = React.createClass({
     var imagebox;
     var pendingQueries = this.pendingQueries();
     var pending        = (pendingQueries.indexOf("images") > -1);
+
+    console.log(pendingQueries)
 
     if(this.state.page == "collections") {
       cb =

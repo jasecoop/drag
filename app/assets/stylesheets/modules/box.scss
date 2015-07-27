@@ -1,0 +1,44 @@
+.box {
+  display: block;
+  z-index: 2;
+  position: relative;
+  border: solid 1px rgba(00,00,00,.8);
+}
+
+.box__header,
+.box__body,
+.box__footer {
+  padding: 1rem;
+  @extend .clearfix;
+  background: #fff;
+}
+
+.box__header {
+  border-bottom: solid 1px rgba(00,00,00,.2);
+}
+.box__footer {
+  border-top: solid 1px rgba(00,00,00,.2);
+}
+
+
+.box__close {
+  display: block;
+  float: right;
+  font-size: 2em;
+  color: rgba(225,225,225,.7);
+  cursor: pointer;
+  @extend .col-right;
+  line-height: 2.9rem;
+  &:hover {
+    color: rgba(225,225,225,1);
+  }
+}
+
+.box__title {
+  @extend .h3;
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 2.25em;
+  font-weight: bold;
+  float: left;
+}

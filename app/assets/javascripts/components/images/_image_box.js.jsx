@@ -10,8 +10,8 @@ var ImageBox = React.createClass({
     return {
       selectedImages: [],
       showBatchEdit : false,
-      setting_bg    : this.props.collection.setting_bg,
-      setting_size  : this.props.collection.setting_size
+      setting_bg    : '',
+      setting_size  : ''
     };
   },
 
@@ -79,6 +79,13 @@ var ImageBox = React.createClass({
     })
   },
 
+  componentDidMount: function () {
+    this.setState({
+      setting_bg    : this.props.collection.setting_bg,
+      setting_size  : this.props.collection.setting_size
+    })
+  },
+
   render: function () {
     var il = "";
     var _this = this;
@@ -97,7 +104,7 @@ var ImageBox = React.createClass({
 
     var collectionName, setting_size, setting_bg;
 
-    if( this.props.images ) {
+    if( this.props.images.length > 0 ) {
       il =
         <ImageList
           images              = {this.props.images}

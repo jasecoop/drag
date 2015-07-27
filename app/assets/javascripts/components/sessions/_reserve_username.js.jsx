@@ -1,4 +1,4 @@
-var SignUp = React.createClass({
+var ReserveUsername = React.createClass({
   mixins: [ParseReact.Mixin],
   getInitialState: function () {
     return {
@@ -8,10 +8,6 @@ var SignUp = React.createClass({
 
   observe: function() {
 
-  },
-
-  signUpSuccess: function() {
-    this.props.setCurrentUser();
   },
 
   _onSignUpClick: function (e) {
@@ -28,7 +24,7 @@ var SignUp = React.createClass({
 
     user.signUp(null, {
       success: function(user) {
-        self.signUpSuccess();
+        window.location.replace("/");
         delete self;
       },
       error: function(user, error) {
@@ -44,7 +40,7 @@ var SignUp = React.createClass({
       <div className="page-container">
         <div className="session-form box">
           <div className="box__header">
-            <div className="box__title">Sign Up</div>
+            <div className="box__title">Reserve your username</div>
           </div>
           <form>
             <div className="box__body">
@@ -68,4 +64,4 @@ var SignUp = React.createClass({
   }
 });
 
-module.exports = SignUp;
+module.exports = ReserveUsername;
