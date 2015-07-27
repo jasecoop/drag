@@ -31,5 +31,7 @@ module Img
 
     config.browserify_rails.commandline_options = "-t reactify --extension=\".js.jsx\""
 
+    config.serve_static_assets = true
+
   end
 end
