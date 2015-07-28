@@ -41,12 +41,13 @@ header a {
 
 .header__settings .icon {
   display: inline-block;
-  width: 15px;
+  width: 14px;
   height: 31px;
   float: left;
   background-size: 100%;
   background-position: left center;
-  background: url('icon_settings2.svg');
+  background: url('<%= asset_path("icon_settings2.svg") %>');
+  background-repeat: no-repeat;
   cursor: pointer;
   margin-left: 1rem;
 }
@@ -61,6 +62,7 @@ header a {
 
 .header__settings:hover .text {
   opacity: 1;
+  cursor: pointer;
 }
 
 
