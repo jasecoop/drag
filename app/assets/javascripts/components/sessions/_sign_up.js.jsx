@@ -10,10 +10,6 @@ var SignUp = React.createClass({
 
   },
 
-  signUpSuccess: function() {
-    this.props.setCurrentUser();
-  },
-
   _onSignUpClick: function (e) {
     var username = this.refs.signupUsername.getDOMNode().value
     var email = this.refs.signupEmail.getDOMNode().value
@@ -28,7 +24,7 @@ var SignUp = React.createClass({
 
     user.signUp(null, {
       success: function(user) {
-        self.signUpSuccess();
+        window.location.replace("/");
         delete self;
       },
       error: function(user, error) {
