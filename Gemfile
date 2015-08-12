@@ -29,8 +29,6 @@ gem 'haml'
 
 gem 'puma'
 
-gem "carrierwave"
-
 gem 'dropzonejs-rails'
 
 gem 'devise'
@@ -42,6 +40,15 @@ gem 'browserify-rails', '~> 0.9.1'
 gem 'react-router-rails', '~>0.13.3'
 
 gem 'rails_12factor', group: :production
+
+gem 'fog'
+
+gem 'carrierwave'
+
+gem 'dotenv-rails', :groups => [:development, :test]
+
+gem 'aws-sdk', '~> 2'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

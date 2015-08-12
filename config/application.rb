@@ -33,6 +33,5 @@ module Img
 
     config.serve_static_files = true
 
-
   end
 end

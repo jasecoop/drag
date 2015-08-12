@@ -23,7 +23,7 @@ var Image = React.createClass({
     return(
       <span ref="image" className={cx} onClick={this._handleClick.bind(null, this.props.image)}>
         <div className={'image__container'}>
-          <img src={ this.props.image.file._url } />
+          <img src={ this.props.image.filesource } />
         </div>
       </span>
     )

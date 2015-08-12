@@ -186,7 +186,9 @@ var AppContent = React.createClass({
           collections             ={this.props.collections}
           currentUser             ={this.props.currentUser}
           activeCollection        ={this.props.activeCollection}
-
+          signingUrl              ={"/signedurl"}
+          bucket                  ={"dragggg"}
+          token                   ={"AKIAIDYEI3DG4RDEX6FQ"}
           refresh                 ={this.props.refresh}
         />
       </div>

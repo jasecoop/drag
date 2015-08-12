@@ -29,7 +29,9 @@ Rails.application.routes.draw do
   # put 'update_user' => 'pages#update_user'
   # put 'update_user_size' => 'pages#update_user_size'
   root 'pages#home'
+  resources :signedurl, only: :index
   get "*path" => 'pages#home'
+
 
   # resources :tags
 

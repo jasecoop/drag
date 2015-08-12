@@ -209,6 +209,10 @@ var AppInit = React.createClass({
         <DropzoneBox
           activeCollectionId = {this.state.activeCollectionId}
           refresh            = {this._refresh}
+          signingUrl         ="/signedurl"
+          accept             ="image/*"
+          bucket             ="dragggg"
+          token              =""
         />
       </div>
     )

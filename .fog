@@ -1,0 +1,5 @@
+FOG = Fog::Storage.new({
+  :provider              => 'AWS',
+  :AWS_ACCESS_KEY_ID     => 'AKIAIDYEI3DG4RDEX6FQ',
+  :AWS_SECRET_KEY_ID     => 'C+jTzPq4UG87jrRXPUVHdUpem8u5HJ72mqfAh70L'
+})
