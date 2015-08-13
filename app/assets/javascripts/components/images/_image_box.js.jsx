@@ -54,10 +54,6 @@ var ImageBox = React.createClass({
     this.setState({selectedImages: []});
   },
 
-  _refresh: function() {
-    this.refreshQueries();
-  },
-
   _resetRootView: function() {
     this._removeAllSelectedImages();
     this.setState ({
@@ -155,7 +151,7 @@ var ImageBox = React.createClass({
 
         <BatchEditBox
           params                  ={this.props.params}
-          refresh                 ={this._refresh}
+          refresh                 ={this.props.refresh}
           showBatchEdit           ={this.state.showBatchEdit}
           toggleBatchEdit         ={this._toggleBatchEdit}
           selectedImages          ={this.state.selectedImages}

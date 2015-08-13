@@ -190,6 +190,7 @@ var AppInit = React.createClass({
       if (pendingQueries.length == 0) {
         imagebox =
           <ImageBox
+            refresh        = {this._refresh}
             params         = {this.props.params}
             pendingQueries = {pendingQueries}
             pending        = {pending}

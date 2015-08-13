@@ -80,14 +80,26 @@ var BatchEdit = React.createClass({
     if (desc)       {this._batchDesc(batch, desc)}
     if (collection) {this._batchCollection(batch, collection)}
 
-    console.log(batch)
     batch.dispatch().then(function() {
       this.props.imagesEdited();
     }.bind(this));
+
   },
 
   _closeClick: function() {
     this.props.closeClick()
+  },
+
+  _deleteImages: function() {
+    var batch = new ParseReact.Mutation.Batch();
+
+    this.props.selectedImages.forEach(function(o)  {
+      ParseReact.Mutation.Destroy(o.id).dispatch({ batch: batch });;
+    });
+
+    batch.dispatch().then(function() {
+      this.props.imagesEdited();
+    }.bind(this));
   },
 
   componentWillMount: function () {
@@ -138,7 +150,8 @@ var BatchEdit = React.createClass({
 
           <div className="form-fix__footer">
             <div className="field">
-              <input type="submit" className="btn btn-black" onClick={this._onFormSubmit} value="Save"></input>
+              <input type="submit" className="btn btn-black left" onClick={this._onFormSubmit} value="Save"></input>
+              <span onClick={this._deleteImages} className="btn right">Delete images</span>
             </div>
           </div>
         </form>

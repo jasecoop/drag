@@ -43,6 +43,12 @@ var BatchEditBox = React.createClass({
     this.props.removeAllSelectedImages();
   },
 
+  _imagesEdited: function() {
+    this._toggleBatchEdit();
+    this._removeAllSelectedImages();
+    this.props.refresh();
+  },
+
   render: function () {
     var batchEditBox;
     var batchEdit;
@@ -53,7 +59,7 @@ var BatchEditBox = React.createClass({
         <BatchEdit
           collections    ={this.data.collections}
           selectedImages ={this.props.selectedImages}
-          imagesEdited   ={this.props.imagesEdited}
+          imagesEdited   ={this._imagesEdited}
           closeClick     ={this._closeClick}
         />;
 
@@ -68,6 +74,7 @@ var BatchEditBox = React.createClass({
           removeAllSelectedImages ={this._removeAllSelectedImages}
           editImage       ={this._editImage}
           closeClick      ={this._closeClick}
+          imagesEdited   ={this._imagesEdited}
         />
     }
 
