@@ -1,0 +1,11 @@
+Fog.credentials = {
+  :default => {
+    :example_url => "https://example.com/"
+    :example_username => "bob",
+    :example_password => "obo"
+  },
+  :production => {
+    :example_username => "bob",
+    :example_password => "obo"
+  }
+}
