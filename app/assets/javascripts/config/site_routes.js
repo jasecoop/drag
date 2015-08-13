@@ -15,7 +15,7 @@ module.exports = (
   <Route name="app" path="/" handler={SiteWrapper} history={BrowserHistory}>
     <DefaultRoute handler={Home} />
     <Route name="signup" path="signup" handler={Signup} />
-    <Route name="login" path="signup" handler={Login} />
+    <Route name="login" path="login" handler={Login} />
     <Route name="collections" path=":username/collections" handler={AppInit} />
     <Route name="collection" path=":username/:collectionName" handler={AppInit} />
     <Route name="username" path=":username" handler={AppInit} />
