@@ -43,8 +43,6 @@ gem 'rails_12factor', group: :production
 
 gem 'fog'
 
-gem 'carrierwave'
-
 gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'aws-sdk', '~> 2'
