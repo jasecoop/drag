@@ -41,7 +41,7 @@ header a {
 
 .header__settings .icon {
   display: inline-block;
-  width: 14px;
+  width: 15px;
   height: 31px;
   float: left;
   background-size: 100%;
@@ -50,6 +50,7 @@ header a {
   background-repeat: no-repeat;
   cursor: pointer;
   margin-left: 1rem;
+  margin-top: 2rem;
 }
 
 .header__settings:hover .icon {
@@ -57,12 +58,15 @@ header a {
 }
 .header__settings .text {
   opacity: 0;
-  margin-left: .25rem;
+  margin-left: .5rem;
+  margin-top: 2rem;
 }
 
 .header__settings:hover .text {
+  display: inline-block;
   opacity: 1;
   cursor: pointer;
+  margin-top: 2rem;
 }
 
 
@@ -72,18 +76,26 @@ header a {
 
 .header-user {
   float: left;
+  @extend .h2;
+  text-transform: capitalize;
+  margin-top: 2rem;
+  font-family: 'GTCinetype';
 }
 
 .header-menu {
   position: relative;
   z-index: 5;
   float: right;
+  width: 100%;
+  background: rgba(00,00,00,.02);
 }
 
 .header-menu ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  text-align: right;
+  margin-right: 2rem;
 }
 
 .header-menu li {
@@ -92,7 +104,7 @@ header a {
 }
 
 .header-user__tag:before {
-  content: ">";
+  content: "/";
   padding: 0 10px;
   color: rgba(00,00,00,.3);
 }

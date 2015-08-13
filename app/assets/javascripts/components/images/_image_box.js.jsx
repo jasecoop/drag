@@ -80,6 +80,7 @@ var ImageBox = React.createClass({
   },
 
   componentDidMount: function () {
+
     this.setState({
       setting_bg    : this.props.collection.setting_bg,
       setting_size  : this.props.collection.setting_size
@@ -117,32 +118,34 @@ var ImageBox = React.createClass({
           saveSettings        = {this.props.saveSettings}
         />
     } else {
-      il =
-        <div className="image-box-empty">
-          Drag images here to upload them
-        </div>;
+      if(Parse.User.current()) {
+        il =
+          <div className="image-box-empty">
+            Drag images here to upload them
+          </div>;
+      } else {
+        il =
+            <div className="image-box-empty">
+              Nothing to see here, ppl
+            </div>;
+      }
+
     }
 
-    if(this.state.showCollections) {
-      cb =
-        <CollectionsBox
-          refresh={this._refresh}
-          setState={this._setState}
-        />
-    }
-
-    if(this.props.showSettings) {
-      settingsBox =
-        <SettingsBox
-          params             ={this.props.params}
-          showSettings       ={this.props.showSettings}
-          toggleSettings     ={this.props.toggleSettings}
-          collection         ={this.props.collection}
-          setting_size       ={this.state.setting_size}
-          setting_bg         ={this.state.setting_bg}
-          setSize            = {this._setSize}
-          setBg              = {this._setBg}
-        />
+    if(this.props.userOwnsCollection) {
+      if(this.props.showSettings) {
+        settingsBox =
+          <SettingsBox
+            params             ={this.props.params}
+            showSettings       ={this.props.showSettings}
+            toggleSettings     ={this.props.toggleSettings}
+            collection         ={this.props.collection}
+            setting_size       ={this.state.setting_size}
+            setting_bg         ={this.state.setting_bg}
+            setSize            = {this._setSize}
+            setBg              = {this._setBg}
+          />
+      }
     }
 
     return (

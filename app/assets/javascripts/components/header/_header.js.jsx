@@ -19,12 +19,14 @@ Header = React.createClass({
     render: function () {
 
       var activeCollection = this.props.activeCollection;
+      var collection       = this.props.paramCollection
       var username         = this.props.username;
       var activeCollectionSpan;
       var collectionsURL   = '/'+ username +'/collections'
       var currentPath      = this.props.currentPath;
       var currentPage;
       var settingsButton;
+      var appMenu;
 
       if (currentPath == '/' + username + '/collections') {
         currentPage =
@@ -34,20 +36,31 @@ Header = React.createClass({
           <span className="header-user__tag">{this.props.params.collectionName}</span>
       }
 
-      activeCollectionSpan =
-        <div className="header-user">
-          <Link to={'/'} onClick={this._handleRootClick}>{username}</Link>
-          {currentPage}
-        </div>
+      if (currentPath == '/' + username || currentPath == '/' + username + '/' + collection) {
+        activeCollectionSpan =
+          <div className="header-user">
+            <Link to={'/'} onClick={this._handleRootClick}>{username}</Link>
+            {currentPage}
+          </div>
+      }
 
-      if(currentPath == '/'+username+'/collections') {
-        settingsButton = '';
-      } else {
-        settingsButton =
-          <span className="header__settings" onClick={this._handleSettingsClick}>
-            <span className="icon"></span>
-            <span className="text">Settings</span>
-          </span>
+      if(this.props.userOwnsCollection) {
+        if(currentPath == '/'+username+'/collections') {
+          settingsButton = '';
+        } else {
+          settingsButton =
+            <span className="header__settings" onClick={this._handleSettingsClick}>
+              <span className="icon"></span>
+              <span className="text">Settings</span>
+            </span>
+        }
+        appMenu =
+          <div className="header-menu" id="header-menu">
+            <ul>
+              <li><Link to={collectionsURL} onClick={this._collectionsClick}>Collections</Link></li>
+              <li><Link to={'/'} onClick={this._logoutClick}>Logout</Link></li>
+            </ul>
+          </div>
       }
 
       var classes = classNames({
@@ -55,15 +68,10 @@ Header = React.createClass({
       });
 
       return <header className={classes}>
+        {appMenu}
         <div className="header__container">
           {activeCollectionSpan}
           {settingsButton}
-          <div className="header-menu" id="header-menu">
-            <ul>
-              <li><Link to={collectionsURL} onClick={this._collectionsClick}>Collections</Link></li>
-              <li><Link to={'/'} onClick={this._logoutClick}>Logout</Link></li>
-            </ul>
-          </div>
         </div>
       </header>
     }

@@ -1,6 +1,7 @@
 var React        = require('react');
 var AppWrapper   = require('../components/site_wrapper');
 var Home         = require('../components/site/_home');
+var AppInit      = require('../components/app/app_init');
 var Signup       = require('../components/sessions/_sign_up');
 var Login        = require('../components/sessions/_login');
 var Router       = require('react-router');
@@ -15,5 +16,8 @@ module.exports = (
     <DefaultRoute handler={Home} />
     <Route name="signup" path="signup" handler={Signup} />
     <Route name="login" path="signup" handler={Login} />
+    <Route name="collections" path=":username/collections" handler={AppInit} />
+    <Route name="collection" path=":username/:collectionName" handler={AppInit} />
+    <Route name="username" path=":username" handler={AppInit} />
   </Route>
 );

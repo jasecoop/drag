@@ -17,7 +17,9 @@ var AppInit = React.createClass({
       paramCollection : '',
       activeCollectionName : '',
       activeCollectionId : '',
-      showSettings : false
+      showSettings : false,
+      activeCollectionOwner: '',
+      userOwnsCollection : false
     };
   },
 
@@ -26,13 +28,11 @@ var AppInit = React.createClass({
   },
 
   observe: function(props, state) {
+
     var _this = this;
     var paramUsername      = state.paramCollection;
     var paramCollection    = state.paramUsername;
     var activeCollectionId = state.activeCollectionId;
-
-    var currentUser      = Parse.User.current();
-    var userId           = currentUser.id
     var collectionsQuery = new Parse.Query('Collection');
 
     var imagesQuery      = new Parse.Query('Images');
@@ -41,15 +41,22 @@ var AppInit = React.createClass({
       className: "Collection",
       objectId: activeCollectionId
     });
-
     var collectionQuery = new Parse.Query("Collection");
 
-    return {
-      images     : (imagesQuery.descending('createdAt')),
-      collection : (collectionQuery.equalTo("objectId", activeCollectionId)),
-      collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
+    if (Parse.User.current()) {
+      var currentUser      = Parse.User.current();
+      var userId           = currentUser.id
+      return {
+        images     : (imagesQuery.descending('createdAt')),
+        collection : (collectionQuery.equalTo("objectId", activeCollectionId)),
+        collections: (collectionsQuery.equalTo("createdBy", currentUser).ascending('createdAt'))
+      }
+    } else {
+      return {
+        images     : (imagesQuery.descending('createdAt')),
+        collection : (collectionQuery.equalTo("objectId", activeCollectionId))
+      }
     }
-
   },
 
   _refresh: function() {
@@ -60,9 +67,6 @@ var AppInit = React.createClass({
     var currentPath = this.context.router.getCurrentPath();
     var username    = this.props.params.username;
     var params      = this.props.params;
-
-    console.log('setpage');
-    console.log(currentPath);
 
     if(currentPath == "/" + username + "/collections") {
       this.setState({
@@ -95,17 +99,25 @@ var AppInit = React.createClass({
       // Get users collection
       var collectionQuery = new Parse.Query("Collection");
       collectionQuery.equalTo("createdBy", user);
-
       if(_this.state.page == 'collections') {
-        console.log(_this.state.page);
         collectionQuery.equalTo("name", _this.state.paramUsername);
       } else {
         collectionQuery.equalTo("name", _this.state.paramCollection);
       }
       return collectionQuery.first();
     }).then(function(collection) {
+      if (Parse.User.current()) {
+        var userId = Parse.User.current().id;
+        var collectionCreatedById = collection.attributes.createdBy.id;
+        if (userId == collectionCreatedById) {
+          _this.setState({
+            userOwnsCollection : true,
+            activeCollectionOwner : collectionCreatedById
+          })
+        }
+      }
       _this.setState({
-        activeCollectionId   : collection.id
+        activeCollectionId    : collection.id,
       })
     }, function(error) {
       console.log('Error getting user');
@@ -134,13 +146,18 @@ var AppInit = React.createClass({
 
   _init: function () {
     var _this = this;
-    var usernameCurrent = Parse.User.current().getUsername();
+
+    if(Parse.User.current()) {
+      this.setState({
+        usernameCurrent : Parse.User.current().getUsername()
+      })
+    }
+
     var paramUsername   = this.props.params.username;
     var params          = this.props.params;
     var currentPath     = this.context.router.getCurrentPath();
 
     this.setState({
-      usernameCurrent : Parse.User.current().getUsername(),
       paramUsername   : paramUsername,
       currentPath     : currentPath,
       params          : this.props.params
@@ -157,10 +174,9 @@ var AppInit = React.createClass({
   render: function () {
     var cb;
     var imagebox;
+    var dropzone;
     var pendingQueries = this.pendingQueries();
     var pending        = (pendingQueries.indexOf("images") > -1);
-
-    console.log(pendingQueries)
 
     if(this.state.page == "collections") {
       cb =
@@ -183,12 +199,26 @@ var AppInit = React.createClass({
             setSize        = {this._setSize}
             setBg          = {this._setBg}
             toggleSettings = {this._toggleSettings}
+            activeCollectionOwner = {this.state.activeCollectionOwner}
+            userOwnsCollection = {this.state.userOwnsCollection}
           />
       } else {
         imagebox =
           <div className="loading"><img src="http://i.imgur.com/Drx5dG7.gif" width="200" height="200"></img></div>;
       }
 
+    }
+
+    if (Parse.User.current()) {
+      dropzone =
+        <DropzoneBox
+          activeCollectionId = {this.state.activeCollectionId}
+          refresh            = {this._refresh}
+          signingUrl         ="/signedurl"
+          accept             ="image/*"
+          bucket             ="dragggg"
+          token              =""
+        />
     }
 
     return (
@@ -200,20 +230,15 @@ var AppInit = React.createClass({
           username       ={this.state.paramUsername}
           resetRootView  ={this._resetRootView}
           setCurrentPath ={this._setCurrentPath}
+          paramCollection = {this.state.paramCollection}
+          userOwnsCollection = {this.state.userOwnsCollection}
         />
 
         {cb}
 
         {imagebox}
 
-        <DropzoneBox
-          activeCollectionId = {this.state.activeCollectionId}
-          refresh            = {this._refresh}
-          signingUrl         ="/signedurl"
-          accept             ="image/*"
-          bucket             ="dragggg"
-          token              =""
-        />
+        {dropzone}
       </div>
     )
   }

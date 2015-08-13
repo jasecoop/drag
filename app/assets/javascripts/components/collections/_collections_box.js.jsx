@@ -74,7 +74,7 @@ var CollectionsBox = React.createClass({
         {addCollection}
 
         <div className="collections-yours">
-          <h1>Yours</h1>
+          <h1 class="bold">Yours</h1>
           <span className="collections-add" onClick={_this._addCollectionClick}>Add Collection</span>
           <ul>
             {this.props.collections.map(function (collection, index) {
@@ -91,7 +91,7 @@ var CollectionsBox = React.createClass({
         </div>
 
         <div className="collections-theirs">
-          <h1>Theirs</h1>
+          <h1 class="bold">Theirs</h1>
           <p>Coming soon — you'll be able to watch other peoples public collections, they'll be available to view in a feed aswell as listed here for reference.</p>
         </div>
       </div>;

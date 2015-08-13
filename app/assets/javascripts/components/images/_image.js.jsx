@@ -9,7 +9,9 @@ var Image = React.createClass({
   },
 
   _handleClick: function(image, e) {
-    this.props.setActiveImage(image);
+    if (Parse.User.current()) {
+      this.props.setActiveImage(image);
+    }
   },
 
   render: function () {
