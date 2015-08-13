@@ -47,6 +47,8 @@ gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'aws-sdk', '~> 2'
 
+gem 'carrierwave'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
