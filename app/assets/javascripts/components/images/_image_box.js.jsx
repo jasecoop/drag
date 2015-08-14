@@ -11,7 +11,10 @@ var ImageBox = React.createClass({
       selectedImages: [],
       showBatchEdit : false,
       setting_bg    : '',
-      setting_size  : ''
+      setting_size  : '',
+      showTitle     : false,
+      showDesc      : false,
+      showSource    : false
     };
   },
 
@@ -57,9 +60,9 @@ var ImageBox = React.createClass({
   _resetRootView: function() {
     this._removeAllSelectedImages();
     this.setState ({
-      showBatchEdit: false,
-      showCollections: false,
-      showSettings: false
+      showBatchEdit   : false,
+      showCollections : false,
+      showSettings    : false
     });
   },
 
@@ -75,11 +78,33 @@ var ImageBox = React.createClass({
     })
   },
 
+  _toggleImageMeta: function(field) {
+    if(field == "title") {
+      this.setState({
+        showTitle: !this.state.showTitle
+      })
+    }
+    if(field == "desc") {
+      this.setState({
+        showDesc: !this.state.showDesc
+      })
+    }
+
+    if(field == "source") {
+      this.setState({
+        showSource: !this.state.showSource
+      })
+    }
+  },
+
   componentDidMount: function () {
 
     this.setState({
       setting_bg    : this.props.collection.setting_bg,
-      setting_size  : this.props.collection.setting_size
+      setting_size  : this.props.collection.setting_size,
+      showTitle     : this.props.collection.showTitle,
+      showDesc      : this.props.collection.showDesc,
+      showSource    : this.props.collection.showSource
     })
   },
 
@@ -112,6 +137,9 @@ var ImageBox = React.createClass({
           setting_size        = {this.state.setting_size}
           setting_bg          = {this.state.setting_bg}
           saveSettings        = {this.props.saveSettings}
+          showTitle           = {this.state.showTitle}
+          showDesc            = {this.state.showDesc}
+          showSource          = {this.state.showSource}
         />
     } else {
       if(Parse.User.current()) {
@@ -132,14 +160,18 @@ var ImageBox = React.createClass({
       if(this.props.showSettings) {
         settingsBox =
           <SettingsBox
-            params             ={this.props.params}
-            showSettings       ={this.props.showSettings}
-            toggleSettings     ={this.props.toggleSettings}
-            collection         ={this.props.collection}
-            setting_size       ={this.state.setting_size}
-            setting_bg         ={this.state.setting_bg}
+            params             = {this.props.params}
+            showSettings       = {this.props.showSettings}
+            toggleSettings     = {this.props.toggleSettings}
+            collection         = {this.props.collection}
+            setting_size       = {this.state.setting_size}
+            setting_bg         = {this.state.setting_bg}
             setSize            = {this._setSize}
             setBg              = {this._setBg}
+            showTitle          = {this.state.showTitle}
+            showDesc           = {this.state.showDesc}
+            showSource         = {this.state.showSource}
+            toggleImageMeta    = {this._toggleImageMeta}
           />
       }
     }

@@ -11,7 +11,10 @@ var SettingsBox = React.createClass({
 
     ParseReact.Mutation.Set(this.props.collection.id, {
       setting_bg  : this.props.setting_bg,
-      setting_size: this.props.setting_size
+      setting_size: this.props.setting_size,
+      showTitle   : this.props.showTitle,
+      showDesc    : this.props.showDesc,
+      showSource  : this.props.showSource
     }).dispatch()
     .then(function() {
       this.props.toggleSettings();
@@ -49,6 +52,17 @@ var SettingsBox = React.createClass({
     this.props.toggleSettings();
   },
 
+  _handleShowTitleChange: function() {
+    this.props.toggleImageMeta('title');
+  },
+
+  _handleShowDescChange: function() {
+    this.props.toggleImageMeta('desc');
+  },
+
+  _handleShowSourceChange: function() {
+    this.props.toggleImageMeta('source');
+  },
 
   render: function () {
     var settingsBox  = '';
@@ -72,7 +86,6 @@ var SettingsBox = React.createClass({
         </div>
 
         <div className="form-fix__body">
-
           <div className="form-fix__field-half mb2">
             <div className="image-settings__item image-settings__bg">
               <div className="image-settings__label">Background</div>
@@ -87,6 +100,27 @@ var SettingsBox = React.createClass({
               <div className="image-settings__label">Image size</div>
               <span className={minusSizeClass} onClick={this._onSizeChange.bind(this, '-')} >-</span>
               <span className={plusSizeClass} onClick={this._onSizeChange.bind(this, '+')} >+</span>
+            </div>
+          </div>
+
+          <div className="form-fix__field mb1">
+            <div className="image-settings__item">
+              <input type="checkbox" name="title" value={!this.props.showTitle} onChange={this._handleShowTitleChange} ></input>
+              <div className="image-settings__label image-settings__label-checkbox">Title</div>
+            </div>
+          </div>
+
+          <div className="form-fix__field mb1">
+            <div className="image-settings__item">
+              <input type="checkbox" name="title" value={!this.props.showDesc} onChange={this._handleShowDescChange} ></input>
+              <div className="image-settings__label image-settings__label-checkbox">Description</div>
+            </div>
+          </div>
+
+          <div className="form-fix__field mb1">
+            <div className="image-settings__item">
+              <input type="checkbox" name="title" value={!this.props.showSource} onChange={this._handleShowSourceChange} ></input>
+              <div className="image-settings__label image-settings__label-checkbox">Source</div>
             </div>
           </div>
 

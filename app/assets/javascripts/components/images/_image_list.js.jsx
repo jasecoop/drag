@@ -49,6 +49,9 @@ var ImageList = React.createClass({
               selectedImages={_this.props.selectedImages }
               setActiveImage={_this._setActiveImage}
               imageIsSelected={_this._imageIsSelected}
+              showTitle      = {_this.props.showTitle}
+              showDesc       = {_this.props.showDesc}
+              showSource     = {_this.props.showSource}
             />
 
           })}
