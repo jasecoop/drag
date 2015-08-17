@@ -12,6 +12,7 @@ var Home = React.createClass({
     user.set("username", username);
     user.set("password", password);
     user.set("email", email);
+    user.set("activated", false);
 
     var self = this;
 
@@ -29,25 +30,46 @@ var Home = React.createClass({
   },
 
   render: function() {
+    var content;
+    var userActivated = false;
+    var username;
+
+    if (Parse.User.current()) {
+      username    = Parse.User.current().get('username');
+      Parse.User.current().fetch().then(function (user) {
+        userActivated = user.get('activated');
+      });
+    }
+
+    if (Parse.User.current()) {
+      content =
+        <div className="form-fix__body">
+          <h2>Hi {username}</h2>
+          <p>Youre on the guestlist.</p>
+        </div>
+    } else {
+      content =
+         <form>
+          <div className="form-fix__body">
+              <div className="input input-full mb2">
+                <input onChange= {this._handleInputChange} ref="signupUsername" type="text" placeholder="Username"></input>
+              </div>
+              <div className="input input-full mb2">
+                <input onChange= {this._handleInputChange} ref="signupEmail" type="email" placeholder="Email address"></input>
+              </div>
+              <div className="input input-full">
+                <input onChange= {this._handleInputChange} ref="signupPassword" type="password" placeholder="Password"></input>
+              </div>
+          </div>
+          <div className="form-fix__footer">
+            <button className="btn btn-black" onClick={this._onSignUpClick}>Reserve your username</button>
+          </div>
+        </form>
+    }
     return (
       <div className="page-home">
         <div className="home-box form-fix">
-          <form>
-            <div className="form-fix__body">
-                <div className="input input-full mb2">
-                  <input onChange= {this._handleInputChange} ref="signupUsername" type="text" placeholder="Username"></input>
-                </div>
-                <div className="input input-full mb2">
-                  <input onChange= {this._handleInputChange} ref="signupEmail" type="email" placeholder="Email address"></input>
-                </div>
-                <div className="input input-full">
-                  <input onChange= {this._handleInputChange} ref="signupPassword" type="password" placeholder="Password"></input>
-                </div>
-            </div>
-            <div className="form-fix__footer">
-              <button className="btn btn-black" onClick={this._onSignUpClick}>Reserve your username</button>
-            </div>
-          </form>
+          {content}
         </div>
       </div>
     )

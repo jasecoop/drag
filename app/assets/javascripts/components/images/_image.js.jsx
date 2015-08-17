@@ -9,8 +9,14 @@ var Image = React.createClass({
   },
 
   _handleClick: function(image, e) {
-    if (Parse.User.current()) {
-      this.props.setActiveImage(image);
+    if (this.props.image.createdBy) {
+      var createdBy = this.props.image.createdBy
+      console.log(Parse.User.current().id);
+      console.log(createdBy.objectId)
+      if (createdBy.objectId == Parse.User.current().id) {
+        console.log(this.props.image.createdBy)
+        this.props.setActiveImage(image);
+      }
     }
   },
 

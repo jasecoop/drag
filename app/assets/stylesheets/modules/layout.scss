@@ -10,4 +10,18 @@
   top: 35%;
   left: 50%;
   margin-left: -200px;
+  border: none;
+  background: rgba(255,255,255,.7) !important;
+}
+
+.home-box .form-fix__body,
+.home-box .form-fix__footer {
+  background: none;
+}
+
+.home-box .form-fix__footer {
+  border-top: 0;
+  .btn {
+    width: 100%;
+  }
 }
