@@ -11,7 +11,7 @@
   left: 50%;
   margin-left: -200px;
   border: none;
-  background: rgba(255,255,255,.7) !important;
+  background: rgba(255,255,255,.9) !important;
 }
 
 .home-box .form-fix__body,
@@ -24,4 +24,12 @@
   .btn {
     width: 100%;
   }
+}
+
+.home-box h2 {
+  margin-top: 0;
+}
+
+.home-box p:last-child {
+  margin-bottom: 0;
 }

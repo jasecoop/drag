@@ -44,8 +44,8 @@ var Home = React.createClass({
     if (Parse.User.current()) {
       content =
         <div className="form-fix__body">
-          <h2>Hi {username}</h2>
-          <p>Youre on the guestlist.</p>
+          <h2 class="mt0">Hi {username}</h2>
+          <p>Thanks for signing up. Drag is a place to keep your images. We'll give you a shout when it's ready to go.</p>
         </div>
     } else {
       content =
