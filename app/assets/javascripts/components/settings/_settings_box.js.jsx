@@ -17,12 +17,14 @@ var SettingsBox = React.createClass({
       showSource  : this.props.showSource
     }).dispatch()
     .then(function() {
+      analytics.track('Saved settings');
       this.props.toggleSettings();
     }.bind(this));
 
   },
 
   _onBgChange: function(colour) {
+    analytics.track('Changed background');
     this.props.setBg(colour);
   },
 
@@ -41,6 +43,7 @@ var SettingsBox = React.createClass({
       newSize = parseInt(currentSize) - 1;
 
     }
+    analytics.track('Changed size');
     this.props.setSize(newSize);
   },
 
@@ -53,14 +56,17 @@ var SettingsBox = React.createClass({
   },
 
   _handleShowTitleChange: function() {
+    analytics.track('Toggled title');
     this.props.toggleImageMeta('title');
   },
 
   _handleShowDescChange: function() {
+    analytics.track('Toggled description');
     this.props.toggleImageMeta('desc');
   },
 
   _handleShowSourceChange: function() {
+    analytics.track('Toggled source');
     this.props.toggleImageMeta('source');
   },
 

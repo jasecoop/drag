@@ -44,12 +44,17 @@ var CollectionsBox = React.createClass({
         setting_public : true
       }).dispatch()
       .then(function(collection) {
+        analytics.track('Created Collection');
         var coid = collection.objectId;
         self.props.setActiveCollection(coid);
         self.props.toggleCollections();
         self.props.refresh();
       }.bind(this));
     });
+  },
+
+  componentDidMount: function () {
+    analytics.page('Collections');
   },
 
   render: function () {

@@ -23,6 +23,10 @@ var ImageBox = React.createClass({
   },
 
   _toggleSettings: function() {
+    if (this.state.showSettings == false) {
+      analytics.track('Opened Settings');
+    }
+
     this.setState ({
       showSettings: !this.state.showSettings
     });
@@ -98,7 +102,6 @@ var ImageBox = React.createClass({
   },
 
   componentDidMount: function () {
-
     this.setState({
       setting_bg    : this.props.collection.setting_bg,
       setting_size  : this.props.collection.setting_size,
@@ -106,6 +109,19 @@ var ImageBox = React.createClass({
       showDesc      : this.props.collection.showDesc,
       showSource    : this.props.collection.showSource
     })
+
+    analytics.page('Collection');
+    analytics.page('Collection - ' + this.props.collection.name);
+    analytics.track('Collection viewed');
+    if (Parse.User.current()) {
+      if(this.props.userOwnsCollection) {
+        analytics.track('Owner viewed their Collection');
+      } else {
+        analytics.track('Stranger viewed Collection');
+      }
+    } else {
+      analytics.track('Stranger viewed Collection');
+    }
   },
 
   render: function () {

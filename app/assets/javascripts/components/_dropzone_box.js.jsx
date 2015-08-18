@@ -169,6 +169,7 @@ var DropzoneBox = React.createClass({
           imageCollection : collection
         }).dispatch()
         .then(function() {
+          analytics.track('Uploaded photo');
           self.props.refresh();
         }.bind(this));
 

@@ -10,6 +10,7 @@ var Login = React.createClass({
 
     Parse.User.logIn(username, password, {
       success: function(user) {
+        analytics.track('Logged In');
         window.location.replace("/");
         delete self;
       },
@@ -19,6 +20,10 @@ var Login = React.createClass({
     });
 
     e.preventDefault();
+  },
+
+  componentDidMount: function () {
+    analytics.page('Login');
   },
 
   render: function() {

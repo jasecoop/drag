@@ -7,6 +7,7 @@ Header = React.createClass({
       this.props.toggleSettings();
     },
     _logoutClick: function() {
+      analytics.track('Logged Out');
       Parse.User.logOut();
     },
     _handleRootClick: function() {

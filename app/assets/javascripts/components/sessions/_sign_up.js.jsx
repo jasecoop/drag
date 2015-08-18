@@ -24,6 +24,7 @@ var SignUp = React.createClass({
 
     user.signUp(null, {
       success: function(user) {
+        analytics.track('Signed Up');
         window.location.replace("/");
         delete self;
       },
@@ -33,6 +34,10 @@ var SignUp = React.createClass({
     });
 
     e.preventDefault();
+  },
+
+  componentDidMount: function () {
+    analytics.page('Sign Up');
   },
 
   render: function () {
