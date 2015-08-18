@@ -81,6 +81,8 @@ var BatchEdit = React.createClass({
     if (collection) {this._batchCollection(batch, collection)}
 
     batch.dispatch().then(function() {
+      analytics.track('Edited');
+      analytics.track('Images saved');
       this.props.imagesEdited();
     }.bind(this));
 

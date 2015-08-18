@@ -11,10 +11,8 @@ var Image = React.createClass({
   _handleClick: function(image, e) {
     if (this.props.image.createdBy) {
       var createdBy = this.props.image.createdBy
-      console.log(Parse.User.current().id);
-      console.log(createdBy.objectId)
       if (createdBy.objectId == Parse.User.current().id) {
-        console.log(this.props.image.createdBy)
+        analytics.track('Image clicked');
         this.props.setActiveImage(image);
       }
     }

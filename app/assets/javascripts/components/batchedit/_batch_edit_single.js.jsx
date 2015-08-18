@@ -19,7 +19,8 @@ var BatchEdit = React.createClass({
       imageCollection : collection
     }).dispatch()
     .then(function(collection) {
-      // this.props.toggleform-fix();
+      analytics.track('Edited');
+      analytics.track('Image saved');
       this.props.removeAllSelectedImages();
       this.props.refresh();
     }.bind(this));
