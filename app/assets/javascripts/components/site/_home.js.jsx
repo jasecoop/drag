@@ -18,6 +18,7 @@ var Home = React.createClass({
 
     user.signUp(null, {
       success: function(user) {
+        analytics.track('Beta user sign up');
         window.location.replace("/");
         delete self;
       },
