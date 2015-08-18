@@ -1,6 +1,34 @@
 var React = require('react');
 var Signup = require('../sessions/_reserve_username');
 
+var mouseDrag = function() {
+  console.log('mousedrag')
+  var win_w = $(window).width();
+  var win_h = $(window).height();
+
+  // $('#target').width(win_w).height(win_h);
+
+
+  // ON Mouse move
+  $( "body" ).mousemove(function( event ) {
+
+        var x = event.clientX;
+        var y = event.clientY;
+
+        $( "body" ).prepend('<div class="move" style="top:'+y+'px; left:'+x+'px;">Like</div>')
+  });
+
+  // $( "#target" ).click(function( event ) {
+
+  //   var x = event.clientX;
+  //   var y = event.clientY;
+
+  //   // color = colours[Math.floor(Math.random() * colours.length)];
+
+  //   $( "#target" ).prepend('<div class="click" style="top:'+y+'px; left:'+x+'px;">Click</div>')
+  // });
+}
+
 var Home = React.createClass({
 
   _onSignUpClick: function (e) {
@@ -29,6 +57,15 @@ var Home = React.createClass({
     e.preventDefault();
   },
 
+
+  _mouseMove: function(e) {
+    console.log('mouvsemove')
+  },
+
+  componentDidMount: function () {
+    document.addEventListener('onMouseMove', this._mouseMove);
+  },
+
   render: function() {
     var content;
     var userActivated = false;
@@ -50,7 +87,7 @@ var Home = React.createClass({
     } else {
       content =
          <form>
-          <div className="form-fix__body">
+          <div className="form-fix__body" onMouseMove={console.log("hi")}>
               <div className="input input-full mb2">
                 <input onChange= {this._handleInputChange} ref="signupUsername" type="text" placeholder="Username"></input>
               </div>
@@ -62,7 +99,7 @@ var Home = React.createClass({
               </div>
           </div>
           <div className="form-fix__footer">
-            <button className="btn btn-black" onClick={this._onSignUpClick}>Reserve your username</button>
+            <button className="btn btn-black" onClick={this._onSignUpClick}>Sign up</button>
           </div>
         </form>
     }
