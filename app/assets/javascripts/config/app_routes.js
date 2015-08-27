@@ -3,6 +3,7 @@ var AppWrapper   = require('../components/app/app_wrapper');
 var AppInit      = require('../components/app/app_init');
 var Images       = require('../components/images/_image_box');
 var Collection   = require('../components/collections/_collections_box');
+var Bookmarklet  = require('../components/bookmarklet/_bookmarklet_box');
 var Router       = require('react-router');
 var DefaultRoute = Router.DefaultRoute;
 var Route        = Router.Route;
@@ -20,6 +21,7 @@ if (Parse.User.current()) {
 
 module.exports = (
   <Route name="app" path="/" handler={AppWrapper} history={BrowserHistory}>
+    <Route name="bookmarklet" path="bookmarklet" handler={Bookmarklet} />
     <Route name="username" path=":username" handler={AppInit} />
     <Route name="collections" path=":username/collections" handler={AppInit} />
     <Route name="collection" path=":username/:collectionName" handler={AppInit} />

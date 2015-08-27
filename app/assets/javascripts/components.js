@@ -9,6 +9,8 @@ window.Image          = require('components/images/_image');
 window.DropzoneBox    = require('components/_dropzone_box');
 window.SignUp         = require('components/sessions/_sign_up');
 window.BatchEditBox   = require('components/batchedit/_batch_edit_box');
+window.UploadBox      = require('components/bookmarklet/_upload_box');
+window.BookmarkletDropzone = require('components/bookmarklet/_dropzone');
 
 window.SiteWrapper    = require('components/site_wrapper');
 window.AppWrapper     = require('components/app/app_wrapper');

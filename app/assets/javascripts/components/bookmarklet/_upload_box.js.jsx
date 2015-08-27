@@ -1,7 +1,6 @@
 'use strict';
-var DropzoneComponent = require('vendor/dropzone.js');
 var FileProgress = require('vendor/FileProgress.js')
-var S3Upload = require('vendor/s3upload.js');
+var S3Upload = require('./_s3upload.js');
 
 var addDragFlash = function() {
   $('body').addClass('dragging');
@@ -54,7 +53,9 @@ var DropzoneBox = React.createClass({
       files         : [],
       uploads       : [],
       showZone      : false,
-      uploading     : false
+      uploading     : false,
+      activeCollection : '',
+      activeCollectionId : ''
     };
   },
 
@@ -157,10 +158,10 @@ var DropzoneBox = React.createClass({
 
         var Collection = Parse.Object.extend("Collection");
         var collection = new Collection();
-        collection.id  = self.props.activeCollectionId;
+        collection.id  = this.state.activeCollectionId;
 
         ParseReact.Mutation.Create('Images', {
-          filesource   : signResult.publicUrl,
+          filesource : signResult.publicUrl,
           title      : signResult.name,
           width      : signResult.width,
           height     : signResult.height,
@@ -169,35 +170,12 @@ var DropzoneBox = React.createClass({
           imageCollection : collection
         }).dispatch()
         .then(function() {
-          analytics.track('Uploaded photo');
-          self.props.refresh();
+          analytics.track('Uploaded photo with Chrome extension');
         }.bind(this));
-
-        var filename =  signResult.filename;
-        this.deleteUpload(filename);
-          this.setState ({
-            uploading: false
-          })
-        if(this.props.onFinish) {
-          this.props.onFinish(signResult);
-        }
     },
 
     onError: function() {
 
-    },
-
-    uploadFile: function(files) {
-      console.log(files)
-      new S3Upload({
-          token: this.props.token,
-          fileElement: files,
-          signingUrl: this.props.signingUrl,
-          onProgress: this.onProgress,
-          onFinishS3Put: this.onFinish,
-          onError: this.props.onError,
-          bucket: this.props.bucket
-      });
     },
 
     toggleZoneTrue: function() {
@@ -242,11 +220,112 @@ var DropzoneBox = React.createClass({
       return loaders;
   },
 
+  _setActiveCollection: function(collection) {
+    this.setState({
+      activeCollection : collection
+    })
+  },
+
+  _getDataURI: function(url) {
+    var image = new Image();
+    var canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth; // or 'width' if you want a special/scaled size
+    canvas.height = image.naturalHeight; // or 'height' if you want a special/scaled size
+    canvas.getContext('2d').drawImage(image, 0, 0);
+    image.src = url;
+  },
+
+  _dataURItoBlog: function(data) {
+
+    var dataURI = data.base64
+
+    var mimestring = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+    }
+
+    var blob = new Blob([new Uint8Array(array)], {type: mimestring});
+    blob.width = data.height;
+    blob.height = data.width;
+    blob.name = data.name;
+
+
+    new S3Upload({
+      token: this.props.token,
+      fileElement: blob,
+      signingUrl: this.props.signingUrl,
+      onProgress: this.onProgress,
+      onFinishS3Put: this.onFinish,
+      onError: this.props.onError,
+      bucket: this.props.bucket
+    });
+  },
+
+  _getBase64: function(theevent) {
+    var insert_text;
+    var location = theevent.target;
+    var etext;
+    var ehtml;
+    var object;
+    try {
+      etext = theevent.dataTransfer.getData("text/plain");
+    } catch (_error) {}
+    try {
+      ehtml = theevent.dataTransfer.getData("text/html");
+    } catch (_error) {}
+    if (etext) {
+      insert_text = etext;
+    } else if (ehtml) {
+      object = $('<div/>').html(ehtml).contents();
+      if (object) {
+              insert_text =  object.closest('img').prop('src');
+      }
+    }
+    if (insert_text) {
+      var _this = this;
+      Parse.Cloud.run('getBase64', {url: insert_text}, {
+         success: function(data) {
+          _this._dataURItoBlog(data);
+         },
+         error: function(error) {
+           console.log(error);
+         }
+      });
+    }
+  },
+
+  _dropped: function (e) {
+    //see if we have anything in the text or img src tag
+    this._getBase64(e);
+
+    this.setState({
+      activeCollectionId : e.target.dataset.id
+    })
+  },
+
   render: function () {
     mixins: [ParseReact.Mixin]
 
     var componentConfig = {
-      allowedFiletypes: ['.jpg', '.png', '.gif'],
+      allowedFiletypes: ['.jpg', '.png', '.gif',"image/jpg",
+        "image/jpeg",
+        "image/gif",
+        "image/png",
+        "image/bmp",
+        "image/x-windows-bmp",
+        "image/tiff",
+        "image/x-tiff",
+        "image/webp",
+        "jpeg",
+        "jpg",
+        "gif",
+        "png",
+        "bmp",
+        "tiff",
+        "webp"],
       showFiletypeIcon: true,
       postUrl: '/images'
     };
@@ -268,12 +347,12 @@ var DropzoneBox = React.createClass({
      */
     var eventHandlers = {
         // All of these receive the event as first parameter:
-        drop: this.removeZone,
+        drop: this._dropped,
         dragstart: null,
         dragend: null,
-        dragenter: this.toggleZoneTrue,
-        dragover: null,
-        dragleave: this.toggleZoneFalse,
+        dragenter: null,
+        dragover: this._dragOver,
+        dragleave: null,
         // All of these receive the file as first parameter:
         addedfile: null,
         removedfile: null,
@@ -291,7 +370,8 @@ var DropzoneBox = React.createClass({
         // and are only called if the uploadMultiple option
         // in djsConfig is true:
         processingmultiple: null,
-        sendingmultiple: this.uploadFile,
+        // sendingmultiple: this.uploadFile,
+        sendingmultiple: null,
         successmultiple: null,
         completemultiple: null,
         canceledmultiple: null,
@@ -324,10 +404,15 @@ var DropzoneBox = React.createClass({
       <div>
         {uploading}
         {zone}
-        <DropzoneComponent
+
+        <BookmarkletDropzone
+          collections={this.props.collections}
           config={componentConfig}
           eventHandlers={eventHandlers}
           djsConfig={djsConfig}
+          collection={this.props.collection}
+          id      = {this.props.id}
+          setActiveCollection = {this._setActiveCollection}
         />
       </div>
     )

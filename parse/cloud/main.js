@@ -1,3 +1,38 @@
+var Image = require("parse-image");
+Parse.Cloud.define("getBase64", function(request, response) {
+  var fileext = request.params.url.replace(/^.*?\.([a-zA-Z0-9]+)$/, "$1");
+  var url = request.params.url;
+  Parse.Cloud.httpRequest({
+    url: url,
+    success: function(httpResponse) {
+      var filename = url.substring(url.lastIndexOf('/')+1);
+      // The file contents are in response.buffer.
+      var image = new Image();
+      var b = httpResponse.buffer.toString('base64');
+      var base64 = 'data:image/'+fileext+';base64,'+b
+      return image.setData(httpResponse.buffer, {
+        success: function() {
+          var data = {
+            base64 : base64,
+            res    : httpResponse,
+            width  : image.width(),
+            height : image.height(),
+            name   : filename
+          }
+          response.success(data);
+        },
+        error: function(error) {
+          console.log(error)
+        }
+      })
+
+    }, error: function(httpResponse) {
+      response.error('Request failed with response code ' + httpResponse.status);
+    }
+  });
+});
+
+
 Parse.Cloud.afterSave(Parse.User, function(request) {
   if(request.object.existed() == false) {
 

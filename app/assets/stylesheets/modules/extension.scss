@@ -1,0 +1,35 @@
+.extCollections {
+  padding: 2rem;
+}
+
+.extCo {
+  display: block;
+  padding: 1rem;
+  border: solid 1px #000;
+  margin-bottom: .5rem;
+}
+
+.extCo.dz-drag-hover {
+    background: linear-gradient(270deg, #0033cc, #00ff00, #ffff00, #ff7f00, #ff0000, #8b00ff, #4b0082);
+  background-size: 1400% 1400%;
+
+  -webkit-animation: AnimationName 50s ease infinite;
+  -moz-animation: AnimationName 50s ease infinite;
+  animation: AnimationName 50s ease infinite;
+
+  @-webkit-keyframes AnimationName {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
+  @-moz-keyframes AnimationName {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
+  @keyframes AnimationName {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
+}

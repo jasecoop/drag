@@ -46,14 +46,9 @@ S3Upload.prototype.onError = function(status) {
 
 S3Upload.prototype.handleFileSelect = function(fileElement) {
     this.onProgress(0, 'Upload started.');
-
-    var files = fileElement.files ? fileElement.files : fileElement;
+    // var files = fileElement.files ? fileElement.files : fileElement;
     var result = [];
-    for (var i=0; i < files.length; i++) {
-        var f = files[i];
-        console.log(f);
-        result.push(this.uploadFile(f));
-    }
+    result.push(this.uploadFile(fileElement));
 };
 
 S3Upload.prototype.createCORSRequest = function(method, url) {
@@ -128,6 +123,8 @@ S3Upload.prototype.uploadToS3 = function(file, signResult) {
     } else {
         xhr.onload = function() {
             if (xhr.status === 200) {
+                console.log('xxx')
+                console.log(file)
                 this.onProgress(100, 'Upload completed.');
                 var uri = signResult.signedUrl;
                 var filename = file.name.replace(/[^\w]/g, "_");
